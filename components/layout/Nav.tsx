@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
@@ -21,14 +20,8 @@ export default function Nav() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-sew-green shadow-lg">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         <Link href="/" className="flex-shrink-0">
-          <Image
-            src="/Sew_Suite_2025-white-gold.png"
-            alt="Sew Suite Embroidery Outfitters"
-            width={280}
-            height={80}
-            className="h-11 w-auto"
-            priority
-          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="Sew Suite Embroidery Outfitters" style={{ height: "44px", width: "auto" }} />
         </Link>
 
         {/* Desktop nav */}

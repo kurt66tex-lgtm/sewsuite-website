@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 const navLinks = [
@@ -17,13 +16,8 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="inline-block mb-3">
-              <Image
-                src="/Sew_Suite_2025-white-gold.png"
-                alt="Sew Suite Embroidery Outfitters"
-                width={280}
-                height={80}
-                className="h-20 w-auto"
-              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.png" alt="Sew Suite Embroidery Outfitters" style={{ height: "80px", width: "auto" }} />
             </Link>
             <p className="text-sew-cream/70 text-sm leading-relaxed">
               Custom embroidery and branded apparel — Allen/Lucas, TX
