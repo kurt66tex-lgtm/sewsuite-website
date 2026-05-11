@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const navLinks = [
@@ -15,9 +16,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Brand */}
           <div>
-            <p className="text-2xl font-semibold tracking-tight text-sew-cream mb-2">
-              Sew Suite
-            </p>
+            <Link href="/" className="inline-block mb-3">
+              <Image
+                src="/Sew_Suite_2025-white-gold.png"
+                alt="Sew Suite Embroidery Outfitters"
+                width={280}
+                height={80}
+                className="h-20 w-auto"
+              />
+            </Link>
             <p className="text-sew-cream/70 text-sm leading-relaxed">
               Custom embroidery and branded apparel — Allen/Lucas, TX
             </p>
