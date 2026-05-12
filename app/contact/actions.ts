@@ -27,7 +27,7 @@ export async function submitContactForm(
 
     await resend.emails.send({
       from: "reports@servicetradeagency.com",
-      to: "kurt66tex@gmail.com",
+      to: "patty@sewsuite.com",
       subject: `New Sew Suite inquiry from ${name}`,
       text: `
 Name: ${name}
