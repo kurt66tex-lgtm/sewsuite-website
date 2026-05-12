@@ -18,10 +18,10 @@ export default function Nav() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-sew-green shadow-lg">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-3">
         <Link href="/" className="flex-shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="Sew Suite Embroidery Outfitters" style={{ height: "44px", width: "auto" }} />
+          <img src="/logo.png" alt="Sew Suite Embroidery Outfitters" style={{ height: "56px", width: "auto" }} />
         </Link>
 
         {/* Desktop nav */}
