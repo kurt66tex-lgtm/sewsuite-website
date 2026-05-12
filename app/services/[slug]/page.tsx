@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getService } from "@/lib/content";
@@ -10,6 +9,15 @@ import FAQSection from "@/components/sections/FAQSection";
 import type { SewSuiteService, SewSuiteFAQ } from "@/types";
 
 export const revalidate = 3600;
+
+interface SuggestedPage {
+  title: string;
+  meta_description: string | null;
+  content: string;
+  schema_markup: Record<string, unknown> | null;
+  target_keyword: string;
+  page_type: string;
+}
 
 const SERVICE_SLUGS = [
   "custom-embroidery",
@@ -208,6 +216,23 @@ Orders are produced with individual names and numbers at no extra hassle — jus
   },
 };
 
+async function getSuggestedPage(slug: string): Promise<SuggestedPage | null> {
+  try {
+    const { createServerClient } = await import("@/lib/supabase");
+    const supabase = createServerClient();
+    const { data, error } = await supabase
+      .from("suggested_pages")
+      .select("title, meta_description, content, schema_markup, target_keyword, page_type")
+      .eq("slug", slug)
+      .eq("status", "published")
+      .single();
+    if (error || !data) return null;
+    return data as SuggestedPage;
+  } catch {
+    return null;
+  }
+}
+
 export async function generateStaticParams() {
   return SERVICE_SLUGS.map((slug) => ({ slug }));
 }
@@ -216,26 +241,14 @@ export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
+}) {
   const { slug } = await params;
-  const service = (await getService(slug).catch(() => null)) ?? FALLBACK_SERVICES[slug];
-
-  const title = service?.meta_title ?? `${slug.replace(/-/g, " ")} | Sew Suite`;
-  const description =
-    service?.meta_desc ??
-    "Professional custom embroidery and decorated apparel services in Allen TX and DFW.";
-
+  if (SERVICE_SLUGS.includes(slug)) return {};
+  const page = await getSuggestedPage(slug);
+  if (!page) return {};
   return {
-    title,
-    description,
-    alternates: { canonical: `https://sewsuite.com/services/${slug}` },
-    openGraph: {
-      title,
-      description,
-      url: `https://sewsuite.com/services/${slug}`,
-      type: "website",
-      siteName: "Sew Suite",
-    },
+    title: `${page.title} | Sew Suite`,
+    description: page.meta_description ?? undefined,
   };
 }
 
@@ -247,8 +260,30 @@ export default async function ServicePage({
   const { slug } = await params;
 
   if (!SERVICE_SLUGS.includes(slug)) {
-    notFound();
+    const suggestedPage = await getSuggestedPage(slug);
+    if (!suggestedPage) notFound();
+
+    return (
+      <>
+        {suggestedPage!.schema_markup && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(suggestedPage!.schema_markup),
+            }}
+          />
+        )}
+        <main className="max-w-4xl mx-auto px-6 py-16">
+          <article
+            className="prose prose-lg max-w-none"
+            dangerouslySetInnerHTML={{ __html: suggestedPage!.content }}
+          />
+        </main>
+      </>
+    );
   }
+
+  // Slug is in SERVICE_SLUGS — fall through to existing static render logic
 
   const service = (await getService(slug).catch(() => null)) ?? FALLBACK_SERVICES[slug];
 
