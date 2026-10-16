@@ -1,0 +1,25 @@
+name: Independent Sew Suite prelaunch build
+on:
+  push:
+    branches: [rrs-independent-prelaunch-20261016]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: {contents: read}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Check prelaunch contact and search gates
+        run: |
+          node -e "const fs=require('fs'); const a=fs.readFileSync('app/contact/actions.ts','utf8');const r=fs.readFileSync('app/robots.ts','utf8');if(a.includes('resend.emails.send')||!r.includes('disallow'))process.exit(1);console.log('PRELAUNCH_SAFETY_PASS')"
+      - name: Build website without production secrets
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: public-placeholder
+          NEXT_PUBLIC_SITE_URL: https://sewsuite.servicetradeagency.com
+        run: npm run build
