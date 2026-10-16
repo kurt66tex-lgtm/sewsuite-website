@@ -11,9 +11,11 @@ const inter = Inter({
   display: "swap",
 });
 
-const GA_ID = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID;
+// No live analytics events from the prelaunch comparison host.
+const GA_ID = undefined;
 
 export const metadata: Metadata = {
+  robots: { index: false, follow: false, googleBot: {index:false,follow:false} },
   title: {
     default: "Sew Suite | Custom Embroidery & Branded Apparel — Allen, TX",
     template: "%s | Sew Suite",
