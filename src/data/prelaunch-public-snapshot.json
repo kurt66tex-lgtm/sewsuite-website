@@ -65,7 +65,15 @@
       "social_instagram_enabled": false,
       "social_tiktok_enabled": false,
       "social_linkedin_enabled": false,
-      "social_youtube_enabled": false
+      "social_youtube_enabled": false,
+      "portfolio_enabled": true,
+      "portfolio_page_enabled": true,
+      "portfolio_service_area_pages_enabled": true,
+      "portfolio_display_label": "Our Work",
+      "customer_support_email": "support@sewsuite.com",
+      "privacy_use_ai_voice": true,
+      "primary_message": "Custom branded apparel, embroidery, screen printing and DTF printing for North Texas and customers nationwide.",
+      "seo_default_meta_description": "Sew Suite creates custom embroidery, screen printing, DTF printing and branded apparel for businesses, schools, teams and organizations in North Texas and nationwide."
     }
   ],
   "ServiceType": [
