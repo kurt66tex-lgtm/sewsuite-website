@@ -1,0 +1,2144 @@
+{
+  "BusinessSettings": [
+    {
+      "business_name": "Sew Suite",
+      "primary_business_category": "Custom Apparel, Embroidery & Screen Printing",
+      "industry_module": "custom",
+      "business_model": "project_quote",
+      "work_number_prefix": "SS",
+      "logo_url": "/sew-suite-logo-standard.png",
+      "hero_image_url": "https://base44.app/api/apps/6aba8ad594aac8fa4dde76e6/files/mp/public/6aba8ad594aac8fa4dde76e6/cfab5c89f_IMG_5766.png",
+      "phone": "469-640-8568",
+      "email": "service@sewsuite.com",
+      "website_url": "https://sewsuite.com",
+      "service_region_label": "Allen, Texas — serving North Texas and customers nationwide",
+      "primary_brand_color": "#243746",
+      "secondary_brand_color": "#2B3137",
+      "accent_color": "#B68A2E",
+      "cta_color": "#B68A2E",
+      "cta_hover_color": "#987224",
+      "button_text_color": "#162630",
+      "light_background_color": "#F5F3EF",
+      "dark_text_color": "#2B3137",
+      "chat_enabled": true,
+      "chat_assistant_name": "Sew Suite Assistant",
+      "chat_welcome_message": "Hi! Tell us about your custom apparel, embroidery, screen printing, or DTF project and we'll help you get started.",
+      "chat_launcher_background_color": "#243746",
+      "chat_launcher_text_color": "#B68A2E",
+      "chat_launcher_border_color": "#B68A2E",
+      "chat_header_background_color": "#243746",
+      "chat_header_accent_color": "#B68A2E",
+      "chat_user_message_background_color": "#D8D4CD",
+      "chat_user_message_text_color": "#243746",
+      "chat_send_background_color": "#243746",
+      "chat_send_icon_color": "#B68A2E",
+      "portfolio_home_enabled": true,
+      "portfolio_detail_pages_enabled": true,
+      "portfolio_service_pages_enabled": true,
+      "credentials": [],
+      "trust_highlights": [],
+      "established_year": null,
+      "hours_mon_fri": "",
+      "hours_saturday": "",
+      "hours_sunday": "",
+      "address_city": "Allen",
+      "address_state": "TX",
+      "social_facebook_url": null,
+      "social_instagram_url": null,
+      "social_tiktok_url": null,
+      "social_linkedin_url": null,
+      "social_youtube_url": null,
+      "home_hero_description": null,
+      "home_hero_accent": null,
+      "home_services_heading": null,
+      "home_services_intro": null,
+      "home_why_cards": [],
+      "home_trust_items": [],
+      "primary_cta_label": "Request a Quote",
+      "inquiry_noun": "quote request",
+      "show_business_address_publicly": false,
+      "secondary_button_border_color": "#B68A2E",
+      "secondary_button_text_color": "#243746",
+      "secondary_button_hover_background_color": "#B68A2E",
+      "secondary_button_hover_text_color": "#162630",
+      "social_facebook_enabled": false,
+      "social_instagram_enabled": false,
+      "social_tiktok_enabled": false,
+      "social_linkedin_enabled": false,
+      "social_youtube_enabled": false
+    }
+  ],
+  "ServiceType": [
+    {
+      "short_description": "Branded polos, shirts, jackets, uniforms, and other apparel for businesses and employees.",
+      "repair_considerations": "Different roles may need different garments while still maintaining a consistent brand. Decoration should be chosen around fabric, wear conditions, logo detail, and desired appearance.",
+      "icon": "corporate",
+      "indexable": true,
+      "display_order": 4,
+      "active": true,
+      "common_causes": [],
+      "before_we_arrive": [
+        "Upload current logo/brand files",
+        "Describe who will wear the apparel and where",
+        "Provide approximate headcount and size needs",
+        "Mention recurring or multi-location ordering needs"
+      ],
+      "seo_title": "Corporate Apparel | Sew Suite",
+      "meta_description": "Branded polos, shirts, jackets, uniforms, and other apparel for businesses and employees. Sew Suite serves North Texas and accepts orders nationwide.",
+      "faqs": [
+        {
+          "question": "Can Sew Suite help with employee uniforms and branded polos?",
+          "answer": "Yes. Corporate apparel can include polos, shirts, jackets, hats, workwear, and other branded garments for employees and teams."
+        },
+        {
+          "question": "Can we reorder the same branded apparel later?",
+          "answer": "Repeat ordering is easier when approved artwork, garment choices, decoration details, and prior project information are retained."
+        }
+      ],
+      "service_intro": "Corporate apparel helps businesses present a consistent brand across employees, sales teams, field staff, events, trade shows, customer-facing roles, and company programs. Sew Suite can coordinate polos, button-downs, jackets, hats, workwear, and other branded pieces using embroidery, screen printing, or DTF as appropriate.",
+      "publicly_advertised": true,
+      "common_symptoms": [],
+      "name": "Corporate Apparel",
+      "page_content": "The goal is more than putting a logo on a shirt. Garment quality, employee use, brand standards, decoration placement, sizing, reorder needs, and budget all matter. Sew Suite can help organize those choices so a company can build a practical branded-apparel program instead of starting from scratch on every order.",
+      "what_we_check": [
+        "Brand artwork, colors, and placement standards",
+        "Employee use case and garment preferences",
+        "Sizing, quantities, departments, and reorder expectations",
+        "Decoration method, deadline, pickup, or shipping"
+      ],
+      "intake_questions": [],
+      "category": "Custom Apparel & Decoration",
+      "slug": "corporate-apparel",
+      "helpful_tip": "For repeat orders, establish a small approved garment and decoration set so future employee additions are easier to match.",
+      "decision_considerations": "Different roles may need different garments while still maintaining a consistent brand. Decoration should be chosen around fabric, wear conditions, logo detail, and desired appearance.",
+      "decision_heading": "Project considerations",
+      "detail_items": [
+        "Brand artwork, colors, and placement standards",
+        "Employee use case and garment preferences",
+        "Sizing, quantities, departments, and reorder expectations",
+        "Decoration method, deadline, pickup, or shipping"
+      ],
+      "detail_section_heading": "Project details",
+      "preparation_heading": "What to send with your quote request",
+      "preparation_items": [
+        "Upload current logo/brand files",
+        "Describe who will wear the apparel and where",
+        "Provide approximate headcount and size needs",
+        "Mention recurring or multi-location ordering needs"
+      ],
+      "id": "6aba8c05ee67bef7efbe6883",
+      "created_date": "2026-09-28T15:47:17.025000",
+      "updated_date": "2026-10-01T15:03:56.327000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "short_description": "Custom apparel and spirit wear for schools, teams, clubs, booster organizations, and events.",
+      "repair_considerations": "Team and school orders can include multiple garments and size ranges. Early artwork approval and a clear quantity breakdown help keep production organized.",
+      "icon": "school",
+      "indexable": true,
+      "display_order": 5,
+      "active": true,
+      "common_causes": [],
+      "before_we_arrive": [
+        "Upload approved logos or the best artwork available",
+        "Provide team/school colors and approximate quantities",
+        "Share size ranges and any personalization needs",
+        "Tell us the required in-hand or event date"
+      ],
+      "seo_title": "Team & School Apparel | Sew Suite",
+      "meta_description": "Custom apparel and spirit wear for schools, teams, clubs, booster organizations, and events. Sew Suite serves North Texas and accepts orders nationwide.",
+      "faqs": [
+        {
+          "question": "Do you make spirit wear and team apparel?",
+          "answer": "Yes. Sew Suite works with schools, teams, clubs, booster groups, staff, and organizations on decorated apparel and related items."
+        },
+        {
+          "question": "Can one project include shirts, hats, bags, or towels?",
+          "answer": "Yes. The product mix can be reviewed together so decoration methods and branding stay coordinated."
+        }
+      ],
+      "service_intro": "Sew Suite creates custom apparel and spirit wear for schools, teams, clubs, booster organizations, student groups, coaches, staff, and events. Projects can range from embroidered polos and hats to screen-printed shirts, DTF graphics, bags, towels, and other coordinated items.",
+      "publicly_advertised": true,
+      "common_symptoms": [],
+      "name": "Team & School Apparel",
+      "page_content": "School and team projects often involve multiple sizes, firm event or season dates, sponsor or organization artwork, and several groups of wearers. Sew Suite can organize the project around the right decoration method, product mix, proof approval, quantities, and fulfillment plan.",
+      "what_we_check": [
+        "School, team, club, or booster artwork and usage requirements",
+        "Player, student, staff, or supporter product needs",
+        "Sizes, quantities, decoration locations, and personalization needs",
+        "Season, tournament, fundraiser, event, or distribution deadlines"
+      ],
+      "intake_questions": [],
+      "category": "Custom Apparel & Decoration",
+      "slug": "team-school-apparel",
+      "helpful_tip": "Start before the season, tournament, fundraiser, or school event when possible—especially when the order includes several products or personalized items.",
+      "decision_considerations": "Team and school orders can include multiple garments and size ranges. Early artwork approval and a clear quantity breakdown help keep production organized.",
+      "decision_heading": "Project considerations",
+      "detail_items": [
+        "School, team, club, or booster artwork and usage requirements",
+        "Player, student, staff, or supporter product needs",
+        "Sizes, quantities, decoration locations, and personalization needs",
+        "Season, tournament, fundraiser, event, or distribution deadlines"
+      ],
+      "detail_section_heading": "Project details",
+      "preparation_heading": "What to send with your quote request",
+      "preparation_items": [
+        "Upload approved logos or the best artwork available",
+        "Provide team/school colors and approximate quantities",
+        "Share size ranges and any personalization needs",
+        "Tell us the required in-hand or event date"
+      ],
+      "id": "6aba8c05ee67bef7efbe6884",
+      "created_date": "2026-09-28T15:47:17.025000",
+      "updated_date": "2026-10-01T15:03:59.831000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "short_description": "Personalized and branded bags, totes, towels, and similar items for businesses, teams, organizations, and gifts.",
+      "repair_considerations": "Not every bag or towel accepts every decoration method equally. Material thickness, texture, seams, and access to the decoration area need to be considered.",
+      "icon": "bag",
+      "indexable": true,
+      "display_order": 7,
+      "active": true,
+      "common_causes": [],
+      "before_we_arrive": [
+        "Share the product type or example",
+        "Upload artwork or logo",
+        "Provide approximate quantity",
+        "Mention packaging, event, or distribution timing"
+      ],
+      "seo_title": "Custom Bags & Towels | Sew Suite",
+      "meta_description": "Personalized and branded bags, totes, towels, and similar items for businesses, teams, organizations, and gifts. Sew Suite serves North Texas and accepts orders nationwide.",
+      "faqs": [
+        {
+          "question": "Can I order decorated bags and towels together?",
+          "answer": "Yes. Include the product types, quantities, artwork and desired completion date in your quote request."
+        },
+        {
+          "question": "Which decoration method works for my item?",
+          "answer": "It depends on the material, surface texture, available decoration area and artwork. Sew Suite reviews these details before recommending an approach."
+        }
+      ],
+      "service_intro": "Bags, totes, towels, and similar products can extend a brand beyond shirts and polos. Sew Suite decorates items for businesses, teams, schools, organizations, events, gifts, and programs using an appropriate method for the material and design.",
+      "publicly_advertised": true,
+      "common_symptoms": [],
+      "name": "Custom Bags & Towels",
+      "page_content": "The product material, surface texture, usable decoration area, logo detail, and expected use determine what will work best. Sew Suite reviews the item and artwork together before recommending embroidery, printing, or another compatible approach.",
+      "what_we_check": [
+        "Product material and decoration area",
+        "Logo size, detail, colors, and placement",
+        "Quantity and intended use",
+        "Deadline, pickup, or shipping"
+      ],
+      "intake_questions": [],
+      "category": "Custom Apparel & Decoration",
+      "slug": "custom-bags-towels",
+      "helpful_tip": "Share a photo or product link when possible; material and the available decoration area can affect which method works best.",
+      "decision_considerations": "Not every bag or towel accepts every decoration method equally. Material thickness, texture, seams, and access to the decoration area need to be considered.",
+      "decision_heading": "Project considerations",
+      "detail_items": [
+        "Product material and decoration area",
+        "Logo size, detail, colors, and placement",
+        "Quantity and intended use",
+        "Deadline, pickup, or shipping"
+      ],
+      "detail_section_heading": "Project details",
+      "preparation_heading": "What to send with your quote request",
+      "preparation_items": [
+        "Share the product type or example",
+        "Upload artwork or logo",
+        "Provide approximate quantity",
+        "Mention packaging, event, or distribution timing"
+      ],
+      "id": "6aba8c05ee67bef7efbe6886",
+      "created_date": "2026-09-28T15:47:17.025000",
+      "updated_date": "2026-10-01T15:04:05.931000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "short_description": "Full-color direct-to-film printing for detailed logos, artwork, and custom apparel.",
+      "repair_considerations": "Artwork quality matters because low-resolution files can reproduce poorly at larger sizes. Garment material and application conditions also affect the result.",
+      "icon": "dtf",
+      "indexable": true,
+      "display_order": 3,
+      "active": true,
+      "common_causes": [],
+      "before_we_arrive": [
+        "Upload the highest-resolution artwork available",
+        "Share the garment type and color",
+        "Provide approximate print size and location",
+        "Tell us the quantity and desired completion date"
+      ],
+      "seo_title": "DTF Printing | Sew Suite",
+      "meta_description": "Full-color direct-to-film printing for detailed logos, artwork, and custom apparel. Sew Suite serves North Texas and accepts orders nationwide.",
+      "faqs": [
+        {
+          "question": "When should I consider DTF instead of screen printing?",
+          "answer": "DTF can be useful for detailed, full-color artwork or quantities where a multi-color screen-print setup is less practical. The best method depends on the specific project."
+        },
+        {
+          "question": "Can I use a full-color logo or artwork with DTF?",
+          "answer": "DTF can accommodate many detailed, multicolor designs. Upload your artwork so Sew Suite can review its quality, intended print size and garment compatibility."
+        },
+        {
+          "question": "What do you need to quote a DTF apparel order?",
+          "answer": "Include the garment type and color, approximate quantity, print location and size, artwork and desired completion date."
+        }
+      ],
+      "service_intro": "DTF printing is useful for full-color artwork, gradients, detailed logos, and projects where traditional screen-print separations may not be the best fit. It can work across a range of apparel and allows detailed graphics to be transferred cleanly.",
+      "publicly_advertised": true,
+      "common_symptoms": [],
+      "name": "DTF Printing",
+      "page_content": "Sew Suite evaluates the artwork, garment, print size, placement, quantity, and intended use before recommending DTF. It can be particularly useful for colorful designs, smaller runs, personalization-style projects, and artwork with detail that would require many screen-print colors.",
+      "what_we_check": [
+        "Artwork resolution, transparency, and edge quality",
+        "Finished print dimensions and placement",
+        "Garment fabric, color, and compatibility",
+        "Quantity, deadline, and expected use"
+      ],
+      "intake_questions": [],
+      "category": "Custom Apparel & Decoration",
+      "slug": "dtf-printing",
+      "helpful_tip": "If you are unsure whether DTF, screen printing, or embroidery is best, send the same project details and Sew Suite can help compare the options.",
+      "decision_considerations": "Artwork quality matters because low-resolution files can reproduce poorly at larger sizes. Garment material and application conditions also affect the result.",
+      "decision_heading": "Project considerations",
+      "detail_items": [
+        "Artwork resolution, transparency, and edge quality",
+        "Finished print dimensions and placement",
+        "Garment fabric, color, and compatibility",
+        "Quantity, deadline, and expected use"
+      ],
+      "detail_section_heading": "Project details",
+      "preparation_heading": "What to send with your quote request",
+      "preparation_items": [
+        "Upload the highest-resolution artwork available",
+        "Share the garment type and color",
+        "Provide approximate print size and location",
+        "Tell us the quantity and desired completion date"
+      ],
+      "id": "6aba8c05ee67bef7efbe6882",
+      "created_date": "2026-09-28T15:47:17.025000",
+      "updated_date": "2026-10-01T15:03:53.645000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "short_description": "Custom decorated specialty products and promotional items beyond standard apparel.",
+      "repair_considerations": "Specialty items vary widely, so feasibility and decoration method should be confirmed before the product is ordered or production is promised.",
+      "icon": "promotional",
+      "indexable": true,
+      "display_order": 8,
+      "active": true,
+      "common_causes": [],
+      "before_we_arrive": [
+        "Send a photo or link to the type of item",
+        "Upload the logo/artwork",
+        "Provide approximate quantity",
+        "Explain how and when the item will be used"
+      ],
+      "seo_title": "Specialty Promotional Items | Sew Suite",
+      "meta_description": "Custom decorated specialty products and promotional items beyond standard apparel. Sew Suite serves North Texas and accepts orders nationwide.",
+      "faqs": [
+        {
+          "question": "Can you quote a promotional item that is not shown on your website?",
+          "answer": "Send the product idea, artwork, approximate quantity and desired timing. Sew Suite can review whether the item and decoration method are suitable."
+        },
+        {
+          "question": "What details should I include in a specialty-item request?",
+          "answer": "Describe how the item will be used, your preferred product, quantity, logo or artwork, decoration location and requested completion date."
+        },
+        {
+          "question": "Can specialty items be part of a coordinated apparel order?",
+          "answer": "Yes. Include the complete product list in your quote request so Sew Suite can review the artwork and decoration needs across the project."
+        }
+      ],
+      "service_intro": "Some branding projects do not fit neatly into a standard shirt, polo, hat, bag, or towel category. Sew Suite can review specialty and promotional-item ideas and determine whether the product, artwork, decoration method, quantity, and timeline are a workable match.",
+      "publicly_advertised": true,
+      "common_symptoms": [],
+      "name": "Specialty Promotional Items",
+      "page_content": "Start with the intended item, how it will be used, the logo or artwork, and the quantity. From employee gifts and event pieces to organization merchandise and unusual decorated products, the project should be evaluated around the actual substrate and decoration limitations rather than a one-size-fits-all process.",
+      "what_we_check": [
+        "Product/substrate and usable decoration area",
+        "Artwork requirements and compatible decoration method",
+        "Quantity and sourcing considerations",
+        "Deadline, presentation, pickup, or shipping needs"
+      ],
+      "intake_questions": [],
+      "category": "Custom Apparel & Decoration",
+      "slug": "specialty-promotional-items",
+      "helpful_tip": "Send the item or a product link before ordering large quantities so decoration compatibility can be reviewed first.",
+      "decision_considerations": "Specialty items vary widely, so feasibility and decoration method should be confirmed before the product is ordered or production is promised.",
+      "decision_heading": "Project considerations",
+      "detail_items": [
+        "Product/substrate and usable decoration area",
+        "Artwork requirements and compatible decoration method",
+        "Quantity and sourcing considerations",
+        "Deadline, presentation, pickup, or shipping needs"
+      ],
+      "detail_section_heading": "Project details",
+      "preparation_heading": "What to send with your quote request",
+      "preparation_items": [
+        "Send a photo or link to the type of item",
+        "Upload the logo/artwork",
+        "Provide approximate quantity",
+        "Explain how and when the item will be used"
+      ],
+      "id": "6aba8c05ee67bef7efbe6887",
+      "created_date": "2026-09-28T15:47:17.025000",
+      "updated_date": "2026-10-01T15:04:08.781000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "decision_heading": "Project considerations",
+      "short_description": "Professional logo and custom embroidery for polos, jackets, hats, uniforms, bags, towels, and other apparel.",
+      "repair_considerations": "Embroidery pricing and appearance depend on stitch count, logo size, number of locations, garment construction, and quantity. Very small text or fine detail may need artwork adjustments for clean stitching.",
+      "icon": "embroidery",
+      "indexable": true,
+      "display_order": 1,
+      "common_causes": [],
+      "preparation_items": [
+        "Vector artwork is helpful but not required to start a quote",
+        "Share the intended garment or product when known",
+        "Include approximate quantities and sizes",
+        "Tell us about event, school, team, or corporate deadlines early"
+      ],
+      "service_intro": "Custom embroidery gives polos, jackets, hats, bags, towels, uniforms, and workwear a polished branded finish. Sew Suite works with businesses, schools, teams, organizations, and individuals to turn approved artwork into durable stitched decoration for everyday wear, events, staff apparel, spirit wear, and gifts.",
+      "common_symptoms": [],
+      "decision_considerations": "Embroidery pricing and appearance depend on stitch count, logo size, number of locations, garment construction, and quantity. Very small text or fine detail may need artwork adjustments for clean stitching.",
+      "what_we_check": [
+        "Logo or artwork quality and whether digitizing is needed",
+        "Garment or product type, fabric, color, and decoration location",
+        "Thread colors, logo dimensions, quantity, and sizing mix",
+        "Deadline, pickup or shipping needs, and any repeat-order requirements"
+      ],
+      "slug": "custom-embroidery",
+      "detail_section_heading": "Project details",
+      "active": true,
+      "before_we_arrive": [
+        "Vector artwork is helpful but not required to start a quote",
+        "Share the intended garment or product when known",
+        "Include approximate quantities and sizes",
+        "Tell us about event, school, team, or corporate deadlines early"
+      ],
+      "seo_title": "Custom Embroidery | Sew Suite",
+      "meta_description": "Professional logo and custom embroidery for polos, jackets, hats, uniforms, bags, towels, and other apparel. Sew Suite serves North Texas and accepts orders nationwide.",
+      "faqs": [
+        {
+          "question": "Can Sew Suite embroider our existing company or team logo?",
+          "answer": "Yes. Send the artwork with your quote request. Sew Suite can review whether it is ready for embroidery or needs preparation or digitizing."
+        },
+        {
+          "question": "What items can be embroidered?",
+          "answer": "Common projects include polos, jackets, hats, uniforms, bags, towels, workwear, and other embroidery-compatible products."
+        },
+        {
+          "question": "Do you handle small and larger group orders?",
+          "answer": "Project size varies by product and decoration. Send the approximate quantity and timing so Sew Suite can recommend the appropriate approach."
+        }
+      ],
+      "publicly_advertised": true,
+      "name": "Custom Embroidery",
+      "detail_items": [
+        "Logo or artwork quality and whether digitizing is needed",
+        "Garment or product type, fabric, color, and decoration location",
+        "Thread colors, logo dimensions, quantity, and sizing mix",
+        "Deadline, pickup or shipping needs, and any repeat-order requirements"
+      ],
+      "page_content": "Embroidery works especially well when a professional, dimensional logo is important. Thread colors, garment fabric, logo size, placement, stitch count, and quantity all affect the finished result. Sew Suite reviews those details before production and can help prepare artwork that is not yet embroidery-ready.",
+      "intake_questions": [],
+      "category": "Custom Apparel & Decoration",
+      "preparation_heading": "What to send with your quote request",
+      "helpful_tip": "For repeat corporate, school, or team orders, keeping approved artwork and decoration details consistent makes future ordering easier.",
+      "id": "6aba8c05ee67bef7efbe6880",
+      "created_date": "2026-09-28T15:47:17.025000",
+      "updated_date": "2026-10-04T16:02:52.266000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "short_description": "Embroidered and decorated caps, hats, and headwear featuring custom logos and designs.",
+      "repair_considerations": "Small lettering and highly detailed artwork may need simplification for cap embroidery because the available decoration area is limited.",
+      "icon": "hat",
+      "indexable": true,
+      "display_order": 6,
+      "active": true,
+      "common_causes": [],
+      "before_we_arrive": [
+        "Upload the logo at the best quality available",
+        "Share preferred cap style or examples",
+        "Provide quantity and color preferences",
+        "Mention side or back decoration if desired"
+      ],
+      "seo_title": "Custom Hats & Caps | Sew Suite",
+      "meta_description": "Embroidered and decorated caps, hats, and headwear featuring custom logos and designs. Sew Suite serves North Texas and accepts orders nationwide.",
+      "faqs": [
+        {
+          "question": "Can I use my existing logo on a hat?",
+          "answer": "Yes. Upload the artwork with your quote request. Sew Suite can review lettering size, stitch detail, placement and cap construction to see whether the design needs adjustment."
+        },
+        {
+          "question": "What information helps you quote custom hats?",
+          "answer": "Include the approximate quantity, preferred hat style and color, logo artwork, decoration location and desired completion date."
+        },
+        {
+          "question": "Can hats be included with a larger apparel order?",
+          "answer": "Yes. Include the hats and other garments in your request so Sew Suite can review the artwork and decoration requirements for each item."
+        }
+      ],
+      "service_intro": "Custom hats and caps put a logo in a highly visible location and work well for companies, crews, teams, schools, events, organizations, and branded merchandise. Sew Suite can help select embroidery-friendly headwear and prepare artwork for the front, side, or other suitable locations.",
+      "publicly_advertised": true,
+      "common_symptoms": [],
+      "name": "Custom Hats & Caps",
+      "page_content": "Cap construction, panel style, logo height, stitch density, small lettering, and placement all influence embroidery. Sew Suite reviews the design and headwear before production to avoid forcing artwork into a format that will not stitch cleanly.",
+      "what_we_check": [
+        "Hat style and panel construction",
+        "Logo dimensions, detail, and embroidery suitability",
+        "Thread colors and placement",
+        "Quantity, deadline, and intended use"
+      ],
+      "intake_questions": [],
+      "category": "Custom Apparel & Decoration",
+      "slug": "custom-hats-caps",
+      "helpful_tip": "Choose the hat style first when possible; crown shape and panel construction can affect the best logo dimensions.",
+      "decision_considerations": "Small lettering and highly detailed artwork may need simplification for cap embroidery because the available decoration area is limited.",
+      "decision_heading": "Project considerations",
+      "detail_items": [
+        "Hat style and panel construction",
+        "Logo dimensions, detail, and embroidery suitability",
+        "Thread colors and placement",
+        "Quantity, deadline, and intended use"
+      ],
+      "detail_section_heading": "Project details",
+      "preparation_heading": "What to send with your quote request",
+      "preparation_items": [
+        "Upload the logo at the best quality available",
+        "Share preferred cap style or examples",
+        "Provide quantity and color preferences",
+        "Mention side or back decoration if desired"
+      ],
+      "id": "6aba8c05ee67bef7efbe6885",
+      "created_date": "2026-09-28T15:47:17.025000",
+      "updated_date": "2026-10-01T15:04:02.290000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "short_description": "Help preparing, adjusting, or converting logos and artwork for embroidery, printing, and apparel decoration.",
+      "repair_considerations": "Artwork preparation is tied to the final production method. A file prepared for embroidery is not necessarily the same file needed for screen printing or DTF.",
+      "icon": "artwork",
+      "indexable": true,
+      "display_order": 9,
+      "active": true,
+      "common_causes": [],
+      "before_we_arrive": [
+        "Upload the best original file available",
+        "Include brand guidelines when available",
+        "Tell us where the artwork will be used",
+        "Avoid repeatedly saving or screenshotting logos when original files exist"
+      ],
+      "seo_title": "Logo & Artwork Assistance | Sew Suite",
+      "meta_description": "Help preparing, adjusting, or converting logos and artwork for embroidery, printing, and apparel decoration. Sew Suite serves North Texas and accepts orders nationwide.",
+      "faqs": [
+        {
+          "question": "What if I only have a low-resolution copy of my logo?",
+          "answer": "Upload the best file you have with your quote request. Sew Suite can review whether the artwork needs higher resolution, vector preparation, simplification, or other changes for the chosen decoration method."
+        },
+        {
+          "question": "Does embroidery use the same artwork as screen printing or DTF?",
+          "answer": "Not always. Embroidery may need digitizing and adjustments for stitch size and detail, while printing may need higher-resolution or vector artwork. Sew Suite reviews the files against the intended production method."
+        }
+      ],
+      "service_intro": "Good decoration starts with usable artwork. Sew Suite can review customer-supplied logos and graphics, identify preparation needs, and help get files ready for embroidery, screen printing, DTF, and other decorated-product workflows.",
+      "publicly_advertised": true,
+      "common_symptoms": [],
+      "name": "Logo & Artwork Assistance",
+      "page_content": "A logo that looks fine on a website may not automatically be production-ready. Embroidery may require digitizing and simplification; printing may require higher-resolution or vector artwork, clean edges, transparent backgrounds, color decisions, or separation work. The required preparation depends on the decoration method.",
+      "what_we_check": [
+        "Available file formats and image resolution",
+        "Logo detail, small text, thin lines, and color requirements",
+        "Intended decoration method and finished size",
+        "Whether redraw, cleanup, vector preparation, or embroidery digitizing may be needed"
+      ],
+      "intake_questions": [],
+      "category": "Custom Apparel & Decoration",
+      "slug": "logo-artwork-assistance",
+      "helpful_tip": "Original vector files such as AI, EPS, or SVG are useful when available, but send what you have—Sew Suite can review the starting point.",
+      "decision_considerations": "Artwork preparation is tied to the final production method. A file prepared for embroidery is not necessarily the same file needed for screen printing or DTF.",
+      "decision_heading": "Project considerations",
+      "detail_items": [
+        "Available file formats and image resolution",
+        "Logo detail, small text, thin lines, and color requirements",
+        "Intended decoration method and finished size",
+        "Whether redraw, cleanup, vector preparation, or embroidery digitizing may be needed"
+      ],
+      "detail_section_heading": "Project details",
+      "preparation_heading": "What to send with your quote request",
+      "preparation_items": [
+        "Upload the best original file available",
+        "Include brand guidelines when available",
+        "Tell us where the artwork will be used",
+        "Avoid repeatedly saving or screenshotting logos when original files exist"
+      ],
+      "id": "6aba8c05ee67bef7efbe6888",
+      "created_date": "2026-09-28T15:47:17.025000",
+      "updated_date": "2026-10-01T15:04:11.105000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "short_description": "Custom screen-printed shirts and apparel for businesses, schools, teams, organizations, events, and groups.",
+      "repair_considerations": "The number of colors, print locations, garment type, artwork setup, and quantity affect screen-printing production and pricing.",
+      "icon": "screen-printing",
+      "indexable": true,
+      "display_order": 2,
+      "active": true,
+      "common_causes": [],
+      "before_we_arrive": [
+        "Upload the best logo or artwork file available",
+        "Provide approximate quantity and size range",
+        "Identify preferred garment colors and print locations",
+        "Mention event or distribution dates"
+      ],
+      "seo_title": "Screen Printing | Sew Suite",
+      "meta_description": "Custom screen-printed shirts and apparel for businesses, schools, teams, organizations, events, and groups. Sew Suite serves North Texas and accepts orders nationwide.",
+      "faqs": [
+        {
+          "question": "Is screen printing a good option for team or event shirts?",
+          "answer": "Yes. It is commonly used for group apparel, especially when the same design is printed across a larger quantity."
+        },
+        {
+          "question": "Can you help if our artwork is not print-ready?",
+          "answer": "Yes. Upload what you have and Sew Suite can review what preparation may be needed."
+        },
+        {
+          "question": "What information should I send for a screen-printing quote?",
+          "answer": "Include the approximate quantity, garment style and color, size breakdown if available, artwork, number and placement of print locations, and desired completion date."
+        }
+      ],
+      "service_intro": "Screen printing is a strong choice for custom shirts, team apparel, event wear, staff uniforms, and larger group orders. Sew Suite helps match the artwork, garment, ink colors, print locations, and quantity to a practical production plan.",
+      "publicly_advertised": true,
+      "common_symptoms": [],
+      "name": "Screen Printing",
+      "page_content": "A successful screen-printed order starts with clean artwork and a clear understanding of garment colors, print colors, placement, sizes, and quantities. Sew Suite reviews the project before production so businesses, schools, teams, clubs, and organizations can approve the direction before the order moves forward.",
+      "what_we_check": [
+        "Artwork quality and number of print colors",
+        "Garment style, color, fabric, and size breakdown",
+        "Front, back, sleeve, or other print locations",
+        "Quantity, deadline, pickup or shipping requirements"
+      ],
+      "intake_questions": [],
+      "category": "Custom Apparel & Decoration",
+      "slug": "screen-printing",
+      "helpful_tip": "If the same design will be used across multiple shirt colors, mention that during quoting so contrast and ink choices can be reviewed.",
+      "decision_considerations": "The number of colors, print locations, garment type, artwork setup, and quantity affect screen-printing production and pricing.",
+      "decision_heading": "Project considerations",
+      "detail_items": [
+        "Artwork quality and number of print colors",
+        "Garment style, color, fabric, and size breakdown",
+        "Front, back, sleeve, or other print locations",
+        "Quantity, deadline, pickup or shipping requirements"
+      ],
+      "detail_section_heading": "Project details",
+      "preparation_heading": "What to send with your quote request",
+      "preparation_items": [
+        "Upload the best logo or artwork file available",
+        "Provide approximate quantity and size range",
+        "Identify preferred garment colors and print locations",
+        "Mention event or distribution dates"
+      ],
+      "id": "6aba8c05ee67bef7efbe6881",
+      "created_date": "2026-09-28T15:47:17.025000",
+      "updated_date": "2026-10-01T15:03:51.443000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    }
+  ],
+  "ServiceArea": [
+    {
+      "local_highlights": [
+        {
+          "title": "McKinney corporate and organization projects",
+          "body": "A McKinney company can request embroidered employee apparel alongside printed shirts for an event. Include garment styles, logo files, quantities and the deadline."
+        },
+        {
+          "title": "Choosing Decoration for Mckinney Orders",
+          "body": "For employee apparel and community-event shirts, the garment material, logo detail and order size affect whether embroidery, screen printing or DTF is suitable. Sew Suite reviews those details before production."
+        },
+        {
+          "title": "Planning Your Mckinney Quote",
+          "body": "Send the product list, approximate quantities, artwork and desired completion date. Identify any event deadline or proof-approval requirement so the project can be reviewed before scheduling."
+        }
+      ],
+      "local_service_context": "McKinney employers and organizations often need different products for different audiences: embroidered staff apparel, shirts for events and decorated items for outreach. School and team projects add sizing, multiple garment styles and approval deadlines. Sew Suite can review those requirements together, including logo preparation, print locations and fulfillment, so the quote reflects the full project rather than just a shirt count.",
+      "neighborhoods": [],
+      "city": "McKinney",
+      "local_heading": "Custom Embroidery & Apparel in McKinney, TX",
+      "indexable": true,
+      "display_order": 2,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for McKinney, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your McKinney apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 49,
+      "canonical_url": null,
+      "local_intro": "McKinney has a diverse and growing business base alongside McKinney ISD, Collin College, healthcare, government, manufacturing, and corporate employers. That mix creates practical demand for employee apparel, event shirts, embroidered polos, school and team wear, hats, and organization merchandise.",
+      "seo_title": "Custom Embroidery & Apparel in McKinney, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for McKinney, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for McKinney businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Mckinney customers include in a custom apparel quote?",
+          "answer": "A McKinney company can request embroidered employee apparel alongside printed shirts for an event. Include garment styles, logo files, quantities and the deadline."
+        },
+        {
+          "question": "How should a McKinney organization plan a multi-product order?",
+          "answer": "Provide a product list, available artwork and approximate quantities for each item; Sew Suite can review the decoration methods together."
+        },
+        {
+          "question": "Does Sew Suite offer pickup or shipping for Mckinney orders?",
+          "answer": "Include your preferred fulfillment method in the quote request. Sew Suite can review pickup or shipping options for your project."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "mckinney",
+      "id": "6aba8c06b0405bd9d06b63f9",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T16:52:11.190000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Murphy business and group apparel",
+          "body": "For a Murphy event, share the design, garment colors, size breakdown and deadline. Workwear orders should also identify the garment material and intended logo placement."
+        },
+        {
+          "title": "Choosing Decoration for Murphy Orders",
+          "body": "For group shirts and company workwear, the garment material, logo detail and order size affect whether embroidery, screen printing or DTF is suitable. Sew Suite reviews those details before production."
+        },
+        {
+          "title": "Planning Your Murphy Quote",
+          "body": "Send the product list, approximate quantities, artwork and desired completion date. Identify any event deadline or proof-approval requirement so the project can be reviewed before scheduling."
+        }
+      ],
+      "local_service_context": "Murphy customers ordering group apparel should identify who will wear the items, whether the order includes multiple sizes and whether an event date is fixed. A company logo on workwear may suit embroidery, while a colorful event design may call for printing. Sew Suite reviews the design and garments together and can quote related hats or bags as part of the same request.",
+      "neighborhoods": [],
+      "city": "Murphy",
+      "local_heading": "Custom Embroidery & Apparel in Murphy, TX",
+      "indexable": true,
+      "display_order": 8,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Murphy, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Murphy apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 43,
+      "canonical_url": null,
+      "local_intro": "Murphy customers can request branded apparel for staff, teams, clubs and community events through Sew Suite. Embroidered polos and hats, printed group shirts and decorated bags can be considered together, with the decoration method chosen around the artwork, garment and quantity rather than a one-size-fits-all package.",
+      "seo_title": "Custom Embroidery & Apparel in Murphy, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Murphy, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Murphy businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Murphy customers include in a custom apparel quote?",
+          "answer": "For a Murphy event, share the design, garment colors, size breakdown and deadline. Workwear orders should also identify the garment material and intended logo placement."
+        },
+        {
+          "question": "What information helps quote a Murphy group-shirt order?",
+          "answer": "Include artwork, approximate quantities, garment sizes and colors, print locations and the requested completion date."
+        },
+        {
+          "question": "Does Sew Suite offer pickup or shipping for Murphy orders?",
+          "answer": "Include your preferred fulfillment method in the quote request. Sew Suite can review pickup or shipping options for your project."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "murphy",
+      "id": "6aba8c06b0405bd9d06b63ff",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T16:52:23.427000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Wylie school and business apparel",
+          "body": "For school and team projects, include approved marks, sizes and an event date. Staff-apparel orders should specify garment preferences and logo placement."
+        },
+        {
+          "title": "Decoration Choices for Wylie",
+          "body": "For school spirit wear and embroidered uniforms, artwork detail, product material and order size affect whether embroidery, screen printing or DTF is appropriate."
+        },
+        {
+          "title": "Preparing Your Wylie Quote",
+          "body": "Provide the product list, approximate quantities, available artwork and desired completion date. Note any event deadline or required proof approval."
+        }
+      ],
+      "local_service_context": "For Wylie school, club and team projects, plan around artwork approval, garment sizes and the date the group needs its apparel. Businesses may instead need durable embroidered polos, hats or coordinated workwear. Sew Suite can review both types of requests, including any sponsor artwork, the desired print locations and whether the finished order will be picked up or shipped.",
+      "neighborhoods": [],
+      "city": "Wylie",
+      "local_heading": "Custom Embroidery & Apparel in Wylie, TX",
+      "indexable": true,
+      "display_order": 9,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Wylie, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Wylie apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 42,
+      "canonical_url": null,
+      "local_intro": "Wylie businesses and Wylie-area school and team groups can request embroidered apparel, screen-printed shirts, DTF designs, hats and accessories from Sew Suite. Orders for a season, school event or staff program benefit from an early artwork review and a clear size breakdown. School and team marks require appropriate permission.",
+      "seo_title": "Custom Embroidery & Apparel in Wylie, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Wylie, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Wylie businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Wylie customers include in a custom apparel quote?",
+          "answer": "For school and team projects, include approved marks, sizes and an event date. Staff-apparel orders should specify garment preferences and logo placement."
+        },
+        {
+          "question": "Can a Wylie order include different products?",
+          "answer": "Yes. List each garment or accessory, its quantity and artwork so Sew Suite can review the decoration method for each item."
+        },
+        {
+          "question": "How do pickup or shipping options work for Wylie orders?",
+          "answer": "Include your preferred fulfillment method when requesting a quote. Sew Suite can review the available options for your project."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "wylie",
+      "id": "6aba8c06b0405bd9d06b6400",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T16:52:43.474000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Lucas school and organization orders",
+          "body": "For a Lucas club or school-related order, provide approved artwork, the intended product mix and any season or event deadline. Business orders should specify logo placement and garment use."
+        },
+        {
+          "title": "Choosing Decoration for Lucas Orders",
+          "body": "For school-club apparel and branded workwear, the garment material, logo detail and order size affect whether embroidery, screen printing or DTF is suitable. Sew Suite reviews those details before production."
+        },
+        {
+          "title": "Planning Your Lucas Quote",
+          "body": "Send the product list, approximate quantities, artwork and desired completion date. Identify any event deadline or proof-approval requirement so the project can be reviewed before scheduling."
+        }
+      ],
+      "local_service_context": "Lucas customers planning school, club or booster apparel can submit a coordinated request for spirit shirts, embroidered hats, bags and staff pieces. For a business order, employee polos or jackets may call for different logo sizes and placement. Sew Suite reviews the intended use, available artwork and quantities before quoting, with pickup or shipping selected for the completed order.",
+      "neighborhoods": [],
+      "city": "Lucas",
+      "local_heading": "Custom Embroidery & Apparel in Lucas, TX",
+      "indexable": true,
+      "display_order": 5,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Lucas, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Lucas apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 46,
+      "canonical_url": null,
+      "local_intro": "Lucas is served by multiple public school districts, including Lovejoy ISD and Allen ISD. That makes school, team, club, booster, staff, and spirit-wear projects relevant alongside branded apparel for local businesses and organizations.",
+      "seo_title": "Custom Embroidery & Apparel in Lucas, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Lucas, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Lucas businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Lucas customers include in a custom apparel quote?",
+          "answer": "For a Lucas club or school-related order, provide approved artwork, the intended product mix and any season or event deadline. Business orders should specify logo placement and garment use."
+        },
+        {
+          "question": "Do I need permission to use a school or team logo?",
+          "answer": "Yes. Customers must have the appropriate rights or permission for protected school, team and organization marks."
+        },
+        {
+          "question": "Does Sew Suite offer pickup or shipping for Lucas orders?",
+          "answer": "Include your preferred fulfillment method in the quote request. Sew Suite can review pickup or shipping options for your project."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "lucas",
+      "id": "6aba8c06b0405bd9d06b63fc",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T16:52:17.187000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Garland employee and event apparel",
+          "body": "Garland projects can combine embroidered workwear and printed event shirts. Submit artwork, separate product quantities and any firm deadline."
+        },
+        {
+          "title": "Decoration Choices for Garland",
+          "body": "For uniforms and community-event shirts, artwork detail, product material and order size affect whether embroidery, screen printing or DTF is appropriate."
+        },
+        {
+          "title": "Preparing Your Garland Quote",
+          "body": "Provide the product list, approximate quantities, available artwork and desired completion date. Note any event deadline or required proof approval."
+        }
+      ],
+      "local_service_context": "Garland businesses and organizations can combine embroidered uniforms with printed shirts for promotions, staff events or community programs. Team and school orders may also need hats, bags or spirit wear. Send the project purpose, artwork, approximate quantities and requested date so Sew Suite can identify which products can share a design and which need separate decoration preparation.",
+      "neighborhoods": [],
+      "city": "Garland",
+      "local_heading": "Custom Embroidery & Apparel in Garland, TX",
+      "indexable": true,
+      "display_order": 11,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Garland, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Garland apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 40,
+      "canonical_url": null,
+      "local_intro": "Sew Suite provides custom apparel and decorated products for Garland businesses, schools, teams and organizations. A project can combine embroidered uniforms or hats with printed shirts for an event or group. Artwork, quantity, garment selection and the requested date help determine the quote and production approach.",
+      "seo_title": "Custom Embroidery & Apparel in Garland, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Garland, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Garland businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Garland customers include in a custom apparel quote?",
+          "answer": "Garland projects can combine embroidered workwear and printed event shirts. Submit artwork, separate product quantities and any firm deadline."
+        },
+        {
+          "question": "Can a Garland order include different products?",
+          "answer": "Yes. List each garment or accessory, its quantity and artwork so Sew Suite can review the decoration method for each item."
+        },
+        {
+          "question": "How do pickup or shipping options work for Garland orders?",
+          "answer": "Include your preferred fulfillment method when requesting a quote. Sew Suite can review the available options for your project."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "garland",
+      "id": "6aba8c06b0405bd9d06b6402",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T16:52:46.848000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Allen-area business apparel and school-group orders",
+          "body": "For company polos, send the logo, preferred garments and staff sizes. For school or club apparel, add approved group artwork, a size breakdown and the event date."
+        },
+        {
+          "title": "Choosing Decoration for Allen Orders",
+          "body": "For employee polos and school spirit wear, the garment material, logo detail and order size affect whether embroidery, screen printing or DTF is suitable. Sew Suite reviews those details before production."
+        },
+        {
+          "title": "Planning Your Allen Quote",
+          "body": "Send the product list, approximate quantities, artwork and desired completion date. Identify any event deadline or proof-approval requirement so the project can be reviewed before scheduling."
+        }
+      ],
+      "local_service_context": "For Allen businesses, a coordinated order might combine embroidered employee polos, event shirts and branded hats. School and club orders may instead require size breakdowns, team artwork and a firm event date. Sew Suite reviews the artwork, quantities and product mix before recommending embroidery, screen printing or DTF. Include whether you prefer pickup or shipping when requesting a quote.",
+      "neighborhoods": [],
+      "city": "Allen",
+      "local_heading": "Custom Embroidery & Apparel in Allen, TX",
+      "indexable": true,
+      "display_order": 1,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Allen, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Allen apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 100,
+      "canonical_url": null,
+      "local_intro": "Allen combines an established business community with a large school and extracurricular market. Allen ISD reports more than 21,000 students, creating legitimate use cases for team apparel, club shirts, staff polos, spirit wear, hats, bags, towels, and event merchandise.",
+      "seo_title": "Custom Embroidery & Apparel in Allen, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Allen, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Allen businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Allen customers include in a custom apparel quote?",
+          "answer": "For company polos, send the logo, preferred garments and staff sizes. For school or club apparel, add approved group artwork, a size breakdown and the event date."
+        },
+        {
+          "question": "Can one Allen order include polos, spirit shirts and hats?",
+          "answer": "Yes. List each product and quantity so Sew Suite can review embroidery and printing needs separately."
+        },
+        {
+          "question": "Does Sew Suite offer pickup or shipping for Allen orders?",
+          "answer": "Include your preferred fulfillment method in the quote request. Sew Suite can review pickup or shipping options for your project."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "allen",
+      "id": "6aba8c06b0405bd9d06b63f8",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T16:52:08.972000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Prosper team and company orders",
+          "body": "Prosper group orders benefit from approved artwork, size breakdowns and a season deadline. Businesses should also specify brand standards and garment preferences."
+        },
+        {
+          "title": "Decoration Choices for Prosper",
+          "body": "For team spirit wear and employee apparel, artwork detail, product material and order size affect whether embroidery, screen printing or DTF is appropriate."
+        },
+        {
+          "title": "Preparing Your Prosper Quote",
+          "body": "Provide the product list, approximate quantities, available artwork and desired completion date. Note any event deadline or required proof approval."
+        }
+      ],
+      "local_service_context": "Prosper school and team apparel requests may include spirit shirts, coach polos, caps and accessories with several size groups. Business orders often focus on branded employee apparel and consistent logo placement. Sew Suite can review a mixed product list, explain when embroidery or printing fits each item and prepare a quote around the required artwork approvals and schedule.",
+      "neighborhoods": [],
+      "city": "Prosper",
+      "local_heading": "Custom Embroidery & Apparel in Prosper, TX",
+      "indexable": true,
+      "display_order": 12,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Prosper, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Prosper apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 39,
+      "canonical_url": null,
+      "local_intro": "Prosper businesses and school or team groups can request embroidered polos, custom shirts, spirit wear, hats and related decorated products from Sew Suite. Mixed orders benefit from a product list, size breakdown and approved artwork. Sew Suite reviews those details before recommending embroidery, screen printing or DTF.",
+      "seo_title": "Custom Embroidery & Apparel in Prosper, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Prosper, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Prosper businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Prosper customers include in a custom apparel quote?",
+          "answer": "Prosper group orders benefit from approved artwork, size breakdowns and a season deadline. Businesses should also specify brand standards and garment preferences."
+        },
+        {
+          "question": "Can a Prosper order include different products?",
+          "answer": "Yes. List each garment or accessory, its quantity and artwork so Sew Suite can review the decoration method for each item."
+        },
+        {
+          "question": "How do pickup or shipping options work for Prosper orders?",
+          "answer": "Include your preferred fulfillment method when requesting a quote. Sew Suite can review the available options for your project."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "prosper",
+      "id": "6aba8c06b0405bd9d06b6403",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T16:52:48.873000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Richardson workplace and event branding",
+          "body": "Richardson employers may need embroidered staff polos and printed shirts for a recruiting event. Specify which products need the same artwork and which require separate designs."
+        },
+        {
+          "title": "Choosing Decoration for Richardson Orders",
+          "body": "For employee apparel and recruiting-event merchandise, the garment material, logo detail and order size affect whether embroidery, screen printing or DTF is suitable. Sew Suite reviews those details before production."
+        },
+        {
+          "title": "Planning Your Richardson Quote",
+          "body": "Send the product list, approximate quantities, artwork and desired completion date. Identify any event deadline or proof-approval requirement so the project can be reviewed before scheduling."
+        }
+      ],
+      "local_service_context": "Richardson business apparel can span customer-facing polos, staff shirts and branded items for recruiting or events. School and organization projects may have different quantities, designs and deadlines. A complete quote request should identify each product group, available artwork and delivery requirements; Sew Suite can then recommend suitable embroidery or printing methods for each.",
+      "neighborhoods": [],
+      "city": "Richardson",
+      "local_heading": "Custom Embroidery & Apparel in Richardson, TX",
+      "indexable": true,
+      "display_order": 10,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Richardson, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Richardson apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 41,
+      "canonical_url": null,
+      "local_intro": "Richardson organizations may need everything from employee polos and branded workwear to shirts for recruiting, events or school activities. Sew Suite offers embroidery, screen printing and DTF printing and can review multiple products under one quote. Send the artwork and requested date so the decoration method fits the project.",
+      "seo_title": "Custom Embroidery & Apparel in Richardson, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Richardson, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Richardson businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Richardson customers include in a custom apparel quote?",
+          "answer": "Richardson employers may need embroidered staff polos and printed shirts for a recruiting event. Specify which products need the same artwork and which require separate designs."
+        },
+        {
+          "question": "Can I use the same logo across different garment types?",
+          "answer": "Often, but the artwork may need adjustments for embroidery versus printing. Sew Suite reviews the intended placement and product material."
+        },
+        {
+          "question": "Does Sew Suite offer pickup or shipping for Richardson orders?",
+          "answer": "Include your preferred fulfillment method in the quote request. Sew Suite can review pickup or shipping options for your project."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "richardson",
+      "id": "6aba8c06b0405bd9d06b6401",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T16:52:28.564000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Melissa group and business orders",
+          "body": "Melissa customers can request group shirts, caps or polos together. Include approved artwork, a size breakdown and the requested completion date."
+        },
+        {
+          "title": "Decoration Choices for Melissa",
+          "body": "For team apparel and staff gear, artwork detail, product material and order size affect whether embroidery, screen printing or DTF is appropriate."
+        },
+        {
+          "title": "Preparing Your Melissa Quote",
+          "body": "Provide the product list, approximate quantities, available artwork and desired completion date. Note any event deadline or required proof approval."
+        }
+      ],
+      "local_service_context": "Melissa customers planning a school, team or organization order can group shirts, caps and bags into one quote request while specifying sizes and artwork for each. Employers seeking embroidered polos or jackets should include the intended garment use and logo placement. Sew Suite reviews these details and the desired completion date before confirming the project approach.",
+      "neighborhoods": [],
+      "city": "Melissa",
+      "local_heading": "Custom Embroidery & Apparel in Melissa, TX",
+      "indexable": true,
+      "display_order": 14,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Melissa, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Melissa apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 37,
+      "canonical_url": null,
+      "local_intro": "Melissa businesses, teams and community organizations can request branded apparel through Sew Suite, including embroidered polos and caps, printed group shirts and decorated bags. Providing sizes, quantities, logo files and timing helps Sew Suite review a mixed order and identify any proof or artwork preparation needed.",
+      "seo_title": "Custom Embroidery & Apparel in Melissa, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Melissa, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Melissa businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Melissa customers include in a custom apparel quote?",
+          "answer": "Melissa customers can request group shirts, caps or polos together. Include approved artwork, a size breakdown and the requested completion date."
+        },
+        {
+          "question": "Can a Melissa order include different products?",
+          "answer": "Yes. List each garment or accessory, its quantity and artwork so Sew Suite can review the decoration method for each item."
+        },
+        {
+          "question": "How do pickup or shipping options work for Melissa orders?",
+          "answer": "Include your preferred fulfillment method when requesting a quote. Sew Suite can review the available options for your project."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "melissa",
+      "id": "6aba8c06b0405bd9d06b6405",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T16:52:52.474000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Plano employee apparel and brand consistency",
+          "body": "For department-wide apparel, supply the approved logo, brand colors, garment preferences and expected reorder needs. These details help maintain consistent decoration across items."
+        },
+        {
+          "title": "Choosing Decoration for Plano Orders",
+          "body": "For consistent corporate branding and repeat orders, the garment material, logo detail and order size affect whether embroidery, screen printing or DTF is suitable. Sew Suite reviews those details before production."
+        },
+        {
+          "title": "Planning Your Plano Quote",
+          "body": "Send the product list, approximate quantities, artwork and desired completion date. Identify any event deadline or proof-approval requirement so the project can be reviewed before scheduling."
+        }
+      ],
+      "local_service_context": "For Plano corporate apparel, consistency across departments and repeat orders can matter as much as the initial garment choice. Provide brand artwork, preferred garment styles, approximate quantities and any event or rollout deadline. Sew Suite can compare embroidery for polos and jackets with printing options for shirts and event wear, while keeping school, team or community orders separate when their sizing and artwork needs differ.",
+      "neighborhoods": [],
+      "city": "Plano",
+      "local_heading": "Custom Embroidery & Apparel in Plano, TX",
+      "indexable": true,
+      "display_order": 3,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Plano, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Plano apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 48,
+      "canonical_url": null,
+      "local_intro": "Plano describes itself as a global business community with many major corporations and strong public schools. Sew Suite can support that mix with corporate apparel, embroidered employee polos, event shirts, branded hats, school and team apparel, and organization merchandise.",
+      "seo_title": "Custom Embroidery & Apparel in Plano, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Plano, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Plano businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Plano customers include in a custom apparel quote?",
+          "answer": "For department-wide apparel, supply the approved logo, brand colors, garment preferences and expected reorder needs. These details help maintain consistent decoration across items."
+        },
+        {
+          "question": "Can a Plano business request apparel for several departments?",
+          "answer": "Yes. Separate the garment styles, quantities and artwork requirements by department in the quote request."
+        },
+        {
+          "question": "Does Sew Suite offer pickup or shipping for Plano orders?",
+          "answer": "Include your preferred fulfillment method in the quote request. Sew Suite can review pickup or shipping options for your project."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "plano",
+      "id": "6aba8c06b0405bd9d06b63fa",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T16:52:12.943000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Fairview organization and staff apparel",
+          "body": "Fairview customers can describe an event or staff program, then send product ideas, logo files and approximate quantities. Sew Suite can review whether embroidery or printing fits each item."
+        },
+        {
+          "title": "Choosing Decoration for Fairview Orders",
+          "body": "For community-event shirts and small-business apparel, the garment material, logo detail and order size affect whether embroidery, screen printing or DTF is suitable. Sew Suite reviews those details before production."
+        },
+        {
+          "title": "Planning Your Fairview Quote",
+          "body": "Send the product list, approximate quantities, artwork and desired completion date. Identify any event deadline or proof-approval requirement so the project can be reviewed before scheduling."
+        }
+      ],
+      "local_service_context": "Fairview organizations can request decorated apparel for a fundraiser, community event or staff program without choosing a production method first. Describe the audience, approximate quantity, product ideas and timing. Sew Suite can assess whether embroidery suits polos or caps, whether printing is appropriate for shirts, and what artwork preparation is needed before a proof can be approved.",
+      "neighborhoods": [],
+      "city": "Fairview",
+      "local_heading": "Custom Embroidery & Apparel in Fairview, TX",
+      "indexable": true,
+      "display_order": 6,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Fairview, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Fairview apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 45,
+      "canonical_url": null,
+      "local_intro": "Sew Suite serves Fairview from the Allen area with custom embroidery, printed apparel and decorated accessories. Fairview businesses can request coordinated polos, hats and workwear; clubs and community groups can plan event shirts or spirit wear. Customers can submit artwork and project details for a quote, with shipping available for eligible orders.",
+      "seo_title": "Custom Embroidery & Apparel in Fairview, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Fairview, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Fairview businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Fairview customers include in a custom apparel quote?",
+          "answer": "Fairview customers can describe an event or staff program, then send product ideas, logo files and approximate quantities. Sew Suite can review whether embroidery or printing fits each item."
+        },
+        {
+          "question": "What if I am unsure which decoration method to choose?",
+          "answer": "Describe the products, artwork and quantity. Sew Suite can review the project before recommending an approach."
+        },
+        {
+          "question": "Does Sew Suite offer pickup or shipping for Fairview orders?",
+          "answer": "Include your preferred fulfillment method in the quote request. Sew Suite can review pickup or shipping options for your project."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "fairview",
+      "id": "6aba8c06b0405bd9d06b63fd",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T16:52:18.884000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Princeton staff and group apparel",
+          "body": "Princeton orders may combine employee polos and printed event shirts. Include artwork, quantities, deadlines and any anticipated reorders."
+        },
+        {
+          "title": "Decoration Choices for Princeton",
+          "body": "For business apparel and school-event shirts, artwork detail, product material and order size affect whether embroidery, screen printing or DTF is appropriate."
+        },
+        {
+          "title": "Preparing Your Princeton Quote",
+          "body": "Provide the product list, approximate quantities, available artwork and desired completion date. Note any event deadline or required proof approval."
+        }
+      ],
+      "local_service_context": "As Princeton businesses and school-related organizations plan apparel orders, quantities and product variety can change between an initial event and later reorders. Provide the best available artwork, approximate size breakdown, product mix and requested timing. Sew Suite can compare printing for group shirts with embroidery for polos and caps and identify what needs approval before production.",
+      "neighborhoods": [],
+      "city": "Princeton",
+      "local_heading": "Custom Embroidery & Apparel in Princeton, TX",
+      "indexable": true,
+      "display_order": 15,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Princeton, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Princeton apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 36,
+      "canonical_url": null,
+      "local_intro": "Princeton identifies itself as one of Collin County's fastest-growing cities, and Princeton ISD is a major local institution. Growing businesses, schools, teams, clubs, and community organizations create recurring needs for staff apparel, spirit wear, event shirts, hats, and branded items.",
+      "seo_title": "Custom Embroidery & Apparel in Princeton, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Princeton, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Princeton businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Princeton customers include in a custom apparel quote?",
+          "answer": "Princeton orders may combine employee polos and printed event shirts. Include artwork, quantities, deadlines and any anticipated reorders."
+        },
+        {
+          "question": "Can a Princeton order include different products?",
+          "answer": "Yes. List each garment or accessory, its quantity and artwork so Sew Suite can review the decoration method for each item."
+        },
+        {
+          "question": "How do pickup or shipping options work for Princeton orders?",
+          "answer": "Include your preferred fulfillment method when requesting a quote. Sew Suite can review the available options for your project."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "princeton",
+      "id": "6aba8c06b0405bd9d06b6406",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T16:52:54.864000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Frisco team and event apparel",
+          "body": "Group orders can combine printed shirts, coach polos and embroidered hats. Share approved artwork, sizes and the date the apparel is needed."
+        },
+        {
+          "title": "Choosing Decoration for Frisco Orders",
+          "body": "For team spirit wear and corporate event merchandise, the garment material, logo detail and order size affect whether embroidery, screen printing or DTF is suitable. Sew Suite reviews those details before production."
+        },
+        {
+          "title": "Planning Your Frisco Quote",
+          "body": "Send the product list, approximate quantities, artwork and desired completion date. Identify any event deadline or proof-approval requirement so the project can be reviewed before scheduling."
+        }
+      ],
+      "local_service_context": "Frisco team and school orders may combine spirit shirts, coach polos, embroidered caps and event merchandise, each with different decoration needs. Corporate programs can involve similar product variety but place more emphasis on consistent logo placement and reorders. Send artwork, product choices, sizes, quantities and the event or delivery date so Sew Suite can assess a workable production schedule.",
+      "neighborhoods": [],
+      "city": "Frisco",
+      "local_heading": "Custom Embroidery & Apparel in Frisco, TX",
+      "indexable": true,
+      "display_order": 4,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Frisco, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Frisco apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 47,
+      "canonical_url": null,
+      "local_intro": "Frisco has an active mix of employers, school communities, sports programs and events. Those different audiences create practical uses for embroidered employee polos, printed team and spirit shirts, branded hats and coordinated event merchandise. Sew Suite reviews the artwork, products, quantities and timing for each project before quoting.",
+      "seo_title": "Custom Embroidery & Apparel in Frisco, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Frisco, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Frisco businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Frisco customers include in a custom apparel quote?",
+          "answer": "Group orders can combine printed shirts, coach polos and embroidered hats. Share approved artwork, sizes and the date the apparel is needed."
+        },
+        {
+          "question": "Can a Frisco team request several apparel styles together?",
+          "answer": "Yes. Include the full list and size breakdown so each garment and decoration location can be reviewed."
+        },
+        {
+          "question": "Does Sew Suite offer pickup or shipping for Frisco orders?",
+          "answer": "Include your preferred fulfillment method in the quote request. Sew Suite can review pickup or shipping options for your project."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "frisco",
+      "id": "6aba8c06b0405bd9d06b63fb",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T17:18:51.367000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Multi-Department Apparel",
+          "body": "Dallas organizations can group employee polos, jackets and event shirts into one request while separating sizes, artwork variations and delivery needs by department."
+        },
+        {
+          "title": "Artwork Consistency Across Products",
+          "body": "A logo may need different preparation for embroidered polos and printed shirts. Provide brand artwork and decoration preferences for each product group."
+        },
+        {
+          "title": "Preparing Your Quote",
+          "body": "Send your product list, approximate quantities, artwork and requested completion date. Note any required proof approval and pickup or shipping preference."
+        }
+      ],
+      "local_service_context": "Dallas customers may be ordering for a company department, a multi-location organization, a school group or a one-time event. These projects differ in garment selection, logo standards, size distribution and delivery timing. Send a consolidated product list and artwork with the quote request so Sew Suite can evaluate embroidery, screen printing and DTF options without assuming every item uses the same method.",
+      "neighborhoods": [],
+      "city": "Dallas",
+      "local_heading": "Custom Embroidery & Apparel in Dallas, TX",
+      "indexable": true,
+      "display_order": 17,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Dallas, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Dallas apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 34,
+      "canonical_url": null,
+      "local_intro": "Sew Suite serves Dallas customers with custom embroidery, screen printing, DTF apparel and decorated accessories from its Allen-area operation. Businesses, schools and organizations can request quotes for staff apparel, events or group orders, including projects with multiple garment styles and artwork requirements. Shipping is available for eligible orders.",
+      "seo_title": "Custom Embroidery & Apparel in Dallas, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Dallas, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Dallas businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "How should a Dallas organization request apparel for multiple departments?",
+          "answer": "List each department's garment choices, quantities, sizes and approved artwork. Sew Suite can review embroidery and printing requirements together."
+        },
+        {
+          "question": "Can a Dallas order combine employee apparel and event shirts?",
+          "answer": "Yes. Include each product group and its deadline so the quote reflects different decoration methods and schedules."
+        },
+        {
+          "question": "What should I provide for a Dallas custom apparel quote?",
+          "answer": "Send the artwork, approximate quantities, garment preferences, decoration locations and requested completion date."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "dallas",
+      "id": "6aba8c06b0405bd9d06b6408",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T17:03:54.913000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Celina event and business apparel",
+          "body": "Celina clubs may need participant shirts and organizer polos, while businesses may need coordinated staff apparel. List the quantities and decoration requirements separately."
+        },
+        {
+          "title": "Decoration Choices for Celina",
+          "body": "For club merchandise and employee polos, artwork detail, product material and order size affect whether embroidery, screen printing or DTF is appropriate."
+        },
+        {
+          "title": "Preparing Your Celina Quote",
+          "body": "Provide the product list, approximate quantities, available artwork and desired completion date. Note any event deadline or required proof approval."
+        }
+      ],
+      "local_service_context": "For Celina clubs, teams and community events, a single apparel project can include shirts for participants, embroidered pieces for organizers and hats or bags for supporters. Local businesses may have different priorities, such as repeatable staff polos or branded workwear. Share the product list, artwork, quantities and deadline so Sew Suite can review decoration choices before quoting.",
+      "neighborhoods": [],
+      "city": "Celina",
+      "local_heading": "Custom Embroidery & Apparel in Celina, TX",
+      "indexable": true,
+      "display_order": 13,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Celina, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Celina apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 38,
+      "canonical_url": null,
+      "local_intro": "For Celina employers, clubs and school-related groups, Sew Suite offers custom embroidery, printed apparel and decorated accessories. Whether the goal is staff apparel or a coordinated event order, the quote process starts with product choices, approximate quantities, artwork and the desired completion date.",
+      "seo_title": "Custom Embroidery & Apparel in Celina, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Celina, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Celina businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Celina customers include in a custom apparel quote?",
+          "answer": "Celina clubs may need participant shirts and organizer polos, while businesses may need coordinated staff apparel. List the quantities and decoration requirements separately."
+        },
+        {
+          "question": "Can a Celina order include different products?",
+          "answer": "Yes. List each garment or accessory, its quantity and artwork so Sew Suite can review the decoration method for each item."
+        },
+        {
+          "question": "How do pickup or shipping options work for Celina orders?",
+          "answer": "Include your preferred fulfillment method when requesting a quote. Sew Suite can review the available options for your project."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "celina",
+      "id": "6aba8c06b0405bd9d06b6404",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T16:52:50.768000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Workwear and Community Apparel",
+          "body": "Rockwall businesses can request coordinated polos and caps, while school or community groups may need printed event shirts and spirit wear."
+        },
+        {
+          "title": "Planning for Event Deadlines",
+          "body": "Send approved artwork, garment sizes, quantities and the date needed. Mixed-product orders may require separate decoration preparation."
+        },
+        {
+          "title": "Preparing Your Quote",
+          "body": "Send your product list, approximate quantities, artwork and requested completion date. Note any required proof approval and pickup or shipping preference."
+        }
+      ],
+      "local_service_context": "Rockwall businesses can request coordinated polos, jackets and caps for staff, while school and community groups may need printed shirts and spirit wear for a scheduled event. Sew Suite reviews artwork detail, garment choice, quantities and timing for each item. Include any repeat-order needs and whether you prefer pickup or shipping when requesting a quote.",
+      "neighborhoods": [],
+      "city": "Rockwall",
+      "local_heading": "Custom Embroidery & Apparel in Rockwall, TX",
+      "indexable": true,
+      "display_order": 18,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Rockwall, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Rockwall apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 33,
+      "canonical_url": null,
+      "local_intro": "Rockwall businesses and school or community groups can request embroidered workwear, printed event shirts, spirit wear, hats and accessories from Sew Suite. Product materials, artwork detail, quantities and timing guide the decoration recommendation. Include pickup or shipping preferences with your quote request.",
+      "seo_title": "Custom Embroidery & Apparel in Rockwall, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Rockwall, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Rockwall businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Rockwall businesses include in a staff apparel request?",
+          "answer": "Provide garment preferences, logo files, quantities, intended decoration locations and the date needed."
+        },
+        {
+          "question": "Can Rockwall groups request shirts and hats for the same event?",
+          "answer": "Yes. Include both products and approved artwork so the different decoration requirements can be reviewed."
+        },
+        {
+          "question": "How do I request pickup or shipping?",
+          "answer": "Include your preferred fulfillment method with the quote request so Sew Suite can review the options for your order."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "rockwall",
+      "id": "6aba8c06b0405bd9d06b6409",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T17:03:56.455000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Club and Event Merchandise",
+          "body": "Sachse clubs can request group shirts, hats and decorated bags for events. Include artwork, quantities and the event date."
+        },
+        {
+          "title": "Employee Polos and Branded Hats",
+          "body": "Sachse businesses can request embroidered polos or caps with consistent branding. Logo detail, material and placement guide decoration choices."
+        },
+        {
+          "title": "Preparing Your Quote",
+          "body": "Send your product list, approximate quantities, artwork and requested completion date. Note any required proof approval and pickup or shipping preference."
+        }
+      ],
+      "local_service_context": "Sachse organizations planning a fundraiser, club event or team order can specify shirts, hats, bags and other decorated items in one request. A local employer may instead need a consistent set of embroidered polos or branded workwear. Sew Suite reviews logo suitability, product materials, quantities and timing, then confirms the proof and fulfillment steps for the chosen items.",
+      "neighborhoods": [],
+      "city": "Sachse",
+      "local_heading": "Custom Embroidery & Apparel in Sachse, TX",
+      "indexable": true,
+      "display_order": 20,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Sachse, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Sachse apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 31,
+      "canonical_url": null,
+      "local_intro": "Sew Suite offers custom embroidery, printed apparel and decorated products for Sachse businesses, teams, clubs and community organizations. Orders may involve staff polos, group shirts, caps or a coordinated set of event items. Customers can submit artwork and quantities so Sew Suite can assess decoration suitability and timing.",
+      "seo_title": "Custom Embroidery & Apparel in Sachse, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Sachse, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Sachse businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should a Sachse club include in an event-apparel request?",
+          "answer": "Provide artwork, approximate shirt sizes and quantities, any accessory choices and the event date."
+        },
+        {
+          "question": "Can Sachse businesses order embroidered polos and hats together?",
+          "answer": "Yes. List the products, quantities and intended logo placements in one quote request."
+        },
+        {
+          "question": "How do I request pickup or shipping?",
+          "answer": "Include your preferred fulfillment method with the quote request so Sew Suite can review the options for your order."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "sachse",
+      "id": "6aba8c06b0405bd9d06b640b",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T17:04:00.232000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "School and Team Artwork",
+          "body": "Rowlett groups served by different school districts should provide approved marks and confirm permission to reproduce them before requesting apparel."
+        },
+        {
+          "title": "Business Apparel and Event Shirts",
+          "body": "Employers can request embroidered workwear alongside printed shirts for staff events. List quantities and artwork separately for each item."
+        },
+        {
+          "title": "Preparing Your Quote",
+          "body": "Send your product list, approximate quantities, artwork and requested completion date. Note any required proof approval and pickup or shipping preference."
+        }
+      ],
+      "local_service_context": "Rowlett school and team orders may involve groups served by different districts, so customers should supply their own approved artwork and confirm any rights to school or team marks. Business orders can combine embroidered staff apparel and printed event shirts. Sew Suite can review the separate artwork, quantities and deadlines together before providing a quote.",
+      "neighborhoods": [],
+      "city": "Rowlett",
+      "local_heading": "Custom Embroidery & Apparel in Rowlett, TX",
+      "indexable": true,
+      "display_order": 19,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Rowlett, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Rowlett apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 32,
+      "canonical_url": null,
+      "local_intro": "Rowlett is served by Garland ISD and Rockwall ISD and continues to emphasize business retention, investment, and commercial growth. Sew Suite can support local employers, schools, teams, clubs, events, and organizations with coordinated branded apparel.",
+      "seo_title": "Custom Embroidery & Apparel in Rowlett, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Rowlett, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Rowlett businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Rowlett school or team groups provide with a quote request?",
+          "answer": "Include approved artwork, permission to use protected marks, garment sizes, quantities and the requested date."
+        },
+        {
+          "question": "Can Rowlett employers combine workwear and event shirts?",
+          "answer": "Yes. Identify the products and quantities separately so embroidery and printing can be assessed."
+        },
+        {
+          "question": "How do I request pickup or shipping?",
+          "answer": "Include your preferred fulfillment method with the quote request so Sew Suite can review the options for your order."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "rowlett",
+      "id": "6aba8c06b0405bd9d06b640a",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T17:03:58.597000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Parker apparel and accessory projects",
+          "body": "A Parker business may prioritize embroidered polos, while an organization may combine shirts, caps and bags. The material, logo detail and quantity determine the practical decoration choices."
+        },
+        {
+          "title": "Choosing Decoration for Parker Orders",
+          "body": "For embroidered staff polos and mixed accessory orders, the garment material, logo detail and order size affect whether embroidery, screen printing or DTF is suitable. Sew Suite reviews those details before production."
+        },
+        {
+          "title": "Planning Your Parker Quote",
+          "body": "Send the product list, approximate quantities, artwork and desired completion date. Identify any event deadline or proof-approval requirement so the project can be reviewed before scheduling."
+        }
+      ],
+      "local_service_context": "A Parker project may involve a smaller set of embroidered polos for a business or a mixed order of shirts, caps and bags for an organization. Decoration suitability depends on the item material, logo detail and order size. Send the available artwork and desired completion date with your quote request; Sew Suite can review the product mix and confirm the next approval steps.",
+      "neighborhoods": [],
+      "city": "Parker",
+      "local_heading": "Custom Embroidery & Apparel in Parker, TX",
+      "indexable": true,
+      "display_order": 7,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for Parker, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your Parker apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 44,
+      "canonical_url": null,
+      "local_intro": "For Parker businesses and organizations, Sew Suite offers custom embroidery, screen printing and DTF apparel along with hats, bags and other decorated items. A quote can cover a simple staff-apparel order or several products for an event. Customers can provide artwork, quantities and timing before choosing the most suitable decoration approach.",
+      "seo_title": "Custom Embroidery & Apparel in Parker, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for Parker, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for Parker businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "What should Parker customers include in a custom apparel quote?",
+          "answer": "A Parker business may prioritize embroidered polos, while an organization may combine shirts, caps and bags. The material, logo detail and quantity determine the practical decoration choices."
+        },
+        {
+          "question": "Can Parker customers combine shirts, hats and bags in one quote?",
+          "answer": "Yes. List each item, its quantity and the intended artwork so the decoration requirements can be reviewed."
+        },
+        {
+          "question": "Does Sew Suite offer pickup or shipping for Parker orders?",
+          "answer": "Include your preferred fulfillment method in the quote request. Sew Suite can review pickup or shipping options for your project."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "parker",
+      "id": "6aba8c06b0405bd9d06b63fe",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T16:52:21.299000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "local_highlights": [
+        {
+          "title": "Retail Staff and Event Merchandise",
+          "body": "The Colony retail and entertainment teams may need embroidered staff polos, printed promotional shirts and hats. Specify which items are for daily use and which are for an event."
+        },
+        {
+          "title": "Coordinating Different Decoration Methods",
+          "body": "Embroidery can suit staff polos and caps, while printing may suit event shirts. The actual choice depends on garment material, artwork and quantities."
+        },
+        {
+          "title": "Preparing Your Quote",
+          "body": "Send your product list, approximate quantities, artwork and requested completion date. Note any required proof approval and pickup or shipping preference."
+        }
+      ],
+      "local_service_context": "Retail, entertainment and event-oriented businesses around The Colony may need branded staff apparel alongside promotional shirts or merchandise. School and team groups may prioritize spirit wear and coordinated accessories. Sew Suite can review each product's material, artwork and decoration area, then quote a mix of embroidered and printed items with pickup or shipping preferences noted.",
+      "neighborhoods": [],
+      "city": "The Colony",
+      "local_heading": "Custom Embroidery & Apparel in The Colony, TX",
+      "indexable": true,
+      "display_order": 16,
+      "hero_subtitle": "Custom embroidery, screen printing and branded apparel for The Colony, Texas",
+      "active": true,
+      "region_label": "North Texas",
+      "service_notes": null,
+      "local_cta_text": "Tell us about your The Colony apparel or branding project, approximate quantity, timing, and artwork. Sew Suite will review the details and follow up about the quote.",
+      "local_appliance_context": [],
+      "priority": 35,
+      "canonical_url": null,
+      "local_intro": "The Colony's SH 121 corridor and Grandscape area support a substantial retail, entertainment, and business market, while students are served by Lewisville ISD and Little Elm ISD. Corporate apparel, staff uniforms, event shirts, team wear, hats, and promotional items all fit that local mix.",
+      "seo_title": "Custom Embroidery & Apparel in The Colony, TX | Sew Suite",
+      "meta_description": "Custom embroidery, screen printing, DTF printing and branded apparel for The Colony, Texas from Sew Suite. Request a quote for your project.",
+      "local_highlights_heading": "Custom apparel for The Colony businesses, schools, teams & organizations",
+      "faqs": [
+        {
+          "question": "How can The Colony businesses plan staff apparel and promotional shirts?",
+          "answer": "Send the product list, logo files, quantities and event or rollout date. Sew Suite can review the decoration requirements for each item."
+        },
+        {
+          "question": "Can retail staff polos and event shirts be ordered together?",
+          "answer": "Yes. List both product types and the artwork or placement needed for each."
+        },
+        {
+          "question": "How do I request pickup or shipping?",
+          "answer": "Include your preferred fulfillment method with the quote request so Sew Suite can review the options for your order."
+        }
+      ],
+      "page_content": null,
+      "state": "TX",
+      "zip_codes": [],
+      "slug": "the-colony",
+      "id": "6aba8c06b0405bd9d06b6407",
+      "created_date": "2026-09-28T15:47:18.828000",
+      "updated_date": "2026-09-29T17:03:52.660000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    }
+  ],
+  "Brand": [],
+  "Review": [],
+  "PortfolioProject": [
+    {
+      "summary": "Custom embroidered appliqué produced by Sew Suite.",
+      "service_area_slugs": [],
+      "featured": true,
+      "show_customer_name": false,
+      "is_published": true,
+      "cover_image_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/c3df55321_Allen_eagles_applique.jpg",
+      "display_order": 1,
+      "description": "This project is an example of Sew Suite’s custom embroidered appliqué work, related to both custom embroidery and team and school apparel. It is included in the portfolio to show the type of decorated apparel work Sew Suite can produce.",
+      "location_label": null,
+      "cover_alt_text": "Allen Eagles custom embroidered appliqué produced by Sew Suite",
+      "title": "Allen Eagles Embroidered Appliqué",
+      "seo_title": "Allen Eagles Embroidered Appliqué | Sew Suite",
+      "completed_date": null,
+      "public_permission_confirmed": true,
+      "meta_description": "See an example of custom embroidered appliqué work produced by Sew Suite.",
+      "customer_display_name": null,
+      "customer_industry": null,
+      "category": "Embroidery",
+      "service_slugs": [
+        "custom-embroidery",
+        "team-school-apparel"
+      ],
+      "slug": "allen-eagles-embroidered-applique",
+      "id": "6aba9ec8d1dc76c461dabb2f",
+      "created_date": "2026-09-28T17:07:20.552000",
+      "updated_date": "2026-10-03T14:44:05.011000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "summary": "Seasonal multi-color decorated sweatshirt produced by Sew Suite.",
+      "service_area_slugs": [],
+      "featured": true,
+      "show_customer_name": false,
+      "is_published": true,
+      "cover_image_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/384a492a1_Winter_wonderland_sweatshirt.jpg",
+      "display_order": 8,
+      "description": "This project features a seasonal multi-color design on a sweatshirt. It is an example of decorated apparel work produced by Sew Suite and is included as part of the screen-printing portfolio.",
+      "location_label": null,
+      "cover_alt_text": "Winter Wonderland design on a light blue sweatshirt produced by Sew Suite",
+      "title": "Winter Wonderland Decorated Sweatshirt",
+      "seo_title": "Winter Wonderland Decorated Sweatshirt | Sew Suite",
+      "completed_date": null,
+      "public_permission_confirmed": true,
+      "meta_description": "See a seasonal decorated sweatshirt example produced by Sew Suite.",
+      "customer_display_name": null,
+      "customer_industry": null,
+      "category": "Screen Printing",
+      "service_slugs": [
+        "screen-printing"
+      ],
+      "slug": "winter-wonderland-decorated-sweatshirt",
+      "id": "6aba9ec8d1dc76c461dabb36",
+      "created_date": "2026-09-28T17:07:20.552000",
+      "updated_date": "2026-10-03T14:44:26.879000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "summary": "Custom anniversary emblem embroidered on branded outerwear.",
+      "service_area_slugs": [],
+      "featured": true,
+      "show_customer_name": false,
+      "is_published": true,
+      "cover_image_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/9198b7c65_Solar_50aniversary_jacket.jpg",
+      "display_order": 6,
+      "description": "This project features a custom anniversary emblem embroidered on branded outerwear. It is an example of Sew Suite’s custom embroidery and corporate apparel work.",
+      "location_label": null,
+      "cover_alt_text": "50th anniversary emblem embroidered on a black jacket by Sew Suite",
+      "title": "50th Anniversary Embroidered Jacket",
+      "seo_title": "50th Anniversary Embroidered Jacket | Sew Suite",
+      "completed_date": null,
+      "public_permission_confirmed": true,
+      "meta_description": "See an example of custom anniversary embroidery on corporate outerwear produced by Sew Suite.",
+      "customer_display_name": null,
+      "customer_industry": null,
+      "category": "Corporate Apparel",
+      "service_slugs": [
+        "custom-embroidery",
+        "corporate-apparel"
+      ],
+      "slug": "50th-anniversary-embroidered-jacket",
+      "id": "6aba9ec8d1dc76c461dabb34",
+      "created_date": "2026-09-28T17:07:20.552000",
+      "updated_date": "2026-10-03T14:44:21.633000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "summary": "Multi-color business logo embroidery on a black performance visor.",
+      "service_area_slugs": [],
+      "featured": true,
+      "show_customer_name": false,
+      "is_published": true,
+      "cover_image_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/3e8f6f7ca_Tommy_terrifics_carwash_visor.jpg",
+      "display_order": 7,
+      "description": "This project features multi-color business logo embroidery on a black performance visor. It is an example of Sew Suite’s custom embroidery, headwear, and corporate apparel work.",
+      "location_label": null,
+      "cover_alt_text": "Tommy Terrific's Car Wash logo embroidered on a black visor by Sew Suite",
+      "title": "Tommy Terrific's Car Wash Embroidered Visor",
+      "seo_title": "Tommy Terrific's Car Wash Embroidered Visor | Sew Suite",
+      "completed_date": null,
+      "public_permission_confirmed": true,
+      "meta_description": "See multi-color business logo embroidery on a visor produced by Sew Suite.",
+      "customer_display_name": null,
+      "customer_industry": null,
+      "category": "Hats & Caps",
+      "service_slugs": [
+        "custom-embroidery",
+        "custom-hats-caps",
+        "corporate-apparel"
+      ],
+      "slug": "tommy-terrifics-car-wash-embroidered-visor",
+      "id": "6aba9ec8d1dc76c461dabb35",
+      "created_date": "2026-09-28T17:07:20.552000",
+      "updated_date": "2026-10-03T14:44:25.313000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "summary": "Custom script and block-letter embroidery on a two-tone cap.",
+      "service_area_slugs": [],
+      "featured": false,
+      "show_customer_name": false,
+      "is_published": true,
+      "cover_image_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/493bd22ab_Rodeo_cap.jpg",
+      "display_order": 5,
+      "description": "This project features custom script and block-letter embroidery on a two-tone cap. It is an example of Sew Suite’s custom embroidery and custom hats and caps work.",
+      "location_label": null,
+      "cover_alt_text": "Rodeo lettering embroidered on a two-tone cap by Sew Suite",
+      "title": "Rodeo Embroidered Cap",
+      "seo_title": "Rodeo Embroidered Cap | Sew Suite",
+      "completed_date": null,
+      "public_permission_confirmed": true,
+      "meta_description": "See custom cap embroidery produced by Sew Suite.",
+      "customer_display_name": null,
+      "customer_industry": null,
+      "category": "Hats & Caps",
+      "service_slugs": [
+        "custom-embroidery",
+        "custom-hats-caps"
+      ],
+      "slug": "rodeo-embroidered-cap",
+      "id": "6aba9ec8d1dc76c461dabb33",
+      "created_date": "2026-09-28T17:07:20.552000",
+      "updated_date": "2026-10-03T14:44:20.170000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "summary": "Custom logo embroidery on a two-tone cap.",
+      "service_area_slugs": [],
+      "featured": true,
+      "show_customer_name": false,
+      "is_published": true,
+      "cover_image_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/0f95beb52_Easygame_cap.jpg",
+      "display_order": 2,
+      "description": "This project features custom logo embroidery on a two-tone cap. It is an example of Sew Suite’s custom embroidery and custom hats and caps work.",
+      "location_label": null,
+      "cover_alt_text": "EasyGame logo embroidered on a white and blue cap by Sew Suite",
+      "title": "EasyGame Embroidered Cap",
+      "seo_title": "EasyGame Embroidered Cap | Sew Suite",
+      "completed_date": null,
+      "public_permission_confirmed": true,
+      "meta_description": "See custom cap embroidery produced by Sew Suite.",
+      "customer_display_name": null,
+      "customer_industry": null,
+      "category": "Hats & Caps",
+      "service_slugs": [
+        "custom-embroidery",
+        "custom-hats-caps"
+      ],
+      "slug": "easygame-embroidered-cap",
+      "id": "6aba9ec8d1dc76c461dabb30",
+      "created_date": "2026-09-28T17:07:20.552000",
+      "updated_date": "2026-10-03T14:44:06.626000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "summary": "Bright logo embroidery on a reusable black tote bag.",
+      "service_area_slugs": [],
+      "featured": true,
+      "show_customer_name": false,
+      "is_published": true,
+      "cover_image_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/8884949b5_Greentech_renewables_bag.jpg",
+      "display_order": 4,
+      "description": "This project features bright logo embroidery on a reusable black tote bag. It is an example of Sew Suite’s custom embroidery, branded bag, and corporate apparel work.",
+      "location_label": null,
+      "cover_alt_text": "GreenTech Renewables logo embroidered on a black tote bag by Sew Suite",
+      "title": "GreenTech Renewables Embroidered Tote",
+      "seo_title": "GreenTech Renewables Embroidered Tote | Sew Suite",
+      "completed_date": null,
+      "public_permission_confirmed": true,
+      "meta_description": "See an example of custom embroidered tote bag work produced by Sew Suite.",
+      "customer_display_name": null,
+      "customer_industry": null,
+      "category": "Bags & Towels",
+      "service_slugs": [
+        "custom-embroidery",
+        "custom-bags-towels",
+        "corporate-apparel"
+      ],
+      "slug": "greentech-renewables-embroidered-tote",
+      "id": "6aba9ec8d1dc76c461dabb32",
+      "created_date": "2026-09-28T17:07:20.552000",
+      "updated_date": "2026-10-03T14:44:18.607000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "summary": "Custom text embroidery on a red and black cap.",
+      "service_area_slugs": [],
+      "featured": false,
+      "show_customer_name": false,
+      "is_published": true,
+      "cover_image_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/cf546f01e_Fire_arms_instructorcap.jpg",
+      "display_order": 3,
+      "description": "This project features custom text embroidery on a red and black cap. It is an example of Sew Suite’s custom embroidery and custom hats and caps work.",
+      "location_label": null,
+      "cover_alt_text": "Firearms Instructor text embroidered on a red and black cap by Sew Suite",
+      "title": "Firearms Instructor Embroidered Cap",
+      "seo_title": "Custom Text Embroidered Cap | Sew Suite",
+      "completed_date": null,
+      "public_permission_confirmed": true,
+      "meta_description": "See an example of custom text embroidery on a cap produced by Sew Suite.",
+      "customer_display_name": null,
+      "customer_industry": null,
+      "category": "Hats & Caps",
+      "service_slugs": [
+        "custom-embroidery",
+        "custom-hats-caps"
+      ],
+      "slug": "firearms-instructor-embroidered-cap",
+      "id": "6aba9ec8d1dc76c461dabb31",
+      "created_date": "2026-09-28T17:07:20.552000",
+      "updated_date": "2026-10-03T14:44:08.408000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    }
+  ],
+  "PortfolioPhoto": [],
+  "ServiceIntakeQuestion": [
+    {
+      "service_type_id": null,
+      "question_text": "How would you like to receive the completed order?",
+      "photo_request_text": null,
+      "question_key": "fulfillment_preference",
+      "answer_type": "choice",
+      "ai_guidance": null,
+      "options": [
+        "Local pickup",
+        "Ship the order",
+        "Not sure yet"
+      ],
+      "display_order": 5,
+      "active": true,
+      "required": false,
+      "id": "6aba8d3970633ad5eb822331",
+      "created_date": "2026-09-28T15:52:25.176000",
+      "updated_date": "2026-09-28T15:52:25.176000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "service_type_id": null,
+      "question_text": "Do you already have a logo or artwork?",
+      "photo_request_text": null,
+      "question_key": "artwork_status",
+      "answer_type": "choice",
+      "ai_guidance": null,
+      "options": [
+        "Yes — ready to upload",
+        "Yes — may need adjustments",
+        "No — need help",
+        "Not sure"
+      ],
+      "display_order": 4,
+      "active": true,
+      "required": false,
+      "id": "6aba8d3970633ad5eb822330",
+      "created_date": "2026-09-28T15:52:25.176000",
+      "updated_date": "2026-09-28T15:52:25.176000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "service_type_id": null,
+      "question_text": "Company / organization (if applicable)",
+      "photo_request_text": null,
+      "question_key": "company_organization",
+      "answer_type": "text",
+      "ai_guidance": null,
+      "options": [],
+      "display_order": 1,
+      "active": true,
+      "required": false,
+      "id": "6aba8d3970633ad5eb82232d",
+      "created_date": "2026-09-28T15:52:25.175000",
+      "updated_date": "2026-09-28T15:52:25.175000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "service_type_id": null,
+      "question_text": "Approximate quantity",
+      "photo_request_text": null,
+      "question_key": "approximate_quantity",
+      "answer_type": "number",
+      "ai_guidance": null,
+      "options": [],
+      "display_order": 2,
+      "active": true,
+      "required": false,
+      "id": "6aba8d3970633ad5eb82232e",
+      "created_date": "2026-09-28T15:52:25.175000",
+      "updated_date": "2026-09-28T15:52:25.175000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    },
+    {
+      "service_type_id": null,
+      "question_text": "Desired completion date",
+      "photo_request_text": null,
+      "question_key": "desired_completion_date",
+      "answer_type": "text",
+      "ai_guidance": "Customer may enter a date or timing such as before an event.",
+      "options": [],
+      "display_order": 3,
+      "active": true,
+      "required": false,
+      "id": "6aba8d3970633ad5eb82232f",
+      "created_date": "2026-09-28T15:52:25.175000",
+      "updated_date": "2026-09-28T15:52:25.175000",
+      "created_by_id": "6aba8ad594aac8fa4dde76e7",
+      "is_sample": false
+    }
+  ]
+}
