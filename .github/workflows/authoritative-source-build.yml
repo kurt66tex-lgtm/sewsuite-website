@@ -1,0 +1,21 @@
+name: Authentic Sew Suite frontend source build
+on:
+  push:
+    branches: [base44-sew-suite-source-20261016]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions: {contents: read}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Verify authoritative visual source
+        run: |
+          node -e "const fs=require('fs'); if(!fs.readFileSync('src/pages/Home.jsx','utf8').includes('Branded Gear That Works Harder'))process.exit(1); console.log('SEW_SUITE_AUTHORITATIVE_SOURCE_PASS')"
+      - name: Build authentic Base44 frontend locally without publishing
+        run: npm run build
