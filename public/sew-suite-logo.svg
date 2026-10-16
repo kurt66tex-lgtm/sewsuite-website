@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-labelledby="title desc">
+  <title id="title">Sew Suite Embroidery Outfitters</title>
+  <desc id="desc">Sew Suite logo in muted navy and muted gold with shirt and cap emblem.</desc>
+  <g fill="#243746" font-family="Arial, Helvetica, sans-serif">
+    <text x="18" y="174" font-size="166" font-weight="900" letter-spacing="-8">SEW</text>
+    <text x="690" y="174" font-size="166" font-weight="900" letter-spacing="-8">SUITE</text>
+    <text x="240" y="232" font-size="43" font-weight="800" letter-spacing="12">EMBROIDERY  OUTFITTERS</text>
+    <text x="485" y="282" font-size="31" font-weight="700" letter-spacing="1">Driven by Detail</text>
+  </g>
+  <g fill="none" stroke="#B68A2E" stroke-width="11" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="600" cy="111" r="103"/>
+    <path d="M507 92l39-26 25 14 29-1 25-13 39 26-18 42-23-12v72h-94v-72l-23 12z"/>
+    <path d="M571 80l12 26 17-12 17 12 12-26"/>
+    <path d="M596 121h8M596 141h8M596 161h8"/>
+    <path d="M625 73c8-25 26-40 50-40 27 0 50 20 50 51 0 11-3 21-7 29"/>
+    <path d="M623 96c28-8 55-10 82-4 15 3 28 9 39 18-27 10-57 12-91 6-12-2-23-8-30-20z"/>
+    <path d="M682 39c8 14 12 31 12 51"/>
+  </g>
+</svg>
