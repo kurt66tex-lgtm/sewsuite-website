@@ -23,6 +23,8 @@ export default function ChatWidget() {
   const assistantName = settings?.chat_assistant_name || (isCustomApparel ? 'Sew Suite Assistant' : 'Service Assistant');
   const welcome = settings?.chat_welcome_message || (isCustomApparel ? 'Hi! I can help with a custom apparel or decoration quote. Tell me about your project, quantity, timing, and artwork.' : 'Hi! I can help you request service. What can we help you with?');
   const enabled = settings?.chat_enabled !== false;
+  const [chatAvailable,setChatAvailable]=useState(false);
+  useEffect(()=>{let live=true;fetch('/api/chat?action=status').then(r=>r.json()).then(d=>{if(live)setChatAvailable(d.available===true)}).catch(()=>{if(live)setChatAvailable(false)});return ()=>{live=false}},[]);
 
   useEffect(() => {
     if (open && messages.length === 0) {
@@ -94,26 +96,13 @@ export default function ChatWidget() {
   const send = async () => {
     if ((!input.trim() && pendingFiles.length === 0) || sending) return;
 
+    if(!chatAvailable){setUploadError('The independent chat is temporarily unavailable. Please use www.sewsuite.com.');return;}
+    if(pendingFiles.length){setUploadError('Attachments are not enabled in the comparison chat yet. Please use www.sewsuite.com to submit files.');return;}
     setSending(true);
     setUploadError('');
 
     try {
       const uploadedAttachments = [];
-      for (const item of pendingFiles) {
-        let fileUri = item.file_uri;
-        if (!fileUri) {
-          const uploaded = await base44.integrations.Core.UploadPrivateFile({ file: item.file });
-          fileUri = uploaded?.file_uri;
-        }
-        if (!fileUri) throw new Error('File upload failed');
-
-        uploadedAttachments.push({
-          file_uri: fileUri,
-          file_name: item.file.name,
-          file_type: item.file_type,
-          file_size: item.file.size
-        });
-      }
 
       const content = input.trim() || `Uploaded ${uploadedAttachments.length} ${uploadedAttachments.length === 1 ? 'file' : 'files'} for review.`;
       const userMsg = {
@@ -123,16 +112,12 @@ export default function ChatWidget() {
       };
       const newMessages = [...messages, userMsg];
 
-      const res = await base44.functions.invoke('chatAssistant', {
-        conversation_id: conversationId,
-        messages: newMessages.map(m => ({ role: m.role, content: m.content })),
-        collected,
-        visitor_id: visitorId.current,
-        source_page: window.location.pathname,
-        attachments: uploadedAttachments
+      const response = await fetch('/api/chat?action=message', {
+        method:'POST',headers:{'content-type':'application/json','x-rrs-preview-visitor':visitorId.current+'preview1234'},
+        body:JSON.stringify({messages:newMessages.map(m=>({role:m.role,content:m.content})),conversation_id:conversationId})
       });
-
-      const data = res.data || res;
+      const data = await response.json();
+      if(!response.ok)throw Error(data.error||'chat_preview_unavailable');
       if (data.error) throw new Error(data.error);
 
       if (data.conversation_id) setConversationId(data.conversation_id);
@@ -143,50 +128,14 @@ export default function ChatWidget() {
       setInput('');
       clearPendingFiles();
 
-      if (data.lead_ready && !leadSubmitted) {
-        const c = data.collected || {};
-        if (c.phone || c.email) {
-          try {
-            const leadRes = await base44.functions.invoke('submitLead', {
-              source: 'AI Chat',
-              first_name: c.first_name || c.name?.split(' ')[0],
-              last_name: c.last_name || c.name?.split(' ').slice(1).join(' '),
-              phone: c.phone,
-              email: c.email,
-              preferred_contact_method: c.preferred_contact_method,
-              service_address: c.service_address,
-              city: c.city,
-              state: c.state,
-              zip: c.zip,
-              service_type: c.service_type || c.appliance_type || c.appliance,
-              asset_type: c.asset_type || c.appliance_type || c.appliance,
-              manufacturer: c.manufacturer || c.brand,
-              equipment_information: c.equipment_information,
-              intake_answers: c.intake_answers || {},
-              niche_data: c.niche_data,
-              appliance_type: c.appliance_type || c.appliance,
-              brand: c.brand,
-              model_number: c.model_number,
-              serial_number: c.serial_number,
-              error_code: c.error_code,
-              problem_description: c.problem || c.problem_description,
-              requested_date: c.requested_date,
-              requested_window: c.requested_window,
-              conversation_id: data.conversation_id
-            });
-            const leadData = leadRes.data || leadRes;
-            if (leadData?.success) setLeadSubmitted(true);
-          } catch {
-            // Lead submission failure should not break the chat.
-          }
-        }
-      }
+      // Preview conversations never create customer leads or send notifications.
+
     } catch (e) {
       const message = String(e?.message || '');
       if (message.toLowerCase().includes('upload') || pendingFiles.length > 0) {
         setUploadError('We could not upload that file. Please try again, or continue without the attachment.');
       } else {
-        setMessages(prev => [...prev, { role: 'assistant', content: settings?.phone ? "I'm having trouble connecting right now. Please call us at " + settings.phone + " or try again in a moment." : "I'm having trouble connecting right now. Please try again in a moment." }]);
+        setUploadError('The independent chat could not connect. Please try again shortly or use www.sewsuite.com.');
       }
     } finally {
       setSending(false);
