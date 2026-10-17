@@ -79,34 +79,9 @@ export default function BookService() {
       setError(`You can upload up to ${photoLimit} ${isCustomApparel ? 'artwork or reference files' : 'photos'}.`);
       return;
     }
-    setError('Artwork uploads are not yet connected in this comparison preview. Please use www.sewsuite.com to submit your files.');
+    setError('Artwork uploads are not yet connected in this comparison preview. Use www.sewsuite.com to submit your files.');
     if (e.target) e.target.value = '';
-    return;
-    setUploading(true);
-    setError(null);
-    const newPhotos = [];
-    for (const file of files) {
-      if (file.size > 10 * 1024 * 1024) {
-        setError(`"${file.name}" exceeds 10MB and was skipped.`);
-        continue;
-      }
-      try {
-        const res = await base44.integrations.Core.UploadPrivateFile({ file });
-        const data = res.data || res;
-        newPhotos.push({
-          file_uri: data.file_uri,
-          file_name: file.name,
-          file_type: file.type,
-          file_size: file.size,
-          attachment_type: isCustomApparel ? 'Logo / Artwork' : (isApplianceModule ? 'Appliance Photo' : (assetTrackingEnabled ? 'Equipment Photo' : 'Site / Space Photo')),
-          preview: URL.createObjectURL(file)
-        });
-      } catch (err) {
-        setError(`Upload failed for "${file.name}". ${isCustomApparel ? 'You can still submit your quote request, but the file will not be attached.' : 'Your service request will still go through.'}`);
-      }
-    }
-    setPhotos(p => [...p, ...newPhotos]);
-    setUploading(false);
+
   };
 
   const removePhoto = (idx) => {
@@ -120,48 +95,8 @@ export default function BookService() {
   const submit = async (e) => {
     e.preventDefault();
     if (submitting) return;
-    setError('Quote submissions are not yet enabled on the comparison website. Please submit your request at www.sewsuite.com until we complete migration testing.');
-    return;
-    setError(null);
-    setSubmitting(true);
-    try {
-      const query = new URLSearchParams(window.location.search);
-      const safeReferrer = (() => {
-        if (!document.referrer) return null;
-        try { const u = new URL(document.referrer); return u.origin + u.pathname; } catch { return null; }
-      })();
-      const payload = {
-        source: 'Website Form',
-        ...form,
-        website_company: form.website_company || '',
-        consent_source: isCustomApparel ? 'Website Request Quote Form' : 'Website Book Service Form',
-        landing_page: window.location.pathname,
-        referrer: safeReferrer,
-        utm_source: query.get('utm_source') || null,
-        utm_medium: query.get('utm_medium') || null,
-        utm_campaign: query.get('utm_campaign') || null,
-        attachments: photos.map(p => ({
-          file_uri: p.file_uri,
-          file_name: p.file_name,
-          file_type: p.file_type,
-          file_size: p.file_size,
-          attachment_type: p.attachment_type
-        }))
-      };
-      delete payload.model_unknown;
-      const res = await base44.functions.invoke('submitLead', payload);
-      const data = res.data || res;
-      if (data.success) {
-        setResult({ success: true, safety_flag: data.safety_flag, out_of_area: !!data.out_of_area });
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        setError(data.error || 'Something went wrong. Please call us.');
-      }
-    } catch (err) {
-      setError(phone ? 'We could not submit your request. Please call us at ' + phone + '.' : 'We could not submit your request. Please try again in a moment.');
-    } finally {
-      setSubmitting(false);
-    }
+    setError('Quote submissions are not yet enabled on this comparison website. Please submit your request at www.sewsuite.com until migration testing is complete.');
+
   };
 
   if (result?.success) {
