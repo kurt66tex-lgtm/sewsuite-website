@@ -235,7 +235,7 @@ export default function ChatWidget() {
             )}
             {leadSubmitted && (
               <div className="text-center text-xs text-green-700 bg-green-50 rounded-lg py-2 px-3">
-                ✓ Your service request has been sent to our team. We'll be in touch shortly.
+                Your request was recorded in the testing CRM. Notifications are held until delivery testing is completed.
               </div>
             )}
           </div>
