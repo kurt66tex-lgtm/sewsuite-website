@@ -24,6 +24,11 @@ export default function ChatWidget() {
   const welcome = settings?.chat_welcome_message || (isCustomApparel ? 'Hi! I can help with a custom apparel or decoration quote. Tell me about your project, quantity, timing, and artwork.' : 'Hi! I can help you request service. What can we help you with?');
   const enabled = settings?.chat_enabled !== false;
   const [chatAvailable,setChatAvailable]=useState(false);
+  const [crmAvailable,setCrmAvailable]=useState(false);
+  const [quoteFormOpen,setQuoteFormOpen]=useState(false);
+  const [quoteDraft,setQuoteDraft]=useState({first_name:'',last_name:'',phone:'',email:'',service_type:'Custom Embroidery',problem_description:'',consent_to_contact:false});
+  const leadRequestKey=useRef('synthetic_'+Math.random().toString(36).slice(2)+'_'+Date.now());
+  useEffect(()=>{let live=true;fetch('/api/chat-lead').then(r=>r.json()).then(d=>{if(live)setCrmAvailable(d.available===true)}).catch(()=>{});return ()=>{live=false}},[]);
   useEffect(()=>{let live=true;fetch('/api/chat?action=status').then(r=>r.json()).then(d=>{if(live)setChatAvailable(d.available===true)}).catch(()=>{if(live)setChatAvailable(false)});return ()=>{live=false}},[]);
 
   useEffect(() => {
@@ -142,6 +147,18 @@ export default function ChatWidget() {
     }
   };
 
+  const submitConfirmedQuote=async()=>{
+    if(!crmAvailable||sending||leadSubmitted||!quoteDraft.consent_to_contact)return;
+    setSending(true);setUploadError('');
+    try{
+      const response=await fetch('/api/chat-lead',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({...quoteDraft,request_key:leadRequestKey.current,confirmed:true,messages:messages.map(m=>({role:m.role,content:m.content}))})});
+      const data=await response.json();
+      if(!response.ok||!data.success||!data.lead_id)throw Error('lead_not_confirmed');
+      setLeadSubmitted(true);setQuoteFormOpen(false);
+    }catch{setUploadError('We could not confirm your request was saved. Please use www.sewsuite.com and do not assume your inquiry was submitted.');}
+    finally{setSending(false)}
+  };
+
   if (!enabled) return null;
 
   return (
@@ -204,6 +221,16 @@ export default function ChatWidget() {
                 <div className="bg-white border border-slate-200 rounded-2xl px-3 py-2">
                   <Loader2 className="w-4 h-4 animate-spin text-slate-400" />
                 </div>
+              </div>
+            )}
+            {crmAvailable&&!leadSubmitted&&(
+              <div className="mx-3 mb-3 rounded-lg border border-slate-200 bg-white p-3">
+                <button type="button" onClick={()=>setQuoteFormOpen(v=>!v)} className="text-xs font-semibold text-brand-dark underline">{quoteFormOpen?'Close quote request':'Send this conversation as a quote request'}</button>
+                {quoteFormOpen&&<div className="mt-2 space-y-2">
+                  {['first_name','last_name','email','phone','service_type','problem_description'].map(field=><label key={field} className="block text-xs text-slate-700">{field.replaceAll('_',' ')}<input className="mt-1 w-full rounded border border-slate-300 px-2 py-1.5" value={quoteDraft[field]} onChange={e=>setQuoteDraft(v=>({...v,[field]:e.target.value}))}/></label>)}
+                  <label className="flex gap-2 text-xs text-slate-700"><input type="checkbox" checked={quoteDraft.consent_to_contact} onChange={e=>setQuoteDraft(v=>({...v,consent_to_contact:e.target.checked}))}/>I confirm these details are correct and agree to be contacted.</label>
+                  <button type="button" disabled={sending||!quoteDraft.consent_to_contact} onClick={submitConfirmedQuote} className="rounded bg-brand-accent px-3 py-2 text-xs font-bold text-brand-dark disabled:opacity-50">Confirm and send request</button>
+                </div>}
               </div>
             )}
             {leadSubmitted && (
