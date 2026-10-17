@@ -79,6 +79,9 @@ export default function BookService() {
       setError(`You can upload up to ${photoLimit} ${isCustomApparel ? 'artwork or reference files' : 'photos'}.`);
       return;
     }
+    setError('Artwork uploads are not yet connected in this comparison preview. Please use www.sewsuite.com to submit your files.');
+    if (e.target) e.target.value = '';
+    return;
     setUploading(true);
     setError(null);
     const newPhotos = [];
@@ -117,6 +120,8 @@ export default function BookService() {
   const submit = async (e) => {
     e.preventDefault();
     if (submitting) return;
+    setError('Quote submissions are not yet enabled on the comparison website. Please submit your request at www.sewsuite.com until we complete migration testing.');
+    return;
     setError(null);
     setSubmitting(true);
     try {
