@@ -10,7 +10,8 @@
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc -p ./jsconfig.json",
     "preview": "vite preview",
-    "test:factory": "node .phase9-test/build-provisioning.mjs && node .phase9-test/regression.mjs"
+    "test:factory": "node .phase9-test/build-provisioning.mjs && node .phase9-test/regression.mjs",
+    "preflight:production": "node scripts/production-cutover-preflight.mjs"
   },
   "dependencies": {
     "@base44/sdk": "^0.8.54",
