@@ -1,23 +1,19 @@
-// Sew Suite independent staging-only chat proxy. Never sends the OpenAI key to visitors.
+// Independent production Sew Suite chat proxy. Public CRM/AI chat disabled by default.
 export default async function handler(req,res){
- res.setHeader('Cache-Control','no-store');res.setHeader('X-Robots-Tag','noindex,nofollow');
+ res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');
  const mode=String(req.query?.action||'message');
- if(mode!=='message'&&mode!=='status')return res.status(404).json({error:'not_found'});
+ if(!['status','message'].includes(mode))return res.status(404).json({error:'not_found'});
  if(req.method!==(mode==='status'?'GET':'POST'))return res.status(405).json({error:'method_not_allowed'});
- if(process.env.RRS_CHAT_BRIDGE_ENABLED!=='true'||!process.env.RRS_VOICE_GATEWAY_URL||!process.env.RRS_VOICE_BRIDGE_KEY)
-  return res.status(503).json({error:'chat_preview_unavailable'});
- if(req.method==='POST'){
-  if(req.headers.origin!=='https://'+req.headers.host)return res.status(403).json({error:'origin_rejected'});
+ const enabled=process.env.RRS_PRODUCTION_CHAT_ENABLED==='true'&&!!process.env.RRS_INTAKE_API_ORIGIN&&!!process.env.RRS_INTERNAL_INTAKE_KEY;
+ if(mode==='status'&&!enabled)return res.status(200).json({available:false});
+ if(!enabled)return res.status(503).json({error:'chat_not_enabled'});
+ if(mode==='message'){
+  if(req.headers.origin!==process.env.RRS_PUBLIC_SITE_ORIGIN)return res.status(403).json({error:'origin_rejected'});
   if(!String(req.headers['content-type']||'').startsWith('application/json'))return res.status(415).json({error:'json_required'});
-  if(Buffer.byteLength(JSON.stringify(req.body||{}))>14000)return res.status(413).json({error:'payload_too_large'});
+  if(!req.body||Buffer.byteLength(JSON.stringify(req.body))>30000)return res.status(413).json({error:'too_large'});
  }
- try{
-  const visitor=String(req.headers['x-rrs-preview-visitor']||'');
-  const r=await fetch(process.env.RRS_VOICE_GATEWAY_URL.replace(/\/$/,'')+'/public/chat/'+mode,{
-   method:req.method,
-   headers:{'content-type':'application/json',origin:'https://rrs-voice-proxy.internal','x-rrs-preview-chat-key':process.env.RRS_VOICE_BRIDGE_KEY,'x-rrs-preview-visitor':visitor},
-   ...(mode==='message'?{body:JSON.stringify(req.body||{})}:{}),signal:AbortSignal.timeout(20000)
-  });
-  res.status(r.status).setHeader('Content-Type','application/json; charset=utf-8');return res.send((await r.text()).slice(0,6000));
- }catch{return res.status(503).json({error:'chat_preview_unavailable'})}
+ let url;try{url=new URL(process.env.RRS_INTAKE_API_ORIGIN);if(url.protocol!=='https:'||url.pathname!=='/'||url.username||url.password)throw Error()}catch{return res.status(503).json({error:'chat_backend_invalid'})}
+ try{const x=await fetch(new URL('/internal/chat/'+mode,url),{method:req.method,headers:{'content-type':'application/json','x-rrs-internal-key':process.env.RRS_INTERNAL_INTAKE_KEY},...(mode==='message'?{body:JSON.stringify(req.body)}:{}),signal:AbortSignal.timeout(20000)});
+ const data=await x.json().catch(()=>({error:'chat_unavailable'}));return res.status(x.status).json(data);
+ }catch{return res.status(503).json({error:'chat_unavailable'})}
 }
