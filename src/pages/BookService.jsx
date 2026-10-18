@@ -110,7 +110,7 @@ export default function BookService() {
     try{
       const fields={first_name:form.first_name,last_name:form.last_name,phone:form.phone,email:form.email,
         service_type:form.service_type,problem_description:form.problem_description,request_key:requestKey.current,
-        consent_to_contact:true,website_company:form.website_company,turnstile_token:turnstileToken};
+        consent_to_contact:true,intake_answers:form.intake_answers,website_company:form.website_company,turnstile_token:turnstileToken};
       const response=await fetch('/api/intake',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(fields)});
       const data=await response.json().catch(()=>({}));
       if(response.status!==202||data.success!==true||!data.lead_id)throw Error('not_confirmed');
