@@ -27,7 +27,10 @@ export default function ChatWidget() {
   const [crmAvailable,setCrmAvailable]=useState(false);
   const [quoteFormOpen,setQuoteFormOpen]=useState(false);
   const [quoteDraft,setQuoteDraft]=useState({first_name:'',last_name:'',phone:'',email:'',service_type:'Custom Embroidery',problem_description:'',consent_to_contact:false});
-  const leadRequestKey=useRef('synthetic_'+Math.random().toString(36).slice(2)+'_'+Date.now());
+  const leadRequestKey=useRef('chat_'+crypto.randomUUID().replaceAll('-',''));
+  const siteKey=import.meta.env.VITE_TURNSTILE_SITE_KEY||'';
+  const [quoteCaptcha,setQuoteCaptcha]=useState('');
+  useEffect(()=>{if(!quoteFormOpen||!siteKey)return;let active=true,instance;const render=()=>{if(!active||!window.turnstile||!document.getElementById('sew-chat-turnstile'))return;instance=window.turnstile.render('#sew-chat-turnstile',{sitekey:siteKey,callback:t=>setQuoteCaptcha(t),'expired-callback':()=>setQuoteCaptcha('')})};const script=document.createElement('script');script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';script.async=true;script.onload=render;document.head.appendChild(script);return()=>{active=false;if(instance!==undefined&&window.turnstile)try{window.turnstile.remove(instance)}catch{};script.remove()}},[quoteFormOpen,siteKey]);
   useEffect(()=>{let live=true;fetch('/api/chat-lead').then(r=>r.json()).then(d=>{if(live)setCrmAvailable(d.available===true)}).catch(()=>{});return ()=>{live=false}},[]);
   useEffect(()=>{let live=true;fetch('/api/chat?action=status').then(r=>r.json()).then(d=>{if(live)setChatAvailable(d.available===true)}).catch(()=>{if(live)setChatAvailable(false)});return ()=>{live=false}},[]);
 
@@ -148,12 +151,12 @@ export default function ChatWidget() {
   };
 
   const submitConfirmedQuote=async()=>{
-    if(!crmAvailable||sending||leadSubmitted||!quoteDraft.consent_to_contact)return;
+    if(!crmAvailable||sending||leadSubmitted||!quoteDraft.consent_to_contact||!quoteCaptcha)return;
     setSending(true);setUploadError('');
     try{
-      const response=await fetch('/api/chat-lead',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({...quoteDraft,request_key:leadRequestKey.current,confirmed:true,messages:messages.map(m=>({role:m.role,content:m.content}))})});
+      const response=await fetch('/api/chat-lead',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({...quoteDraft,request_key:leadRequestKey.current,turnstile_token:quoteCaptcha,confirmed:true,messages:messages.map(m=>({role:m.role,content:m.content}))})});
       const data=await response.json();
-      if(!response.ok||!data.success||!data.lead_id)throw Error('lead_not_confirmed');
+      if(response.status!==202||!data.success||!data.lead_id)throw Error('lead_not_confirmed');
       setLeadSubmitted(true);setQuoteFormOpen(false);
     }catch{setUploadError('We could not confirm your request was saved. Please use www.sewsuite.com and do not assume your inquiry was submitted.');}
     finally{setSending(false)}
@@ -229,13 +232,14 @@ export default function ChatWidget() {
                 {quoteFormOpen&&<div className="mt-2 space-y-2">
                   {['first_name','last_name','email','phone','service_type','problem_description'].map(field=><label key={field} className="block text-xs text-slate-700">{field.replaceAll('_',' ')}<input className="mt-1 w-full rounded border border-slate-300 px-2 py-1.5" value={quoteDraft[field]} onChange={e=>setQuoteDraft(v=>({...v,[field]:e.target.value}))}/></label>)}
                   <label className="flex gap-2 text-xs text-slate-700"><input type="checkbox" checked={quoteDraft.consent_to_contact} onChange={e=>setQuoteDraft(v=>({...v,consent_to_contact:e.target.checked}))}/>I confirm these details are correct and agree to be contacted.</label>
-                  <button type="button" disabled={sending||!quoteDraft.consent_to_contact} onClick={submitConfirmedQuote} className="rounded bg-brand-accent px-3 py-2 text-xs font-bold text-brand-dark disabled:opacity-50">Confirm and send request</button>
+                  <button type="button" disabled={sending||!quoteDraft.consent_to_contact||!quoteCaptcha} onClick={submitConfirmedQuote} className="rounded bg-brand-accent px-3 py-2 text-xs font-bold text-brand-dark disabled:opacity-50">Confirm and send request</button>
+                  <div id="sew-chat-turnstile" aria-label="Verify quote request"></div>
                 </div>}
               </div>
             )}
             {leadSubmitted && (
               <div className="text-center text-xs text-green-700 bg-green-50 rounded-lg py-2 px-3">
-                Your request was recorded in the testing CRM. Notifications are held until delivery testing is completed.
+                Your request was saved in the Sew Suite CRM. Our staff can now review the details.
               </div>
             )}
           </div>
