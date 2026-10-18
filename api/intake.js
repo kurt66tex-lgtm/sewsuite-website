@@ -22,6 +22,7 @@ export default async function handler(req,res){
   const fields=['first_name','last_name','phone','email','service_type','problem_description','request_key'];
   const lead=Object.fromEntries(fields.map(k=>[k,body[k]]));
   lead.consent_to_contact=body.consent_to_contact===true;
+  lead.intake_answers=body.intake_answers;
   lead.source='Website Form';
   const result=await fetch(new URL('/internal/lead',origin),{
    method:'POST',headers:{'content-type':'application/json','x-rrs-internal-key':process.env.RRS_INTERNAL_INTAKE_KEY},
