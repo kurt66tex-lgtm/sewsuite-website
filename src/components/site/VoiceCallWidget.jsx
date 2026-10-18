@@ -62,6 +62,26 @@ export default function VoiceCallWidget(){
    const dc=pc.createDataChannel('oai-events');state.current.dc=dc;
    dc.onmessage=async e=>{
     let v;try{v=JSON.parse(e.data)}catch{return}
+    // GPT-Live Responses delegation: execute only the confirmed CRM tool through
+    // our authenticated server proxy, then return the result and resume speech.
+    if(v.type==='response.event'&&v.event?.type==='response.output_item.done'&&v.event?.item?.type==='function_call'){
+      const call=v.event.item;
+      if(call.name!=='create_service_request'||!call.call_id)return;
+      const s=state.current;
+      if(!s.session||!s.token||s.dc!==dc||dc.readyState!=='open')return;
+      setCaption('Saving confirmed test inquiry…');
+      let outcome;
+      try{
+        const result=await voiceRequest('tool',{session_id:s.session,runtime_token:s.token,tool_call_id:call.call_id,tool_name:call.name,arguments:call.arguments});
+        outcome=result?.result?.success===true?{success:true,lead_id:result.result.lead_id,delivery_mode:result.result.delivery_mode}:{success:false,error:'not_confirmed'};
+      }catch{outcome={success:false,error:'crm_submission_unavailable'};}
+      if(dc.readyState==='open'){
+        dc.send(JSON.stringify({type:'response.item.create',item:{type:'function_call_output',call_id:call.call_id,output:JSON.stringify(outcome)}}));
+        dc.send(JSON.stringify({type:'response.create'}));
+      }
+      setCaption(outcome.success?'Test inquiry saved in CRM.':'Test inquiry could not be saved. Please use the website form.');
+      return;
+    }
     if(v.type==='session.started'){setPhase('connected');setCaption('Connected. Start speaking.');}
     if(v.type==='session.usage.updated'){state.current.seconds=Math.max(state.current.seconds,Number(v.usage?.seconds||0))}
     if(v.type==='session.output_transcript.delta')setCaption(t=>(t+String(v.delta||'')).slice(-280));
