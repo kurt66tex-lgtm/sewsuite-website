@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Upload, X, Loader2, CheckCircle2, AlertTriangle, Info, Calendar } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
@@ -41,7 +41,7 @@ export default function BookService() {
     requested_date: '', requested_window: '',
     service_address: '', city: '', state: 'TX', zip: '',
     first_name: '', last_name: '', phone: '', email: '',
-    preferred_contact_method: 'Phone', sms_consent: false, email_consent: false,
+    preferred_contact_method: 'Phone', sms_consent: false, email_consent: false, consent_to_contact:false,
     intake_answers: {},
     website_company: ''
   });
@@ -50,6 +50,12 @@ export default function BookService() {
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState(null); // {success, safety_flag}
   const [error, setError] = useState(null);
+  const [turnstileToken,setTurnstileToken]=useState('');
+  const [publicIntakeAvailable,setPublicIntakeAvailable]=useState(false);
+  const requestKey=useRef('website_'+crypto.randomUUID().replaceAll('-',''));
+  const siteKey=import.meta.env.VITE_TURNSTILE_SITE_KEY||'';
+  useEffect(()=>{let active=true;fetch('/api/intake',{cache:'no-store'}).then(r=>r.json()).then(x=>active&&setPublicIntakeAvailable(x.available===true)).catch(()=>{});return()=>{active=false}},[]);
+  useEffect(()=>{if(!siteKey)return;let active=true,instance;const render=()=>{if(!active||!window.turnstile||!document.getElementById('sew-turnstile'))return;instance=window.turnstile.render('#sew-turnstile',{sitekey:siteKey,callback:t=>setTurnstileToken(t),'expired-callback':()=>setTurnstileToken('')})};const script=document.createElement('script');script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';script.async=true;script.onload=render;document.head.appendChild(script);return()=>{active=false;if(instance!==undefined&&window.turnstile)try{window.turnstile.remove(instance)}catch{};script.remove()}},[siteKey]);
 
   const photoLimit = settings?.photo_limit_per_conversation || 5;
   const phone = settings?.phone || '';
@@ -94,9 +100,26 @@ export default function BookService() {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (submitting) return;
-    setError('Quote submissions are not yet enabled on this comparison website. Please submit your request at www.sewsuite.com until migration testing is complete.');
-
+    if(submitting)return;
+    setError('');
+    if(!publicIntakeAvailable||!siteKey){setError('Online requests are not available yet. Please contact Sew Suite directly.');return;}
+    if(!form.consent_to_contact){setError('Please confirm that Sew Suite may contact you about your inquiry.');return;}
+    if(!turnstileToken){setError('Please complete the verification before submitting.');return;}
+    if(photos.length){setError('File uploads are being configured. Please submit the request without attachments for now.');return;}
+    setSubmitting(true);
+    try{
+      const fields={first_name:form.first_name,last_name:form.last_name,phone:form.phone,email:form.email,
+        service_type:form.service_type,problem_description:form.problem_description,request_key:requestKey.current,
+        consent_to_contact:true,website_company:form.website_company,turnstile_token:turnstileToken};
+      const response=await fetch('/api/intake',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(fields)});
+      const data=await response.json().catch(()=>({}));
+      if(response.status!==202||data.success!==true||!data.lead_id)throw Error('not_confirmed');
+      setResult({success:true,lead_id:data.lead_id,notification_status:data.notification_status});
+    }catch{
+      setError('We could not confirm your request was saved. Please contact Sew Suite directly rather than assuming it was submitted.');
+      setTurnstileToken('');
+      if(window.turnstile)try{window.turnstile.reset()}catch{}
+    }finally{setSubmitting(false)}
   };
 
   if (result?.success) {
@@ -413,6 +436,10 @@ export default function BookService() {
               </div>
             </div>
             <div className="mt-4 space-y-2">
+              <label className="flex items-start gap-2 text-xs text-slate-700">
+                <input type="checkbox" checked={form.consent_to_contact} onChange={e=>update('consent_to_contact',e.target.checked)} className="mt-0.5" />
+                <span>I authorize Sew Suite to contact me about this quote or project inquiry. This does not authorize marketing messages.</span>
+              </label>
               <label className="flex items-start gap-2 text-xs text-slate-600">
                 <input type="checkbox" checked={form.sms_consent} onChange={(e) => update('sms_consent', e.target.checked)} className="mt-0.5" />
                 <span>I consent to receive text messages (SMS) about my {isCustomApparel ? 'quote/project request' : 'service request'}. Message/data rates may apply. I can reply STOP to opt out.</span>
@@ -437,6 +464,7 @@ export default function BookService() {
             />
           </div>
 
+          <div className="my-3" id="sew-turnstile" aria-label="Request verification"></div>
           {error && (
             <div className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-800">
               <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" /> {error}
