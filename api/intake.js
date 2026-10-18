@@ -1,32 +1,33 @@
-// Independent quote-intake relay. Default disabled until production attachments
-// and notifications are verified. Never trust browser tenant/test-data flags.
+// Sew Suite production Vercel intake relay. Fail closed until API, captcha,
+// abuse controls and notification workflow pass release acceptance.
 export default async function handler(req,res){
- res.setHeader('Cache-Control','private, no-store');
- res.setHeader('X-Robots-Tag','noindex,nofollow');
+ res.setHeader('Cache-Control','no-store');
  res.setHeader('X-Content-Type-Options','nosniff');
- if(req.method==='GET')return res.status(200).json({available:false,mode:'prelaunch_hold'});
+ if(req.method==='GET')return res.status(200).json({available:process.env.RRS_PRODUCTION_INTAKE_ENABLED==='true'&&!!process.env.RRS_INTAKE_API_ORIGIN&&!!process.env.RRS_INTERNAL_INTAKE_KEY&&!!process.env.RRS_TURNSTILE_SECRET_KEY});
  if(req.method!=='POST')return res.status(405).json({error:'method_not_allowed'});
- if(process.env.RRS_INTAKE_BRIDGE_ENABLED!=='true')return res.status(503).json({error:'quote_intake_not_ready'});
- const hostname=String(req.headers.host||'');
- if(req.headers.origin!=='https://'+hostname)return res.status(403).json({error:'origin_rejected'});
+ if(process.env.RRS_PRODUCTION_INTAKE_ENABLED!=='true'||!process.env.RRS_INTAKE_API_ORIGIN||!process.env.RRS_INTERNAL_INTAKE_KEY||!process.env.RRS_TURNSTILE_SECRET_KEY)return res.status(503).json({error:'intake_not_available'});
+ if(req.headers.origin!==process.env.RRS_PUBLIC_SITE_ORIGIN)return res.status(403).json({error:'origin_rejected'});
  if(!String(req.headers['content-type']||'').startsWith('application/json'))return res.status(415).json({error:'json_required'});
  const body=req.body;
- if(!body||typeof body!=='object'||Array.isArray(body)||Buffer.byteLength(JSON.stringify(body))>14000)return res.status(413).json({error:'payload_rejected'});
- // This is intentionally limited to server-generated synthetic rehearsal traffic.
- // Visitor-entered quote forms remain held, including when the bridge is configured.
- if(body.request_key?.startsWith('synthetic-')!==true||body.email!=='synthetic@example.invalid')
-  return res.status(503).json({error:'real_submissions_not_enabled'});
- if(!process.env.RRS_VOICE_GATEWAY_URL||!process.env.RRS_VOICE_BRIDGE_KEY)
-  return res.status(503).json({error:'backend_not_configured'});
+ if(!body||Array.isArray(body)||typeof body!=='object'||Buffer.byteLength(JSON.stringify(body))>12000)return res.status(422).json({error:'invalid_payload'});
+ if(typeof body.website_company==='string'&&body.website_company.trim())return res.status(200).json({success:false,submission_confirmed:false});
+ if(typeof body.turnstile_token!=='string'||!body.turnstile_token||body.turnstile_token.length>2100)return res.status(422).json({error:'verification_required'});
+ let origin;try{origin=new URL(process.env.RRS_INTAKE_API_ORIGIN);if(origin.protocol!=='https:'||origin.pathname!=='/'||origin.username||origin.password||origin.search||origin.hash)throw Error()}catch{return res.status(503).json({error:'api_origin_invalid'})}
  try{
-  const upstream=await fetch(process.env.RRS_VOICE_GATEWAY_URL.replace(/\/$/,'')+'/public/intake',{
-   method:'POST',
-   headers:{origin:'https://rrs-voice-proxy.internal','content-type':'application/json','x-rrs-test-key':process.env.RRS_VOICE_BRIDGE_KEY},
-   body:JSON.stringify(body),
-   signal:AbortSignal.timeout(15000)
-  });
-  const response=(await upstream.text()).slice(0,5000);
-  res.status(upstream.status).setHeader('Content-Type','application/json; charset=utf-8');
-  return res.send(response);
- }catch{return res.status(503).json({error:'quote_backend_unavailable'})}
+  const challenge=await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify',{method:'POST',
+   headers:{'content-type':'application/x-www-form-urlencoded'},body:new URLSearchParams({secret:process.env.RRS_TURNSTILE_SECRET_KEY,response:body.turnstile_token}),
+   signal:AbortSignal.timeout(7000)});
+  const verified=await challenge.json().catch(()=>({success:false}));
+  if(!verified.success||!challenge.ok)return res.status(403).json({error:'verification_failed'});
+  const fields=['first_name','last_name','phone','email','service_type','problem_description','request_key'];
+  const lead=Object.fromEntries(fields.map(k=>[k,body[k]]));
+  lead.consent_to_contact=body.consent_to_contact===true;
+  lead.source='Website Form';
+  const result=await fetch(new URL('/internal/lead',origin),{
+   method:'POST',headers:{'content-type':'application/json','x-rrs-internal-key':process.env.RRS_INTERNAL_INTAKE_KEY},
+   body:JSON.stringify(lead),signal:AbortSignal.timeout(12000)});
+  const data=await result.json().catch(()=>({}));
+  if(result.status!==202||data.success!==true||!data.lead_id)return res.status(503).json({error:'submission_not_confirmed'});
+  return res.status(202).json({success:true,lead_id:data.lead_id,replayed:data.replayed===true,notification_status:data.notification_status||'held'});
+ }catch{return res.status(503).json({error:'submission_unavailable'})}
 }
