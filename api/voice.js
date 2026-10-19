@@ -8,7 +8,7 @@ export default async function handler(req,res){
  res.setHeader('X-Content-Type-Options','nosniff');
  if(!allowed.has(action))return res.status(404).json({error:'not_found'});
  if(req.method!==(action==='status'?'GET':'POST'))return res.status(405).json({error:'method_not_allowed'});
- if(process.env.RRS_PRODUCTION_VOICE_ENABLED!=='true'||!process.env.RRS_VOICE_GATEWAY_URL||!process.env.RRS_VOICE_BRIDGE_KEY||!process.env.RRS_PUBLIC_SITE_ORIGIN)
+ if(process.env.RRS_PRODUCTION_VOICE_ENABLED!=='true'||!process.env.RRS_VOICE_GATEWAY_URL||!process.env.RRS_PRODUCTION_VOICE_BRIDGE_KEY||!process.env.RRS_PUBLIC_SITE_ORIGIN)
   return res.status(503).json({error:'independent_voice_not_enabled'});
  const host=String(req.headers.host||'');
  const origin=String(req.headers.origin||'');
@@ -20,7 +20,7 @@ export default async function handler(req,res){
  try{
   const upstream=await fetch(base+'/public/voice/'+action,{
     method:req.method,
-    headers:{'content-type':'application/json',origin:'https://rrs-voice-proxy.internal','x-rrs-preview-voice-key':process.env.RRS_VOICE_BRIDGE_KEY},
+    headers:{'content-type':'application/json',origin:'https://rrs-voice-proxy.internal','x-rrs-preview-voice-key':process.env.RRS_PRODUCTION_VOICE_BRIDGE_KEY},
     ...(req.method==='POST'?{body:JSON.stringify(req.body||{})}:{}),
     signal:AbortSignal.timeout(18000)
   });
