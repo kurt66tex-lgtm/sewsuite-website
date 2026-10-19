@@ -13,7 +13,7 @@ export default async function handler(req,res){
  try{
   const challenge=await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify',{method:'POST',headers:{'content-type':'application/x-www-form-urlencoded'},body:new URLSearchParams({secret:process.env.RRS_TURNSTILE_SECRET_KEY,response:v.turnstile_token}),signal:AbortSignal.timeout(7000)});
   const verified=await challenge.json().catch(()=>({success:false}));
-  if(!challenge.ok||!verified.success)return res.status(403).json({error:'verification_failed'});
+  if(!challenge.ok||!verified.success||verified.hostname!==new URL(process.env.RRS_PUBLIC_SITE_ORIGIN).hostname)return res.status(403).json({error:'verification_failed'});
   const u=new URL(process.env.RRS_INTAKE_API_ORIGIN);
   if(u.protocol!=='https:'||u.pathname!=='/'||u.username||u.password)throw Error('config');
   const lead={first_name:v.first_name,last_name:v.last_name,phone:v.phone,email:v.email,service_type:v.service_type,problem_description:v.problem_description,request_key:v.request_key,consent_to_contact:true,source:'AI Chat',transcript:v.messages};
