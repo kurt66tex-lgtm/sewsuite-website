@@ -18,7 +18,7 @@ export default async function handler(req,res){
    headers:{'content-type':'application/x-www-form-urlencoded'},body:new URLSearchParams({secret:process.env.RRS_TURNSTILE_SECRET_KEY,response:body.turnstile_token}),
    signal:AbortSignal.timeout(7000)});
   const verified=await challenge.json().catch(()=>({success:false}));
-  if(!verified.success||!challenge.ok)return res.status(403).json({error:'verification_failed'});
+  if(!verified.success||!challenge.ok||verified.hostname!==new URL(process.env.RRS_PUBLIC_SITE_ORIGIN).hostname)return res.status(403).json({error:'verification_failed'});
   const fields=['first_name','last_name','phone','email','service_type','problem_description','request_key'];
   const lead=Object.fromEntries(fields.map(k=>[k,body[k]]));
   lead.consent_to_contact=body.consent_to_contact===true;
