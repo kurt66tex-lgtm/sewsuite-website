@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import snapshot from "@/src/data/prelaunch-public-snapshot.json";
 
 const BASE_URL = "https://sewsuite.com";
 
@@ -21,6 +22,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  const cityUrls = snapshot.ServiceArea.filter(area => area.active && area.indexable).map(area => ({
+    url: `${BASE_URL}/service-areas/${area.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   return [
     {
       url: BASE_URL,
@@ -35,6 +43,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     ...serviceUrls,
+    {
+      url: `${BASE_URL}/service-areas`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    ...cityUrls,
     {
       url: `${BASE_URL}/gallery`,
       lastModified: now,
