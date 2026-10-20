@@ -3,6 +3,7 @@ import Link from "next/link";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
+  { href: "/service-areas", label: "Service Areas" },
   { href: "/gallery", label: "Gallery" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
@@ -78,7 +79,7 @@ export default function Footer() {
 
         <div className="border-t border-sew-green-light mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-sew-cream/50 text-xs">
-            © 2025 Sew Suite. All rights reserved.
+            © 2026 Sew Suite. All rights reserved.
           </p>
           <p className="text-sew-cream/40 text-xs">
             Marketing by{" "}
