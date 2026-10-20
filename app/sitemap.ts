@@ -3,14 +3,7 @@ import snapshot from "@/src/data/prelaunch-public-snapshot.json";
 
 const BASE_URL = "https://sewsuite.com";
 
-const SERVICE_SLUGS = [
-  "custom-embroidery",
-  "screen-printing",
-  "branded-apparel",
-  "hats-and-caps",
-  "corporate-gifts",
-  "team-uniforms",
-];
+const SERVICE_SLUGS = snapshot.ServiceType.filter(service => service.active && service.publicly_advertised).map(service => service.slug);
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
