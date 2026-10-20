@@ -1,42 +1,33 @@
-import type { SewSuiteFAQ, SewSuiteService } from "@/types";
-
+// Local business information must be grounded in the currently published Sew Suite website.
+// Avoid fabricated rating, office coordinates, and placeholder telephone in search results.
 export function localBusinessSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: "Sew Suite",
     description:
-      "Custom embroidery and branded apparel for businesses across North Texas",
+      "Custom embroidery, screen printing, DTF printing and branded apparel for businesses, schools, teams and organizations in North Texas and nationwide",
     url: "https://sewsuite.com",
-    telephone: "TBD",
+    telephone: "+1-469-640-8568",
+    email: "support@sewsuite.com",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Allen",
       addressRegion: "TX",
       addressCountry: "US",
     },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 33.103,
-      longitude: -96.671,
-    },
     areaServed: [
-      "Allen TX",
-      "Lucas TX",
-      "McKinney TX",
-      "Frisco TX",
-      "Plano TX",
-      "DFW",
+      "Allen TX", "McKinney TX", "Plano TX", "Frisco TX", "Lucas TX",
+      "Fairview TX", "Parker TX", "Murphy TX", "Wylie TX", "Richardson TX",
+      "Garland TX", "Prosper TX", "Celina TX", "Melissa TX", "Princeton TX",
+      "The Colony TX", "Dallas TX", "Rockwall TX", "Rowlett TX", "Sachse TX",
     ],
-    priceRange: "$$",
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5",
-      reviewCount: "3",
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Custom Apparel and Decoration Services",
     },
   };
 }
-
 export function faqPageSchema(faqs: SewSuiteFAQ[]) {
   return {
     "@context": "https://schema.org",
