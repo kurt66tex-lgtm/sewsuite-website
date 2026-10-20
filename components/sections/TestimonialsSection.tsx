@@ -1,45 +1,15 @@
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import type { SewSuiteTestimonial } from "@/types";
 
-const fallbackTestimonials: SewSuiteTestimonial[] = [
-  {
-    id: "1",
-    name: "Marcus T.",
-    company: "Allen Eagles Booster Club",
-    quote:
-      "Sew Suite handled our entire booster club order — over 200 pieces — without a single issue. The embroidery quality on the jackets was exceptional. We've been going back for three years.",
-    rating: 5,
-    approved: true,
-    sort_order: 0,
-  },
-  {
-    id: "2",
-    name: "Sarah K.",
-    company: "GreenTech Renewables",
-    quote:
-      "We needed branded bags and polos for a trade show with a tight deadline. Sew Suite delivered early and the quality was exactly what we needed. Our team looked professional and we got compliments all weekend.",
-    rating: 5,
-    approved: true,
-    sort_order: 1,
-  },
-  {
-    id: "3",
-    name: "James R.",
-    company: "Tommy Terrific's Car Wash",
-    quote:
-      "I've ordered from a lot of places online and nothing compares. Sew Suite actually took the time to make our logo look right on a visor — something I could never get right through a print-on-demand site.",
-    rating: 5,
-    approved: true,
-    sort_order: 2,
-  },
-];
-
 interface Props {
   testimonials?: SewSuiteTestimonial[];
 }
 
-export default function TestimonialsSection({ testimonials = fallbackTestimonials }: Props) {
-  const items = testimonials.length > 0 ? testimonials : fallbackTestimonials;
+export default function TestimonialsSection({ testimonials = [] }: Props) {
+  // Only verified approved testimonials may be shown. Never invent customer endorsements.
+  if (testimonials.length === 0) return null;
+  const items = testimonials.filter(t => t.approved === true);
+  if (items.length === 0) return null;
 
   return (
     <SectionWrapper bg="cream">
