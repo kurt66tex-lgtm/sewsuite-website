@@ -12,14 +12,15 @@ import StitchInkCTA from "@/components/sections/StitchInkCTA";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import FAQSection from "@/components/sections/FAQSection";
 import { localBusinessSchema, faqPageSchema } from "@/lib/schema";
-import { getTestimonials, getFAQs } from "@/lib/content";
+import snapshot from "@/src/data/prelaunch-public-snapshot.json";
+import type { SewSuiteFAQ } from "@/types";
 
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Sew Suite | Custom Embroidery & Branded Apparel — Allen, TX",
   description:
-    "Professional custom embroidery and branded apparel for businesses, teams, and organizations in Allen, Lucas, and the DFW area. 17+ years of experience. Fast turnaround. Low minimums.",
+    "Professional custom embroidery and branded apparel for businesses, teams, and organizations in Allen, Lucas, and the DFW area. Serving North Texas and customers nationwide.",
   alternates: {
     canonical: "https://sewsuite.com",
   },
@@ -33,11 +34,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function HomePage() {
-  const [testimonials, faqs] = await Promise.all([
-    getTestimonials().catch(() => []),
-    getFAQs().catch(() => []),
-  ]);
+const verifiedFAQs: SewSuiteFAQ[] = snapshot.ServiceType
+  .filter(service => service.active && service.publicly_advertised)
+  .flatMap(service => (Array.isArray(service.faqs) ? service.faqs : []).map((item,i) => ({
+    id: `${service.slug}-${i}`,
+    question: item.question,
+    answer: item.answer,
+    sort_order: i,
+    active: true,
+  })))
+  .filter((item,i,arr) => arr.findIndex(x => x.question === item.question) === i)
+  .slice(0, 8);
+
+export default function HomePage() {
+  const faqs = verifiedFAQs;
+  // Testimonials stay unpublished until owner-approved customer reviews are migrated.
+  const testimonials: never[] = [];
 
   return (
     <>
