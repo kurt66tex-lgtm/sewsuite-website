@@ -8,6 +8,15 @@ import {join} from 'node:path';
 const snapshot=JSON.parse(readFileSync('src/data/prelaunch-public-snapshot.json','utf8'));
 const items=(snapshot.PortfolioProject||[]).filter(x=>x.is_published);
 if(items.length!==9)throw Error('published_portfolio_count_mismatch');
+const business=(snapshot.BusinessSettings||[])[0]||{};
+for(const name of ['logo_url','logo_reversed_url','hero_image_url']){
+ const media=business[name];
+ if(typeof media!=='string'||!/^[\/][A-Za-z0-9._-]+\.png$/.test(media))throw Error('missing_or_external_brand_media_'+name);
+ const file=join('public',media.slice(1));
+ if(!existsSync(file)||statSync(file).size<100)throw Error('missing_brand_media_'+name);
+ const bytes=readFileSync(file);
+ if(!bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])))throw Error('invalid_brand_png_'+name);
+}
 const paths=new Set();
 for(const item of items){
  if(item.public_permission_confirmed!==true||!item.cover_alt_text?.trim())throw Error('public_media_permission_or_alt_missing_'+item.slug);
@@ -30,4 +39,4 @@ for(const item of evidence.assets){
  if(bytes.length!==item.bytes||createHash('sha256').update(bytes).digest('hex')!==item.sha256)
   throw Error('portfolio_media_sha256_verification_failed_'+item.slug);
 }
-console.log('RRS_INDEPENDENT_PORTFOLIO_MEDIA_PASS '+JSON.stringify({images:items.length,externalBase44Media:false,verifiedNewAssets:evidence.assets.length}));
+console.log('RRS_INDEPENDENT_PORTFOLIO_MEDIA_PASS '+JSON.stringify({images:items.length,externalBase44Media:false,verifiedNewAssets:evidence.assets.length,localBrandImages:3}));
