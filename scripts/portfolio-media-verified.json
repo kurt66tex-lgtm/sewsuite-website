@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "source_app": "69e39cd9aef38e2e50456a73",
+  "total": 1,
+  "total_bytes": 1855406,
+  "assets": [
+    {
+      "slug": "allen-americans-embroidered-polo",
+      "local_path": "/media/portfolio/1e3ba1888_AllenAmericansPolo.png",
+      "sha256": "5eccd2d60a5f1b5cc8f3b3c79b5f55b0f125437534567a95335d15ff103d36eb",
+      "bytes": 1855406
+    }
+  ]
+}
