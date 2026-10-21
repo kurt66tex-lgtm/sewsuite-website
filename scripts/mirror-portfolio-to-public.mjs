@@ -15,7 +15,7 @@ const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const src=JSON.parse(await readFile(resolve(root,'scripts/portfolio-media-sources.json'),'utf8'));
 const snapshotPath=resolve(root,'src/data/prelaunch-public-snapshot.json');
 const snapshot=JSON.parse(await readFile(snapshotPath,'utf8'));
-if(src.schema_version!==1||src.source_app!=='69e39cd9aef38e2e50456a73'||src.assets?.length!==9||
+if(src.schema_version!==1||src.source_app!=='69e39cd9aef38e2e50456a73'||src.assets?.length!==1||
    snapshot.PortfolioProject?.length!==9)throw Error('portfolio_inventory_mismatch');
 const recs=new Map(snapshot.PortfolioProject.map(x=>[x.slug,x]));
 const hashes=[];
@@ -59,8 +59,24 @@ for(const entry of src.assets){
  portfolio.cover_image_url=entry.local_path;
  console.log('RRS_PORTFOLIO_MEDIA_MIRROR_PASS',entry.slug,buffer.length,reused?'reused':'copied');
 }
-if(new Set(hashes.map(x=>x.local_path)).size!==9)throw Error('duplicate_media_destination');
+if(new Set(hashes.map(x=>x.local_path)).size!==src.assets.length)throw Error('duplicate_media_destination');
+// Verify the eight already-mirrored local images remain unchanged and that all
+// nine public portfolio records now resolve to independent local files.
+const localFiles=new Set();
+for(const item of snapshot.PortfolioProject){
+ if(!item.is_published||item.public_permission_confirmed!==true)throw Error('public_record_not_approved');
+ const u=item.cover_image_url;
+ if(typeof u!=='string'||!/^\/(?:portfolio-[a-z0-9-]+\.jpg|media\/portfolio\/[A-Za-z0-9_.-]+\.(?:png|jpg))$/.test(u))
+   throw Error('remaining_external_portfolio_image_'+item.slug);
+ if(localFiles.has(u))throw Error('duplicate_portfolio_image');
+ localFiles.add(u);
+ const local=resolve(root,'public',u.slice(1));
+ if(!local.startsWith(resolve(root,'public')+'/'))throw Error('unsafe_asset_path');
+ const info=await stat(local);
+ if(!info.isFile()||info.size<100)throw Error('missing_local_portfolio_image_'+item.slug);
+}
+if(localFiles.size!==9)throw Error('wrong_final_portfolio_count');
 await writeFile(snapshotPath,JSON.stringify(snapshot,null,2)+'\n');
 const evidence={schema_version:1,source_app:src.source_app,total:hashes.length,total_bytes:hashes.reduce((n,x)=>n+x.bytes,0),assets:hashes.map(({reused,...x})=>x)};
 await writeFile(resolve(root,'scripts/portfolio-media-verified.json'),JSON.stringify(evidence,null,2)+'\n');
-console.log('RRS_PORTFOLIO_MEDIA_INDEPENDENCE_READY',JSON.stringify({images:hashes.length,total_bytes:evidence.total_bytes,refs_local:true}));
+console.log('RRS_PORTFOLIO_MEDIA_INDEPENDENCE_READY',JSON.stringify({new_images:hashes.length,all_local_images:localFiles.size,total_new_bytes:evidence.total_bytes,refs_local:true}));
