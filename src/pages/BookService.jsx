@@ -52,9 +52,11 @@ export default function BookService() {
   const [error, setError] = useState(null);
   const [turnstileToken,setTurnstileToken]=useState('');
   const [publicIntakeAvailable,setPublicIntakeAvailable]=useState(false);
+  const [artworkAvailable,setArtworkAvailable]=useState(false);
   const requestKey=useRef('website_'+crypto.randomUUID().replaceAll('-',''));
   const siteKey=import.meta.env.VITE_TURNSTILE_SITE_KEY||'';
   useEffect(()=>{let active=true;fetch('/api/intake',{cache:'no-store'}).then(r=>r.json()).then(x=>active&&setPublicIntakeAvailable(x.available===true)).catch(()=>{});return()=>{active=false}},[]);
+  useEffect(()=>{let active=true;fetch('/api/artwork',{cache:'no-store'}).then(r=>r.json()).then(x=>active&&setArtworkAvailable(x.available===true)).catch(()=>{});return()=>{active=false}},[]);
   useEffect(()=>{if(!siteKey)return;let active=true,instance;const render=()=>{if(!active||!window.turnstile||!document.getElementById('sew-turnstile'))return;instance=window.turnstile.render('#sew-turnstile',{sitekey:siteKey,callback:t=>setTurnstileToken(t),'expired-callback':()=>setTurnstileToken('')})};const script=document.createElement('script');script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';script.async=true;script.onload=render;document.head.appendChild(script);return()=>{active=false;if(instance!==undefined&&window.turnstile)try{window.turnstile.remove(instance)}catch{};script.remove()}},[siteKey]);
 
   const photoLimit = settings?.photo_limit_per_conversation || 5;
@@ -81,21 +83,69 @@ export default function BookService() {
 
   const handleFileSelect = async (e) => {
     const files = Array.from(e.target.files || []);
-    if (photos.length + files.length > photoLimit) {
-      setError(`You can upload up to ${photoLimit} ${isCustomApparel ? 'artwork or reference files' : 'photos'}.`);
+    if (e.target) e.target.value = '';
+    if (!artworkAvailable) {
+      setError('Artwork uploads are not available yet. Please contact Sew Suite to send your files.');
       return;
     }
-    setError('Artwork uploads are not yet connected in this comparison preview. Use www.sewsuite.com to submit your files.');
-    if (e.target) e.target.value = '';
-
+    if (photos.length + files.length > Math.min(photoLimit, 5)) {
+      setError(`You can select up to ${Math.min(photoLimit, 5)} artwork or reference files.`);
+      return;
+    }
+    const namesOk = files.every(file =>
+      /^[A-Za-z0-9 _().-]{1,120}$/.test(file.name) &&
+      ['image/jpeg','image/png','image/webp'].includes(file.type) &&
+      file.size > 0 && file.size <= 10 * 1024 * 1024
+    );
+    if (!namesOk) {
+      setError('Use JPG, PNG or WEBP images under 10MB each, with a standard filename.');
+      return;
+    }
+    setError('');
+    setPhotos(previous => [...previous,...files.map(file => ({
+      file, file_name:file.name, attachment_type:attachmentTypes[0],
+      preview:URL.createObjectURL(file)
+    }))]);
   };
 
   const removePhoto = (idx) => {
-    setPhotos(p => p.filter((_, i) => i !== idx));
+    setPhotos(previous => {
+      const removed = previous[idx];
+      if (removed?.preview) URL.revokeObjectURL(removed.preview);
+      return previous.filter((_, i) => i !== idx);
+    });
   };
 
   const setPhotoType = (idx, type) => {
-    setPhotos(p => p.map((ph, i) => i === idx ? { ...ph, attachment_type: type } : ph));
+    setPhotos(previous => previous.map((p,i) => i===idx ? {...p,attachment_type:type}:p));
+  };
+
+  const uploadConfirmedArtwork = async (leadId, capability) => {
+    if (!/^[a-f0-9]{64}$/.test(capability || '')) throw Error('missing_artwork_capability');
+    const done = [];
+    for (const item of photos) {
+      const file = item.file;
+      const bytes = await file.arrayBuffer();
+      const digest = await crypto.subtle.digest('SHA-256',bytes);
+      const sha256 = Array.from(new Uint8Array(digest),v=>v.toString(16).padStart(2,'0')).join('');
+      const ownership = {lead_id:leadId,request_key:requestKey.current,artwork_token:capability};
+      const prepare = await fetch('/api/artwork?action=prepare',{
+        method:'POST',headers:{'content-type':'application/json'},
+        body:JSON.stringify({...ownership,filename:file.name,content_type:file.type,size:file.size,sha256})
+      });
+      const prepared = await prepare.json().catch(()=>({}));
+      if (prepare.status!==200 || !prepared.intent_id || !prepared.upload_url) throw Error('artwork_prepare_failed');
+      const upload = await fetch(prepared.upload_url,{method:'PUT',headers:{'content-type':file.type},body:file});
+      if (!upload.ok) throw Error('artwork_upload_failed');
+      const commit = await fetch('/api/artwork?action=commit',{
+        method:'POST',headers:{'content-type':'application/json'},
+        body:JSON.stringify({...ownership,intent_id:prepared.intent_id})
+      });
+      const committed = await commit.json().catch(()=>({}));
+      if (commit.status!==200||committed.success!==true||!committed.file_id)throw Error('artwork_commit_failed');
+      done.push({file_name:file.name,file_id:committed.file_id});
+    }
+    return done;
   };
 
   const submit = async (e) => {
@@ -105,7 +155,7 @@ export default function BookService() {
     if(!publicIntakeAvailable||!siteKey){setError('Online requests are not available yet. Please contact Sew Suite directly.');return;}
     if(!form.consent_to_contact){setError('Please confirm that Sew Suite may contact you about your inquiry.');return;}
     if(!turnstileToken){setError('Please complete the verification before submitting.');return;}
-    if(photos.length){setError('File uploads are being configured. Please submit the request without attachments for now.');return;}
+    if(photos.length&&!artworkAvailable){setError('Artwork uploading is not available. Remove the selected files to submit without artwork.');return;}
     setSubmitting(true);
     try{
       const fields={first_name:form.first_name,last_name:form.last_name,phone:form.phone,email:form.email,
@@ -114,7 +164,16 @@ export default function BookService() {
       const response=await fetch('/api/intake',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(fields)});
       const data=await response.json().catch(()=>({}));
       if(response.status!==202||data.success!==true||!data.lead_id)throw Error('not_confirmed');
-      setResult({success:true,lead_id:data.lead_id,notification_status:data.notification_status});
+      // Lead was durably committed. A subsequent artwork failure MUST NOT undo or resubmit the lead.
+      let artworkFiles=[],artworkError=false;
+      if (photos.length) {
+        setUploading(true);
+        try { artworkFiles=await uploadConfirmedArtwork(data.lead_id,data.artwork_token); }
+        catch { artworkError=true; }
+        finally { setUploading(false); }
+      }
+      setResult({success:true,lead_id:data.lead_id,notification_status:data.notification_status,
+        artwork_files:artworkFiles,artwork_error:artworkError,artwork_expected:photos.length});
     }catch{
       setError('We could not confirm your request was saved. Please contact Sew Suite directly rather than assuming it was submitted.');
       setTurnstileToken('');
@@ -135,6 +194,15 @@ export default function BookService() {
                 ? `Thank you for checking with ${businessName}. The address you entered is outside our current service area, so we won't be able to schedule this request right now.`
                 : `Thank you — we've received your service request. A ${businessName} team member will contact you to confirm your appointment. Your requested date and time is not confirmed until we reach you.`}
           </p>
+          {result.artwork_error && (
+            <div role="alert" className="mt-5 flex items-start gap-2 bg-amber-50 border border-amber-300 rounded-lg p-4 text-left text-sm text-amber-950">
+              <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+              <span>Your quote request was received, but one or more artwork files could not be confirmed. Please contact service@sewsuite.com and mention your request ID: {result.lead_id}. Do not resubmit the quote.</span>
+            </div>
+          )}
+          {!result.artwork_error && result.artwork_expected > 0 && (
+            <p className="mt-4 text-sm text-slate-700">{result.artwork_files.length} artwork file(s) securely attached to your quote request.</p>
+          )}
           {result.safety_flag && (
             <div className="mt-5 flex items-start gap-2 bg-red-50 border border-red-200 rounded-lg p-4 text-left text-sm text-red-800">
               <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" />
@@ -342,8 +410,8 @@ export default function BookService() {
             <p className="text-sm text-slate-600 mb-3">{isCustomApparel ? 'Upload your logo, artwork, garment/product reference, or inspiration images when available.' : isApplianceModule ? 'If you can, upload a clear photo of the appliance and model/serial label. This can help the team prepare before the visit.' : 'Upload photos of the equipment, problem area, property, or project details that may help us understand the request.'} JPG, PNG or WEBP, up to 10MB each, max {photoLimit} files.</p>
             <label className="flex flex-col items-center justify-center border-2 border-dashed border-slate-300 rounded-lg p-6 cursor-pointer hover:border-brand-accent transition-colors">
               {uploading ? <Loader2 className="w-6 h-6 animate-spin text-slate-400" /> : <Upload className="w-6 h-6 text-slate-400" />}
-              <span className="text-sm text-slate-600 mt-2">{isCustomApparel ? 'Choose artwork or reference images' : 'Click to upload photos'}</span>
-              <input type="file" accept="image/jpeg,image/png,image/webp" multiple className="hidden" onChange={handleFileSelect} disabled={uploading || photos.length >= photoLimit} />
+              <span className="text-sm text-slate-600 mt-2">{artworkAvailable ? (isCustomApparel ? 'Choose artwork or reference images' : 'Click to upload photos') : 'Artwork uploading is not available in this preview'}</span>
+              <input type="file" accept="image/jpeg,image/png,image/webp" multiple className="hidden" onChange={handleFileSelect} disabled={!artworkAvailable || submitting || uploading || photos.length >= Math.min(photoLimit, 5)} />
             </label>
             {photos.length > 0 && (
               <div className="mt-4 space-y-3">
