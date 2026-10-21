@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node --test tests/artwork-gate.test.mjs && vite build && node scripts/build-static-seo.mjs && node scripts/test-static-seo.mjs && node scripts/test-independent-media.mjs",
+    "build": "node --test tests/artwork-gate.test.mjs && vite build && node scripts/build-static-seo.mjs && node scripts/test-static-seo.mjs && node scripts/test-independent-media.mjs && node scripts/test-sitemap-parity.mjs",
     "lint": "eslint . --quiet",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc -p ./jsconfig.json",
@@ -13,7 +13,8 @@
     "test:factory": "node .phase9-test/build-provisioning.mjs && node .phase9-test/regression.mjs",
     "preflight:production": "node scripts/production-cutover-preflight.mjs",
     "test:static-seo": "node scripts/test-static-seo.mjs",
-    "test:artwork": "node --test tests/artwork-gate.test.mjs"
+    "test:artwork": "node --test tests/artwork-gate.test.mjs",
+    "test:sitemap": "node scripts/test-sitemap-parity.mjs"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^17.0.0",
