@@ -29,6 +29,6 @@ export default async function handler(req,res){
    body:JSON.stringify(lead),signal:AbortSignal.timeout(12000)});
   const data=await result.json().catch(()=>({}));
   if(result.status!==202||data.success!==true||!data.lead_id)return res.status(503).json({error:'submission_not_confirmed'});
-  return res.status(202).json({success:true,lead_id:data.lead_id,replayed:data.replayed===true,notification_status:data.notification_status||'held'});
+  return res.status(202).json({success:true,lead_id:data.lead_id,replayed:data.replayed===true,notification_status:data.notification_status||'held',...(process.env.RRS_PRODUCTION_ARTWORK_ENABLED==='true'&&/^[a-f0-9]{64}$/.test(data.artwork_token||'')?{artwork_token:data.artwork_token}:{})});
  }catch{return res.status(503).json({error:'submission_unavailable'})}
 }
