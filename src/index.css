@@ -122,24 +122,19 @@
 }
 
 @layer components {
-  .public-site a.bg-brand-accent,
-  .public-site button.bg-brand-accent {
+  .public-site :is(a,button).bg-brand-accent {
     background-color: var(--brand-cta);
     color: var(--brand-button-text);
   }
 
-  .public-site a.border-brand-accent,
-  .public-site button.border-brand-accent,
-  .public-site a.border-zoom-yellow,
-  .public-site button.border-zoom-yellow {
+  .public-site :is(a,button).border-brand-accent,
+  .public-site :is(a,button).border-zoom-yellow {
     border-color: var(--brand-secondary-border);
     color: var(--brand-secondary-text);
   }
 
-  .public-site a.border-brand-accent:hover,
-  .public-site button.border-brand-accent:hover,
-  .public-site a.border-zoom-yellow:hover,
-  .public-site button.border-zoom-yellow:hover {
+  .public-site :is(a,button).border-brand-accent:hover,
+  .public-site :is(a,button).border-zoom-yellow:hover {
     background-color: var(--brand-secondary-hover-bg);
     border-color: var(--brand-secondary-hover-bg);
     color: var(--brand-secondary-hover-text);
@@ -181,36 +176,25 @@
   }
 
   /* Context-safe outlined CTAs: legacy page markup inside dark sections must stay readable. */
-  .public-site .bg-brand-dark a.border-brand-accent,
-  .public-site .bg-brand-dark button.border-brand-accent,
-  .public-site .bg-brand-charcoal a.border-brand-accent,
-  .public-site .bg-brand-charcoal button.border-brand-accent,
-  .public-site .bg-zoom-black a.border-zoom-yellow,
-  .public-site .bg-zoom-black button.border-zoom-yellow,
-  .public-site .bg-slate-900 a.border-brand-accent,
-  .public-site .bg-slate-900 button.border-brand-accent,
-  .public-site .bg-slate-800 a.border-brand-accent,
-  .public-site .bg-slate-800 button.border-brand-accent {
+  .public-site .bg-brand-dark :is(a,button).border-brand-accent,
+  .public-site .bg-brand-charcoal :is(a,button).border-brand-accent,
+  .public-site .bg-zoom-black :is(a,button).border-zoom-yellow,
+  .public-site .bg-slate-900 :is(a,button).border-brand-accent,
+  .public-site .bg-slate-800 :is(a,button).border-brand-accent {
     color: var(--brand-light) !important;
   }
 
-  .public-site .bg-brand-dark a.border-brand-accent:hover,
-  .public-site .bg-brand-dark button.border-brand-accent:hover,
-  .public-site .bg-brand-charcoal a.border-brand-accent:hover,
-  .public-site .bg-brand-charcoal button.border-brand-accent:hover,
-  .public-site .bg-zoom-black a.border-zoom-yellow:hover,
-  .public-site .bg-zoom-black button.border-zoom-yellow:hover,
-  .public-site .bg-slate-900 a.border-brand-accent:hover,
-  .public-site .bg-slate-900 button.border-brand-accent:hover,
-  .public-site .bg-slate-800 a.border-brand-accent:hover,
-  .public-site .bg-slate-800 button.border-brand-accent:hover {
+  .public-site .bg-brand-dark :is(a,button).border-brand-accent:hover,
+  .public-site .bg-brand-charcoal :is(a,button).border-brand-accent:hover,
+  .public-site .bg-zoom-black :is(a,button).border-zoom-yellow:hover,
+  .public-site .bg-slate-900 :is(a,button).border-brand-accent:hover,
+  .public-site .bg-slate-800 :is(a,button).border-brand-accent:hover {
     background-color: var(--brand-secondary-hover-bg);
     border-color: var(--brand-secondary-hover-bg);
     color: var(--brand-secondary-hover-text) !important;
   }
 
-  .public-site a.bg-brand-accent:hover,
-  .public-site button.bg-brand-accent:hover {
+  .public-site :is(a,button).bg-brand-accent:hover {
     background-color: var(--brand-accent-dark);
     color: var(--brand-button-text);
   }
