@@ -5,6 +5,7 @@
  *
  * Run on a trusted CI worker: node scripts/mirror-portfolio-to-public.mjs
  * Each image must have an explicitly approved origin, type and exact byte count.
+ * This migration is preview-only; no Base44 LIVE or DNS changes are made.
  */
 import {readFile,writeFile,mkdir,stat} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
