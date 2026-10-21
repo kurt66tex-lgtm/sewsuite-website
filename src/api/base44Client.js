@@ -14,7 +14,10 @@ async function document(){
   .then(async response=>{
    if(!response.ok)throw Error('independent_catalog_unavailable');
    const message=await response.json();
-   if(message.tenant!=='sew-suite'||!message.version||!message.data||typeof message.data!=='object'||
+   if(message.tenant!=='sew-suite'||!message.version||
+      !import.meta.env.VITE_APPROVED_CATALOG_VERSION||
+      message.version!==import.meta.env.VITE_APPROVED_CATALOG_VERSION||
+      !message.data||typeof message.data!=='object'||
       Object.keys(message.data).some(key=>!allowed.has(key))||
       [...allowed].some(key=>!Array.isArray(message.data[key])))throw Error('catalog_shape_invalid');
    return message.data;
