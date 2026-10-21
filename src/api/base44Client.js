@@ -1,22 +1,59 @@
-// Independent, read-only prelaunch adapter. No Base44 SDK or network calls.
-import dataset from '@/data/prelaunch-public-snapshot.json';
-const settings=dataset.BusinessSettings?.[0] || {};
-function readonlyRows(name){return dataset[name] || []}
+// RRS independent public content compatibility adapter.
+// Existing React components still import {base44}; there are NO Base44 SDK/network calls.
+// Protected preview defaults to its signed-off snapshot. Production must explicitly
+// select independent mode and pass a real owned catalog API acceptance gate.
+import snapshot from '@/data/prelaunch-public-snapshot.json';
+const independent=import.meta.env.VITE_PUBLIC_CATALOG_MODE==='independent';
+const allowed=new Set(['BusinessSettings','ServiceType','ServiceArea','Brand','Review','PortfolioProject','PortfolioPhoto','ServiceIntakeQuestion']);
+const denied=async()=>{throw Error('public_write_not_allowed')};
+let activeRequest=null,expiresAt=0;
+async function document(){
+ if(!independent)return snapshot;
+ if(activeRequest&&Date.now()<expiresAt)return activeRequest;
+ activeRequest=fetch('/api/public-catalog',{cache:'no-store',headers:{accept:'application/json'}})
+  .then(async response=>{
+   if(!response.ok)throw Error('independent_catalog_unavailable');
+   const message=await response.json();
+   if(message.tenant!=='sew-suite'||!message.version||!message.data||typeof message.data!=='object'||
+      Object.keys(message.data).some(key=>!allowed.has(key))||
+      [...allowed].some(key=>!Array.isArray(message.data[key])))throw Error('catalog_shape_invalid');
+   return message.data;
+  }).catch(error=>{activeRequest=null;expiresAt=0;throw error});
+ expiresAt=Date.now()+60000;
+ return activeRequest;
+}
+async function records(name){
+ const data=await document();
+ return allowed.has(String(name))?[...(data[name]||[])]:[];
+}
+function sorted(rows,sort){
+ if(typeof sort!=='string'||!sort)return rows;
+ const descending=sort.startsWith('-'),field=descending?sort.slice(1):sort;
+ return rows.sort((a,b)=>String(a?.[field]??'').localeCompare(String(b?.[field]??''))*(descending?-1:1));
+}
 const entities=new Proxy({}, {get(_target,name){
  return {
-  filter:async (query={},sort,limit)=>{let a=readonlyRows(name).filter(row=>Object.entries(query||{}).every(([k,v])=>row[k]===v));if(typeof sort==='string'){const descending=sort.startsWith('-'),field=descending?sort.slice(1):sort;a=a.sort((x,y)=>((x[field]??'')>(y[field]??'')?1:(x[field]??'')<(y[field]??'')?-1:0)*(descending?-1:1))}return typeof limit==='number'?a.slice(0,limit):a},
-  list:async(sort,limit)=>{let a=[...readonlyRows(name)];if(sort){const desc=sort.startsWith('-'),field=desc?sort.slice(1):sort;a.sort((x,y)=>(String(x[field]??'').localeCompare(String(y[field]??'')))*(desc?-1:1))}return limit?a.slice(0,limit):a},
-  get:async id=>readonlyRows(name).find(r=>r.id===id)||null,
-  create:async()=>{throw Error('prelaunch_read_only')},
-  update:async()=>{throw Error('prelaunch_read_only')},
-  delete:async()=>{throw Error('prelaunch_read_only')}
- } }});
-const denied=async()=>{throw Error('prelaunch_read_only')};
+  filter:async(query={},sort,limit)=>{
+   const result=sorted((await records(name)).filter(row=>Object.entries(query||{}).every(([k,v])=>row?.[k]===v)),sort);
+   return typeof limit==='number'?result.slice(0,limit):result;
+  },
+  list:async(sort,limit)=>{
+   const result=sorted(await records(name),sort);
+   return typeof limit==='number'?result.slice(0,limit):result;
+  },
+  get:async id=>(await records(name)).find(row=>row.id===id)||null,
+  create:denied,update:denied,delete:denied
+ }
+}});
 export const base44={
- app:{getPublicSettings:async()=>({id:'prelaunch',public_settings:{}})},
- auth:{me:denied,logout:()=>{window.location.assign('/')},redirectToLogin:()=>{window.location.assign('/')},isAuthenticated:async()=>false},
- functions:{invoke:async(name)=>{if(name==='getPublicBusinessSettings')return {data:settings};throw Error('prelaunch_function_disabled')}},
+ app:{getPublicSettings:async()=>({id:'rrs-independent-public',public_settings:{}})},
+ auth:{me:denied,logout:()=>{window.location.assign('/')},
+  redirectToLogin:()=>{window.location.assign('/')},isAuthenticated:async()=>false},
+ functions:{invoke:async(name)=>{
+  if(name==='getPublicBusinessSettings')return {data:(await document()).BusinessSettings?.[0]||{}};
+  throw Error('public_function_disabled');
+ }},
  entities,integrations:{Core:{UploadFile:denied,SendEmail:denied}},
  users:{inviteUser:denied},
- asServiceRole:{entities},
+ asServiceRole:{entities}
 };
