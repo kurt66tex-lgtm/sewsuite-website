@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "source_app": "69e39cd9aef38e2e50456a73",
+  "assets": [
+    {
+      "slug": "50th-anniversary-embroidered-jacket",
+      "source_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/9198b7c65_Solar_50aniversary_jacket.jpg",
+      "local_path": "/media/portfolio/9198b7c65_Solar_50aniversary_jacket.jpg",
+      "expected_bytes": 72008
+    },
+    {
+      "slug": "firearms-instructor-embroidered-cap",
+      "source_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/cf546f01e_Fire_arms_instructorcap.jpg",
+      "local_path": "/media/portfolio/cf546f01e_Fire_arms_instructorcap.jpg",
+      "expected_bytes": 143986
+    },
+    {
+      "slug": "greentech-renewables-embroidered-tote",
+      "source_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/8884949b5_Greentech_renewables_bag.jpg",
+      "local_path": "/media/portfolio/8884949b5_Greentech_renewables_bag.jpg",
+      "expected_bytes": 216249
+    },
+    {
+      "slug": "tommy-terrifics-car-wash-embroidered-visor",
+      "source_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/3e8f6f7ca_Tommy_terrifics_carwash_visor.jpg",
+      "local_path": "/media/portfolio/3e8f6f7ca_Tommy_terrifics_carwash_visor.jpg",
+      "expected_bytes": 316515
+    },
+    {
+      "slug": "allen-eagles-embroidered-applique",
+      "source_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/c3df55321_Allen_eagles_applique.jpg",
+      "local_path": "/media/portfolio/c3df55321_Allen_eagles_applique.jpg",
+      "expected_bytes": 256694
+    },
+    {
+      "slug": "rodeo-embroidered-cap",
+      "source_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/493bd22ab_Rodeo_cap.jpg",
+      "local_path": "/media/portfolio/493bd22ab_Rodeo_cap.jpg",
+      "expected_bytes": 133260
+    },
+    {
+      "slug": "winter-wonderland-decorated-sweatshirt",
+      "source_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/384a492a1_Winter_wonderland_sweatshirt.jpg",
+      "local_path": "/media/portfolio/384a492a1_Winter_wonderland_sweatshirt.jpg",
+      "expected_bytes": 100143
+    },
+    {
+      "slug": "easygame-embroidered-cap",
+      "source_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/0f95beb52_Easygame_cap.jpg",
+      "local_path": "/media/portfolio/0f95beb52_Easygame_cap.jpg",
+      "expected_bytes": 103451
+    },
+    {
+      "slug": "allen-americans-embroidered-polo",
+      "source_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/1e3ba1888_AllenAmericansPolo.png",
+      "local_path": "/media/portfolio/1e3ba1888_AllenAmericansPolo.png",
+      "expected_bytes": 1855406
+    }
+  ]
+}
