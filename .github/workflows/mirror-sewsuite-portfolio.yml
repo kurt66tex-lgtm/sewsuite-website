@@ -1,0 +1,41 @@
+name: Mirror Sew Suite LIVE portfolio images
+on:
+  push:
+    branches: [sew-suite-production-precutover-20261018]
+    paths:
+      - scripts/portfolio-media-sources.json
+      - scripts/mirror-portfolio-to-public.mjs
+      - .github/workflows/mirror-sewsuite-portfolio.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sew-suite-preview-portfolio-mirror
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify and copy public images into repository
+        run: node scripts/mirror-portfolio-to-public.mjs
+      - name: Commit copied images and local preview references
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add public/media/portfolio scripts/portfolio-media-verified.json src/data/prelaunch-public-snapshot.json
+          if git diff --cached --quiet; then
+            echo "Already mirrored and committed"
+          else
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Mirror LIVE Sew Suite portfolio images into independent preview [skip ci]"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
