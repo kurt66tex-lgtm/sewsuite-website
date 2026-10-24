@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 const data=JSON.parse(readFileSync('src/data/prelaunch-public-snapshot.json','utf8'));
+assert.equal(data.BusinessSettings?.[0]?.email,'support@sewsuite.com','public_email_drift');
 const xml=readFileSync('public/sitemap.xml','utf8');
 const urls=[...xml.matchAll(/<loc>(https:\/\/[^<]+)<\/loc>/g)].map(m=>m[1]);
 const found=new Set(urls);
