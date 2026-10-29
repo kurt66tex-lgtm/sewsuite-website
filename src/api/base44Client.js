@@ -8,7 +8,7 @@ const allowed=new Set(['BusinessSettings','ServiceType','ServiceArea','Brand','R
 const denied=async()=>{throw Error('public_write_not_allowed')};
 let activeRequest=null,expiresAt=0;
 async function document(){
- if(!independent)return snapshot;
+ if(!independent)return repairDisplayText(snapshot);
  if(activeRequest&&Date.now()<expiresAt)return activeRequest;
  activeRequest=fetch('/api/public-catalog',{cache:'no-store',headers:{accept:'application/json'}})
   .then(async response=>{
@@ -20,13 +20,13 @@ async function document(){
       !message.data||typeof message.data!=='object'||
       Object.keys(message.data).some(key=>!allowed.has(key))||
       [...allowed].some(key=>!Array.isArray(message.data[key])))throw Error('catalog_shape_invalid');
-   return message.data;
+   return repairDisplayText(message.data);
   }).catch(error=>{activeRequest=null;expiresAt=0;throw error});
  expiresAt=Date.now()+60000;
  return activeRequest;
 }
 function repairDisplayText(value){
- if(typeof value==='string')return value.replace(/Ã©/g,'é').replace(/Ã¨/g,'è').replace(/Ã¢/g,'â').replace(/â€”|â€\u0094|â\u20ac\u201d/g,'—').replace(/â€“/g,'–');
+ if(typeof value==='string')return value.replace(/Ã©/g,'é').replace(/Ã¨/g,'è').replace(/â€”|â€\u0094|â\u20ac\u201d|â€\u201d|â\u20ac\u0094|â\u20ac\u201c/g,'—').replace(/â€“|â€\u0093|â\u20ac\u0093/g,'–').replace(/Ã¢/g,'â');
  if(Array.isArray(value))return value.map(repairDisplayText);
  if(value&&typeof value==='object')return Object.fromEntries(Object.entries(value).map(([key,item])=>[key,repairDisplayText(item)]));
  return value;
@@ -59,7 +59,7 @@ export const base44={
  auth:{me:denied,logout:()=>{window.location.assign('/')},
   redirectToLogin:()=>{window.location.assign('/')},isAuthenticated:async()=>false},
  functions:{invoke:async(name)=>{
-  if(name==='getPublicBusinessSettings')return {data:(await document()).BusinessSettings?.[0]||{}};
+  if(name==='getPublicBusinessSettings')return {data:repairDisplayText((await document()).BusinessSettings?.[0]||{})};
   throw Error('public_function_disabled');
  }},
  entities,integrations:{Core:{UploadFile:denied,SendEmail:denied}},
