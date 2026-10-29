@@ -25,9 +25,15 @@ async function document(){
  expiresAt=Date.now()+60000;
  return activeRequest;
 }
+function repairDisplayText(value){
+ if(typeof value==='string')return value.replace(/Ã©/g,'é').replace(/Ã¨/g,'è').replace(/Ã¢/g,'â').replace(/â€”|â€\u0094|â\u20ac\u201d/g,'—').replace(/â€“/g,'–');
+ if(Array.isArray(value))return value.map(repairDisplayText);
+ if(value&&typeof value==='object')return Object.fromEntries(Object.entries(value).map(([key,item])=>[key,repairDisplayText(item)]));
+ return value;
+}
 async function records(name){
  const data=await document();
- return allowed.has(String(name))?[...(data[name]||[])]:[];
+ return allowed.has(String(name))?(data[name]||[]).map(repairDisplayText):[];
 }
 function sorted(rows,sort){
  if(typeof sort!=='string'||!sort)return rows;
