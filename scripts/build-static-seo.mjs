@@ -52,7 +52,7 @@ for(const a of cityRows){
   faqSchema?[schema,faqSchema]:[schema]);
 }
 
-// The sitemap also publishes home, nine approved portfolio examples, and seven
+// The sitemap also publishes home, eight approved portfolio examples, and seven
 // standard information/quote pages. Render actual crawlable HTML for those too,
 // instead of serving an empty SPA shell to visitors without JavaScript.
 const settings=snapshot.BusinessSettings?.[0]||{};
@@ -109,8 +109,8 @@ add('/privacy-policy','Privacy Policy | Sew Suite',
  'Read the Sew Suite privacy policy and information about contacting the business.',
  '<h1>Privacy Policy</h1>'+para('Read the privacy information displayed on this page and contact Sew Suite if you have questions about a submitted inquiry.')+
  '<p>Email <a href="mailto:'+esc(support)+'">'+esc(support)+'</a> for privacy-related questions.</p>');
-if(projects.length!==9)throw Error('published_portfolio_count_changed_without_review');
-if(serviceRows.length!==9||cityRows.length!==20||routes.length!==49)throw Error('catalog_parity_failure_'+JSON.stringify({services:serviceRows.length,cities:cityRows.length,routes:routes.length}));
+if(projects.length!==8)throw Error('published_portfolio_count_changed_without_review');
+if(serviceRows.length!==9||cityRows.length!==20||routes.length!==48)throw Error('catalog_parity_failure_'+JSON.stringify({services:serviceRows.length,cities:cityRows.length,routes:routes.length}));
 function render(route){
  const url=base+route.path;
  const replace=(html,search,replacement)=>{if(!search.test(html))throw Error('missing_meta_marker_'+route.path);return html.replace(search,replacement)};
