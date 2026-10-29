@@ -110,7 +110,7 @@ export default function SiteLayout() {
   const [previewChecked, setPreviewChecked] = useState(false);
   const location = useLocation();
   const businessName = settings?.business_name || 'Service Business';
-  const regionLabel = settings?.service_region_label || '';
+  const regionLabel = String(settings?.service_region_label || '').replace(/â\u20ac[\u201c\u0094]|â€”|â€“|Ã¢â‚¬â€\u009d/g, '—').replace(/\s+—\s*/g, '  —');
   const phone = settings?.phone || '';
   const customerSupportEmail = settings?.customer_support_email || settings?.email || '';
   const logoLight = settings?.logo_url || settings?.logo_reversed_url || null;
