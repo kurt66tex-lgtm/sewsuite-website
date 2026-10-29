@@ -59,7 +59,7 @@ const settings=snapshot.BusinessSettings?.[0]||{};
 const projects=(snapshot.PortfolioProject||[]).filter(p=>p.is_published===true&&p.public_permission_confirmed===true);
 const homeDescription=settings.seo_default_meta_description||'Custom embroidery, screen printing, DTF and corporate apparel for businesses, schools and teams in North Texas.';
 add('/','Sew Suite | Custom Embroidery, Screen Printing & Apparel',homeDescription,
- '<h1>Custom Branded Apparel, Built Around Your Logo</h1>'+para(settings.home_hero_description||homeDescription)+
+ '<h1>Branded Gear That Works Harder for Your Business</h1>'+para('Embroidery, screen printing, and promotional products for businesses, schools, teams, and organizations across North Texas and nationwide.')+
  '<p><a href="/services">Browse services</a> or <a href="/book-service">request a quote</a>.</p>');
 add('/our-work','Sew Suite Portfolio | Custom Embroidery & Decorated Apparel',
  'View examples of Sew Suite custom embroidery, caps, corporate apparel, team wear and decorated bags.',
@@ -129,8 +129,10 @@ function render(route){
  // Keep the preview's existing noindex policy; production indexing requires a separate owner-approved release.
  const schemas=[business,...route.extraSchemas];
  html=html.replace('</head>','<script type="application/ld+json">'+jsonld(schemas)+'</script>\n</head>');
- const style='style="max-width:1000px;margin:3rem auto;padding:1.25rem;font:16px/1.6 system-ui,sans-serif;color:#263238"';
- const fallback='<main id="sew-suite-seo-fallback" '+style+'><article>'+route.body+'</article><p><a href="/book-service">Request a quote</a> or call <a href="tel:4696408568">469-640-8568</a>.</p></main>';
+ const style='style="max-width:1200px;margin:auto;padding:28px 24px;font-family:Montserrat,Arial,sans-serif;color:#243746;line-height:1.6"';
+ const navigation='<header style="border-bottom:1px solid #e5e7eb;padding:16px 24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap"><a href="/" aria-label="Sew Suite home"><img src="/sew-suite-logo-standard.png" width="150" alt="Sew Suite"></a><nav style="display:flex;gap:18px;flex-wrap:wrap"><a href="/services">Services</a><a href="/service-areas">Service Areas</a><a href="/our-work">Our Work</a><a href="/why-us">Why Us</a><a href="/reviews">Reviews</a><a href="/about">About</a><a href="/contact">Contact</a></nav></header>';
+ const hero=route.path==='/'?'<figure style="margin:18px auto;max-width:720px"><img src="/sew-suite-hero.png" alt="Sew Suite featured service image" style="width:100%;height:auto;border-radius:12px"></figure>':'';
+ const fallback='<div id="sew-suite-seo-fallback">'+navigation+'<main '+style+'><article>'+route.body+'</article>'+hero+'<p><a href="/book-service" style="display:inline-block;background:#D4A72C;color:#111;padding:12px 22px;border-radius:8px;font-weight:700">Request a Quote</a> <a href="tel:4696408568">469-640-8568</a></p></main></div>';
  html=replace(html,/<div id="root"><\/div>/,'<div id="root">'+fallback+'</div>');
  const dst=join('dist',route.path.slice(1),'index.html');
  mkdirSync(dirname(dst),{recursive:true});
