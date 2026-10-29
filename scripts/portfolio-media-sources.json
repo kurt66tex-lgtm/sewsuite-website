@@ -1,14 +1,7 @@
 {
   "schema_version": 1,
   "source_app": "69e39cd9aef38e2e50456a73",
-  "assets": [
-    {
-      "slug": "allen-americans-embroidered-polo",
-      "source_url": "https://media.base44.com/images/public/69e39cd9aef38e2e50456a73/1e3ba1888_AllenAmericansPolo.png",
-      "local_path": "/media/portfolio/1e3ba1888_AllenAmericansPolo.png",
-      "expected_bytes": 1855406
-    }
-  ],
+  "assets": [],
   "preexisting_local_portfolio_count": 8,
-  "note": "Eight published portfolio images already reside under public/portfolio-*.jpg; mirror only the ninth imported LIVE example."
+  "note": "Current live Base44 Sew Suite website is authoritative. All eight current portfolio images are already bundled. No older-app extra portfolio assets approved."
 }
