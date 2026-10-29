@@ -25,3 +25,10 @@ test('public catalog preserves numeric Base44 display ordering and repairs displ
  assert.match(adapter,/repairDisplayText/);
  assert.match(adapter,/Ã©/);
 });
+
+test('business settings and all page-facing catalog entities share UTF-8 normalization',()=>{
+ assert.match(adapter,/return repairDisplayText\(message\.data\)/);
+ assert.match(adapter,/return repairDisplayText\(snapshot\)/);
+ assert.match(adapter,/getPublicBusinessSettings.*repairDisplayText/);
+ assert.match(adapter,/\.replace\(\/Ã©\/g,'é'\)/);
+});
