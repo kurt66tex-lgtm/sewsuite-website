@@ -1,0 +1,72 @@
+[
+  {
+    "id": "6aba9505e2ac08a583c7dd4a",
+    "question": "What decoration methods does Sew Suite offer?",
+    "answer": "Sew Suite offers custom embroidery, screen printing, DTF printing, branded apparel, hats and caps, bags and towels, specialty promotional items, and logo/artwork assistance.",
+    "active": true,
+    "display_order": 1
+  },
+  {
+    "id": "6aba9505e2ac08a583c7dd4b",
+    "question": "What should I include with a quote request?",
+    "answer": "Include the project type, approximate quantity, desired completion date, product or garment ideas, decoration needs, and the best logo or artwork files you have. You can upload reference files directly with the quote request.",
+    "active": true,
+    "display_order": 2
+  },
+  {
+    "id": "6aba9505e2ac08a583c7dd4c",
+    "question": "Can Sew Suite help if my logo is not production-ready?",
+    "answer": "Yes. Send the best file you have. Sew Suite can review whether the artwork needs cleanup, vector preparation, embroidery digitizing, resizing, or other adjustments for the selected decoration method.",
+    "active": true,
+    "display_order": 3
+  },
+  {
+    "id": "6aba9505e2ac08a583c7dd4d",
+    "question": "Do you work with businesses and corporate apparel?",
+    "answer": "Yes. Projects can include embroidered polos, jackets, hats, workwear, staff shirts, event apparel, and other branded products for businesses and organizations.",
+    "active": true,
+    "display_order": 4
+  },
+  {
+    "id": "6aba9505e2ac08a583c7dd4e",
+    "question": "Do you make school, team, club, and spirit wear?",
+    "answer": "Yes. Sew Suite can quote apparel and decorated products for schools, teams, clubs, booster groups, staff, and supporters. Customers must have appropriate permission to use protected school, team, sponsor, or organization marks.",
+    "active": true,
+    "display_order": 5
+  },
+  {
+    "id": "6aba9505e2ac08a583c7dd4f",
+    "question": "How do I know whether embroidery, screen printing, or DTF is best?",
+    "answer": "The best method depends on the artwork, product, fabric, quantity, number of colors, desired appearance, and budget. Send the project details and Sew Suite can review the practical options.",
+    "active": true,
+    "display_order": 6
+  },
+  {
+    "id": "6aba9505e2ac08a583c7dd50",
+    "question": "Can I order hats, bags, towels, or specialty items too?",
+    "answer": "Yes. Sew Suite handles hats and caps, bags, towels, and other specialty decorated products when the item and decoration method are compatible.",
+    "active": true,
+    "display_order": 7
+  },
+  {
+    "id": "6aba9505e2ac08a583c7dd51",
+    "question": "Do you serve customers outside Allen?",
+    "answer": "Yes. Sew Suite serves customers throughout North Texas and can ship completed orders nationwide.",
+    "active": true,
+    "display_order": 8
+  },
+  {
+    "id": "6aba9505e2ac08a583c7dd52",
+    "question": "Can I reorder a previous project?",
+    "answer": "Repeat orders can be easier when prior artwork, product choices, decoration details, and project history are available. Contact Sew Suite with the previous project information and current quantity or changes.",
+    "active": true,
+    "display_order": 9
+  },
+  {
+    "id": "6aba9505e2ac08a583c7dd53",
+    "question": "When should I place an order for an event, season, or deadline?",
+    "answer": "Send the request as early as possible. Timing depends on product availability, artwork readiness, proof approval, quantity, decoration method, and production workload. Include the required in-hand date with the quote request.",
+    "active": true,
+    "display_order": 10
+  }
+]
