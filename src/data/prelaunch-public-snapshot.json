@@ -2051,36 +2051,6 @@
       "updated_date": "2026-10-03T14:44:08.408000",
       "created_by_id": "6aba8ad594aac8fa4dde76e7",
       "is_sample": false
-    },
-    {
-      "summary": "Custom embroidered Allen Americans hockey team logo on a polo shirt.",
-      "service_area_slugs": [],
-      "featured": false,
-      "show_customer_name": false,
-      "is_published": true,
-      "cover_image_url": "/media/portfolio/1e3ba1888_AllenAmericansPolo.png",
-      "display_order": 9,
-      "description": "Professional polo featuring the Allen Americans hockey team logo, embroidered in full color on the left chest.",
-      "location_label": "Allen, Texas",
-      "cover_alt_text": "Allen Americans hockey team embroidered polo shirt with star logo on left chest",
-      "title": "Allen Americans Embroidered Polo",
-      "seo_title": "Allen Americans Embroidered Polo | Sew Suite",
-      "completed_date": null,
-      "public_permission_confirmed": true,
-      "meta_description": "Sew Suite embroidered the Allen Americans hockey team logo on a professional polo.",
-      "customer_display_name": null,
-      "customer_industry": "Sports & Teams",
-      "category": "Embroidery",
-      "service_slugs": [
-        "custom-embroidery",
-        "team-school-apparel"
-      ],
-      "slug": "allen-americans-embroidered-polo",
-      "id": "69e3fa431bccedecaf393b37",
-      "created_date": "2026-04-18T21:40:19.070000",
-      "updated_date": "2026-04-18T21:40:19.070000",
-      "created_by_id": null,
-      "is_sample": false
     }
   ],
   "PortfolioPhoto": [],
