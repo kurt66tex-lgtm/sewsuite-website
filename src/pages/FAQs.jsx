@@ -1,21 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
-import { base44 } from '@/api/base44Client';
+import liveFaqs from '@/data/current-base44-public-faqs.json';
 import { useBusinessSettings } from '@/hooks/useBusinessSettings';
 
 export default function FAQs() {
   const { settings } = useBusinessSettings();
-  const [faqs, setFaqs] = useState([]);
+  const [faqs] = useState(() => liveFaqs.filter(f => f.active === true).sort((a, b) => a.display_order - b.display_order));
   const [open, setOpen] = useState(0);
   const primary = settings?.primary_brand_color || '#FF6A00';
   const businessName = settings?.business_name || 'Service Business';
   const isApplianceModule = settings?.industry_module === 'appliance_repair';
   const isCustomApparel = settings?.industry_module === 'custom' && /apparel|embroidery|screen/i.test(settings?.primary_business_category || '');
 
-  useEffect(() => {
-    base44.entities.KnowledgeBase.filter({ active: true }, 'display_order', 100).then(setFaqs).catch(() => {});
-  }, []);
 
   return (
     <div>
