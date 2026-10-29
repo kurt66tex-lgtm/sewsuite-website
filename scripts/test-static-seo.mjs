@@ -23,7 +23,7 @@ const routes=[
  {path:'/book-service',title:'Request a Custom Apparel Quote'},
  {path:'/privacy-policy',title:'Privacy Policy'}
 ];
-if(projects.length!==9||routes.length!==49)throw Error('route_count_mismatch');
+if(projects.length!==8||routes.length!==48)throw Error('route_count_mismatch');
 for(const r of routes){
  const f=join('dist',r.path.slice(1),'index.html');
  if(!existsSync(f))throw Error('missing_static_route_'+r.path);
