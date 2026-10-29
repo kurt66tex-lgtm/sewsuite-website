@@ -18,3 +18,10 @@ test('independent content proxy requires private server-side key and owned origi
  assert.match(proxy,/https:/);
  assert.match(proxy,/catalog_shape_rejected/);
 });
+
+test('public catalog preserves numeric Base44 display ordering and repairs display encoding',()=>{
+ assert.match(adapter,/typeof av==='number'&&typeof bv==='number'/);
+ assert.match(adapter,/localeCompare\(String\(bv\?\?''\),undefined,\{numeric:true\}\)/);
+ assert.match(adapter,/repairDisplayText/);
+ assert.match(adapter,/Ã©/);
+});
