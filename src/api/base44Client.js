@@ -32,7 +32,7 @@ async function records(name){
 function sorted(rows,sort){
  if(typeof sort!=='string'||!sort)return rows;
  const descending=sort.startsWith('-'),field=descending?sort.slice(1):sort;
- return rows.sort((a,b)=>String(a?.[field]??'').localeCompare(String(b?.[field]??''))*(descending?-1:1));
+ return rows.sort((a,b)=>{const av=a?.[field],bv=b?.[field];const cmp=typeof av==='number'&&typeof bv==='number'?av-bv:String(av??'').localeCompare(String(bv??''),undefined,{numeric:true});return cmp*(descending?-1:1);});
 }
 const entities=new Proxy({}, {get(_target,name){
  return {
