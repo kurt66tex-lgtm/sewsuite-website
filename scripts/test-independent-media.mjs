@@ -7,7 +7,7 @@ import {join} from 'node:path';
 
 const snapshot=JSON.parse(readFileSync('src/data/prelaunch-public-snapshot.json','utf8'));
 const items=(snapshot.PortfolioProject||[]).filter(x=>x.is_published);
-if(items.length!==9)throw Error('published_portfolio_count_mismatch');
+if(items.length!==8)throw Error('published_portfolio_count_mismatch');
 const business=(snapshot.BusinessSettings||[])[0]||{};
 for(const name of ['logo_url','logo_reversed_url','hero_image_url']){
  const media=business[name];
@@ -33,7 +33,7 @@ for(const item of items){
  if(!(route.endsWith('.png')?isPng:isJpeg))throw Error('invalid_media_signature_'+item.slug);
 }
 const evidence=JSON.parse(readFileSync('scripts/portfolio-media-verified.json','utf8'));
-if(evidence.total!==1||evidence.assets?.length!==1)throw Error('media_mirror_evidence_missing');
+if(evidence.total!==0||evidence.assets?.length!==0)throw Error('unapproved_extra_portfolio_media_reference');
 for(const item of evidence.assets){
  const bytes=readFileSync(join('public',item.local_path.slice(1)));
  if(bytes.length!==item.bytes||createHash('sha256').update(bytes).digest('hex')!==item.sha256)
