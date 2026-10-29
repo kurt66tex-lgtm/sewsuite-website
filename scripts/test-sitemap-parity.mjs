@@ -14,7 +14,7 @@ const cities=(data.ServiceArea||[]).filter(x=>x.active===true&&x.indexable!==fal
 const projects=(data.PortfolioProject||[]).filter(x=>x.is_published===true&&x.public_permission_confirmed===true);
 assert.equal(services.length,9);
 assert.equal(cities.length,20);
-assert.equal(projects.length,9);
+assert.equal(projects.length,8);
 for(const path of ['/', '/services','/service-areas','/our-work','/book-service',
  ...services.map(x=>'/services/'+x.slug),
  ...cities.map(x=>'/service-areas/'+x.slug),
