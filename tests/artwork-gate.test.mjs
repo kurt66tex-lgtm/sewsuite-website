@@ -7,6 +7,7 @@ const leadId=randomUUID(),requestKey='website_'+randomUUID().replaceAll('-','');
 const token=createHmac('sha256',approvalKey).update(leadId+':'+requestKey).digest('hex');
 const original={
  RRS_PRODUCTION_ARTWORK_ENABLED:process.env.RRS_PRODUCTION_ARTWORK_ENABLED,
+ RRS_PRODUCTION_INTAKE_ENABLED:process.env.RRS_PRODUCTION_INTAKE_ENABLED,
  RRS_ARTWORK_GATEWAY_ORIGIN:process.env.RRS_ARTWORK_GATEWAY_ORIGIN,
  RRS_ARTWORK_INTERNAL_KEY:process.env.RRS_ARTWORK_INTERNAL_KEY,
  RRS_INTERNAL_INTAKE_KEY:process.env.RRS_INTERNAL_INTAKE_KEY,
@@ -15,6 +16,7 @@ const original={
 function configure(enabled){
  Object.assign(process.env,{
  RRS_PRODUCTION_ARTWORK_ENABLED:enabled?'true':'false',
+ RRS_PRODUCTION_INTAKE_ENABLED:'true',
  RRS_ARTWORK_GATEWAY_ORIGIN:'https://private-artwork.example.invalid',
  RRS_ARTWORK_INTERNAL_KEY:bridgeKey,
  RRS_INTERNAL_INTAKE_KEY:approvalKey,
@@ -97,5 +99,26 @@ test('failed private artwork gateway cannot report upload success',async()=>{
   const res=response();await handler(req('prepare',{...auth,filename:'reference.png',content_type:'image/png',size:123,sha256:'a'.repeat(64)}),res);
   assert.equal(res.statusCode,422);
   assert.equal(res.body.error,'artwork_not_confirmed');
+ }finally{globalThis.fetch=priorFetch}
+});
+
+test('browser upload readiness requires both intake and private gateway readiness',async()=>{
+ configure(true);
+ const priorFetch=globalThis.fetch;
+ let probeCount=0;
+ globalThis.fetch=async target=>{
+  probeCount++;assert.equal(String(target),'https://private-artwork.example.invalid/ready');
+  return new Response(JSON.stringify({ready:true,configured:true,enabled:true}),{status:200});
+ };
+ try{
+  let res=response();await handler({method:'GET',headers:{}},res);
+  assert.equal(res.statusCode,200);assert.equal(res.body.available,true);assert.equal(probeCount,1);
+  process.env.RRS_PRODUCTION_INTAKE_ENABLED='false';
+  res=response();await handler({method:'GET',headers:{}},res);
+  assert.equal(res.body.available,false);assert.equal(probeCount,1);
+  process.env.RRS_PRODUCTION_INTAKE_ENABLED='true';
+  globalThis.fetch=async()=>new Response(JSON.stringify({ready:true,configured:true,enabled:false}),{status:200});
+  res=response();await handler({method:'GET',headers:{}},res);
+  assert.equal(res.body.available,false);
  }finally{globalThis.fetch=priorFetch}
 });
