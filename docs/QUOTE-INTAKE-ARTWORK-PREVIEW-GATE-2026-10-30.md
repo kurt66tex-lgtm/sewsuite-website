@@ -1,0 +1,7 @@
+# Sew Suite protected quote-form release checkpoint — October 30, 2026
+
+The preview at `https://sewsuite-authentic-comparison.vercel.app` is NOT the live Sew Suite website. Its `RRS_PUBLIC_SITE_ORIGIN` was aligned to this canonical protected preview alias. Site-side flags `RRS_PRODUCTION_INTAKE_ENABLED=false` and `RRS_PRODUCTION_ARTWORK_ENABLED=false` remain fail-closed. The form now clearly warns that live submissions and new artwork uploads are disabled and directs visitors to the existing Base44 quote form.
+
+The new isolated `tests/production-intake-relay.test.mjs` is wired into every website `npm run build` along with the previous artwork-gate, public catalog, and FAQ parity tests. It checks Turnstile siteverify hostname, same-origin POST, allowlisted CRM payload, held notification response and backend rejection handling using mocked network endpoints only. No real customer leads, email, billing, or storage operations are exercised.
+
+**Still blocked:** Vercel preview lacks `RRS_ARTWORK_INTERNAL_KEY`, although Railway artwork gateway has its own key. Railway OAuth connection exposes variable names but not values. Do not guess or rotate this credential without inventory/coordination; use owner-managed secret transfer or approved coordinated rotation, then test in controlled preview. The independent intake backend and artwork gateway remain disabled. DNS/public traffic unchanged.
