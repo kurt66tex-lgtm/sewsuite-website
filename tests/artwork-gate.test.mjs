@@ -71,3 +71,31 @@ test('public endpoint refuses invalid method, action and oversized payload',asyn
  res=response();await handler(req('prepare',{...auth,extra:'x'.repeat(5000)}),res);assert.equal(res.statusCode,422);
 });
 test.after(()=>{for(const [k,v] of Object.entries(original)){if(v===undefined)delete process.env[k];else process.env[k]=v;}});
+
+test('commit of a valid lead-scoped intent relays only the required identifiers',async()=>{
+ configure(true);
+ const intent=randomUUID(),priorFetch=globalThis.fetch;let calls=0;
+ globalThis.fetch=async(uri,options)=>{
+  calls++;
+  assert.equal(String(uri),'https://private-artwork.example.invalid/internal/artwork/commit');
+  assert.equal(options.headers['x-rrs-artwork-key'],bridgeKey);
+  const body=JSON.parse(options.body);
+  assert.deepEqual(Object.keys(body).sort(),['intent_id','lead_id']);
+  assert.equal(body.lead_id,leadId);assert.equal(body.intent_id,intent);
+  return new Response(JSON.stringify({success:true,file_id:randomUUID()}),{status:200,headers:{'content-type':'application/json'}});
+ };
+ try{
+  const res=response();await handler(req('commit',{...auth,intent_id:intent}),res);
+  assert.equal(res.statusCode,200);assert.equal(res.body.success,true);assert.equal(calls,1);
+ }finally{globalThis.fetch=priorFetch}
+});
+test('failed private artwork gateway cannot report upload success',async()=>{
+ configure(true);
+ const priorFetch=globalThis.fetch;
+ globalThis.fetch=async()=>new Response(JSON.stringify({error:'artwork_not_confirmed'}),{status:422,headers:{'content-type':'application/json'}});
+ try{
+  const res=response();await handler(req('prepare',{...auth,filename:'reference.png',content_type:'image/png',size:123,sha256:'a'.repeat(64)}),res);
+  assert.equal(res.statusCode,422);
+  assert.equal(res.body.error,'artwork_not_confirmed');
+ }finally{globalThis.fetch=priorFetch}
+});
