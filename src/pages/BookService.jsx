@@ -265,6 +265,13 @@ export default function BookService() {
           <p className="mt-2 text-slate-600">{isCustomApparel ? 'Tell us about your project, quantity, timing, and artwork. Upload your logo or reference files when available.' : isApplianceModule ? "Tell us what's going on. The more we know up front, the better prepared we'll be for the visit." : "Tell us what you need help with. The more useful information you provide, the better prepared the team can be."}</p>
         </div>
 
+        {!publicIntakeAvailable && (
+          <div role="status" className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-950">
+            <strong>Preview only:</strong> Online quote submissions and artwork uploads are not yet enabled on this replacement website. The current live Sew Suite website remains available for customer requests.
+            <a href="https://www.sewsuite.com/book-service" className="ml-1 font-semibold underline">Open the live quote form</a>.
+          </div>
+        )}
+
         <form onSubmit={submit} className="space-y-6">
           {/* Service / niche intake */}
           <section className="bg-white rounded-xl border border-slate-200 p-5">
