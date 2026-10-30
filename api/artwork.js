@@ -8,6 +8,7 @@ const keyPattern=/^[-_A-Za-z0-9]{20,128}$/;
 const hex64=/^[a-f0-9]{64}$/;
 const json=(res,status,data)=>res.status(status).json(data);
 const ready=()=>process.env.RRS_PRODUCTION_ARTWORK_ENABLED==='true'&&
+ process.env.RRS_PRODUCTION_INTAKE_ENABLED==='true'&&
  !!process.env.RRS_ARTWORK_GATEWAY_ORIGIN&&
  (process.env.RRS_ARTWORK_INTERNAL_KEY?.length||0)>=32&&
  (process.env.RRS_INTERNAL_INTAKE_KEY?.length||0)>=32&&
@@ -24,7 +25,17 @@ export default async function handler(req,res){
  res.setHeader('Cache-Control','private, no-store');
  res.setHeader('X-Content-Type-Options','nosniff');
  res.setHeader('X-Robots-Tag','noindex,nofollow');
- if(req.method==='GET')return json(res,200,{available:ready()});
+ if(req.method==='GET'){
+  if(!ready())return json(res,200,{available:false});
+  try{
+   const target=new URL(process.env.RRS_ARTWORK_GATEWAY_ORIGIN);
+   if(target.protocol!=='https:'||target.pathname!=='/'||target.search||target.hash||target.username||target.password)
+    return json(res,200,{available:false});
+   const upstream=await fetch(new URL('/ready',target),{method:'GET',cache:'no-store',signal:AbortSignal.timeout(5000)});
+   const state=await upstream.json().catch(()=>({}));
+   return json(res,200,{available:upstream.ok&&state.configured===true&&state.enabled===true});
+  }catch{return json(res,200,{available:false})}
+ }
  const action=String(req.query?.action||'');
  if(!allowed.has(action))return json(res,404,{error:'not_found'});
  if(req.method!=='POST')return json(res,405,{error:'method_not_allowed'});
