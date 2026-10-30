@@ -3,7 +3,20 @@
 export default async function handler(req,res){
  res.setHeader('Cache-Control','no-store');
  res.setHeader('X-Content-Type-Options','nosniff');
- if(req.method==='GET')return res.status(200).json({available:process.env.RRS_PRODUCTION_INTAKE_ENABLED==='true'&&!!process.env.RRS_INTAKE_API_ORIGIN&&!!process.env.RRS_INTERNAL_INTAKE_KEY&&!!process.env.RRS_TURNSTILE_SECRET_KEY});
+ if(req.method==='GET'){
+  const configured=process.env.RRS_PRODUCTION_INTAKE_ENABLED==='true'&&
+   !!process.env.RRS_INTAKE_API_ORIGIN&&(process.env.RRS_INTERNAL_INTAKE_KEY?.length||0)>=32&&
+   !!process.env.RRS_TURNSTILE_SECRET_KEY&&!!process.env.RRS_PUBLIC_SITE_ORIGIN;
+  if(!configured)return res.status(200).json({available:false});
+  try{
+   const origin=new URL(process.env.RRS_INTAKE_API_ORIGIN);
+   if(origin.protocol!=='https:'||origin.pathname!=='/'||origin.search||origin.hash||origin.username||origin.password)
+    return res.status(200).json({available:false});
+   const upstream=await fetch(new URL('/ready',origin),{method:'GET',cache:'no-store',signal:AbortSignal.timeout(5000)});
+   const readiness=await upstream.json().catch(()=>({}));
+   return res.status(200).json({available:upstream.ok&&readiness.configured===true&&readiness.public_intake_enabled===true});
+  }catch{return res.status(200).json({available:false})}
+ }
  if(req.method!=='POST')return res.status(405).json({error:'method_not_allowed'});
  if(process.env.RRS_PRODUCTION_INTAKE_ENABLED!=='true'||!process.env.RRS_INTAKE_API_ORIGIN||!process.env.RRS_INTERNAL_INTAKE_KEY||!process.env.RRS_TURNSTILE_SECRET_KEY)return res.status(503).json({error:'intake_not_available'});
  if(req.headers.origin!==process.env.RRS_PUBLIC_SITE_ORIGIN)return res.status(403).json({error:'origin_rejected'});
