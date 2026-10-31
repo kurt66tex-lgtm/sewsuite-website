@@ -197,7 +197,7 @@ export default function BookService() {
           {result.artwork_error && (
             <div role="alert" className="mt-5 flex items-start gap-2 bg-amber-50 border border-amber-300 rounded-lg p-4 text-left text-sm text-amber-950">
               <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" />
-              <span>Your quote request was received, but one or more artwork files could not be confirmed. Please contact service@sewsuite.com and mention your request ID: {result.lead_id}. Do not resubmit the quote.</span>
+              <span>Your quote request was received, but we could not confirm one or more artwork attachments. Please email service@sewsuite.com with your name and project details so the team can locate your request. Do not submit the quote again.</span>
             </div>
           )}
           {!result.artwork_error && result.artwork_expected > 0 && (
