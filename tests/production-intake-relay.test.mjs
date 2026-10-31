@@ -3,13 +3,13 @@ import assert from 'node:assert/strict';
 import {randomUUID} from 'node:crypto';
 import handler from '../api/intake.js';
 
-const tracked=['RRS_PRODUCTION_INTAKE_ENABLED','RRS_INTAKE_API_ORIGIN','RRS_INTERNAL_INTAKE_KEY','RRS_TURNSTILE_SECRET_KEY','RRS_PUBLIC_SITE_ORIGIN'];
+const tracked=['VERCEL_ENV','RRS_PRODUCTION_INTAKE_ENABLED','RRS_INTAKE_API_ORIGIN','RRS_INTERNAL_INTAKE_KEY','RRS_TURNSTILE_SECRET_KEY','RRS_PUBLIC_SITE_ORIGIN'];
 const original=Object.fromEntries(tracked.map(k=>[k,process.env[k]]));
 const savedFetch=globalThis.fetch;
 const site='https://sewsuite-authentic-comparison.vercel.app';
 const leadId=randomUUID();
 function configure(enabled=true){
- Object.assign(process.env,{RRS_PRODUCTION_INTAKE_ENABLED:enabled?'true':'false',RRS_INTAKE_API_ORIGIN:'https://crm.example.invalid',RRS_INTERNAL_INTAKE_KEY:'i'.repeat(40),RRS_TURNSTILE_SECRET_KEY:'t'.repeat(40),RRS_PUBLIC_SITE_ORIGIN:site});
+ Object.assign(process.env,{VERCEL_ENV:'production',RRS_PRODUCTION_INTAKE_ENABLED:enabled?'true':'false',RRS_INTAKE_API_ORIGIN:'https://crm.example.invalid',RRS_INTERNAL_INTAKE_KEY:'i'.repeat(40),RRS_TURNSTILE_SECRET_KEY:'t'.repeat(40),RRS_PUBLIC_SITE_ORIGIN:site});
 }
 function request(body={},method='POST',origin=site){return {method,headers:{origin,'content-type':'application/json'},body};}
 function response(){return {headers:{},statusCode:null,body:null,setHeader(k,v){this.headers[k]=v;},status(v){this.statusCode=v;return this;},json(v){this.body=v;return this;}};}

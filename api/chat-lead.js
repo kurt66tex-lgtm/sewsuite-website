@@ -1,3 +1,4 @@
+import {previewAllowsSyntheticLead} from './preview-synthetic-only.mjs';
 // Confirmed production Sew Suite chat lead, gated separately from conversation AI.
 export default async function handler(req,res){
  res.setHeader('Cache-Control','no-store');
@@ -20,6 +21,7 @@ export default async function handler(req,res){
  const v=req.body;
  if(v?.confirmed!==true||v?.consent_to_contact!==true||typeof v.turnstile_token!=='string'||!v.turnstile_token)return res.status(422).json({error:'confirmation_required'});
  if(!Array.isArray(v.messages)||v.messages.length>24||v.messages.some(m=>!['user','assistant'].includes(m.role)||typeof m.content!=='string'||m.content.length>1500))return res.status(422).json({error:'conversation_invalid'});
+ if(!previewAllowsSyntheticLead(v,'chat'))return res.status(403).json({error:'preview_test_only'});
  try{
   const challenge=await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify',{method:'POST',headers:{'content-type':'application/x-www-form-urlencoded'},body:new URLSearchParams({secret:process.env.RRS_TURNSTILE_SECRET_KEY,response:v.turnstile_token}),signal:AbortSignal.timeout(7000)});
   const verified=await challenge.json().catch(()=>({success:false}));
