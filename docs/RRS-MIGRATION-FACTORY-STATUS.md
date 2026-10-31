@@ -137,3 +137,8 @@ Backend branch pull request #3 contains candidate replay-notice guard, read-only
 ## Isolated PostgreSQL notification replay regression PASS (2026-10-31)
 
 Private backend PR #3 branch sew-suite-mail-replay-safety-20261031 includes candidate migration 012, read-only mail audit 013 and GitHub Actions with disposable PostgreSQL 16. Workflow run 41215799757 completed SUCCESS; verified original schema + mail functions + candidate migration and synthetic tests: new two-held-notice lead, correct idempotent replay, one accepted/one held outcome, missing outbox fail-closed without auto-backfill, mismatched request-hash rejection. Log marker RRS_MAIL_REPLAY_ISOLATED_POSTGRES_ACCEPTANCE_PASS. **Candidate migration not merged or applied to Railway production.** Controlled Microsoft Graph delivery, lost-claim handling, staff/voice acceptance and remaining website/SEO gates are still open.
+## October 31 connected Outlook and public catalog verification
+
+The Outlook connector confirmed the Sew Suite mailbox account and historical October 18 synthetic test sends plus an October 20 mail test in Sent Items. Current Railway mail-worker delivery remains unverified and disabled.
+
+The approved protected Vercel comparison site's public catalog endpoint returned HTTP 200 and the approved version. Service areas, services, portfolio projects and intake question counts were 20, 9, 8, 5, respectively, exactly matching fresh read-only Base44 counts. The preview sitemap returned 49 unique canonical URL entries and no duplicates. Preview service area, work and why-us routes returned 200 with noindex. These checks establish independent preview count and route reachability, not production indexing, full visual parity, or live customer acceptance.
