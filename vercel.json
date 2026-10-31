@@ -16,6 +16,16 @@
           "key": "X-Robots-Tag",
           "value": "noindex, nofollow"
         }
+      ],
+      "missing": [
+        {
+          "type": "host",
+          "value": "sewsuite.com"
+        },
+        {
+          "type": "host",
+          "value": "www.sewsuite.com"
+        }
       ]
     }
   ]
