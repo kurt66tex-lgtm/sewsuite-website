@@ -48,3 +48,14 @@ See `docs/INDEPENDENT-SEW-SUITE-CUTOVER-ACCEPTANCE.md`, `docs/SEW-SUITE-INDEPEND
 ## Verified SQL schema discovery, October 31
 
 Owner ran a read-only `information_schema.tables` query in the intended Railway psql session (`railway=#`) and verified exactly these five matching application tables in schema `rrs_production`: `leads`, `lead_receipts`, `lead_workflow`, `artwork_intents`, and `outbox`. This is **schema discovery only**; record counts, column relationships, constraints, file hashes, and outbox delivery status have not yet been confirmed by this check. The next query must inspect column names and safe aggregate counts without displaying customer PII. Avoid guessing that attachments live in a table named `attachments` or `files`.
+
+## Verified production table column inventory
+
+Owner inspected `information_schema.columns` in Railway psql and returned 39 columns on five `rrs_production` tables:
+- `leads`: tenant, id, request_key, payload (jsonb), created_at.
+- `lead_receipts`: tenant, request_key, payload_hash, lead_id.
+- `lead_workflow`: tenant, lead_id, version, status, updated_at, assigned_to, follow_up, close_reason.
+- `artwork_intents`: tenant, id, lead_id, object_key, filename, content_type, size_bytes, sha256, state, created_at, committed_at.
+- `outbox`: tenant, lead_id, kind, state, payload (jsonb), created_at, claim_token, claim_started_at, provider_state, updated_at, attempt_count.
+
+The subsequent record-count attempt failed with `syntax error at or near "lead_workflow"` because the pasted statement began in the middle. This does **not** indicate table corruption or a failed migration. Provide a single SELECT with five scalar COUNT subqueries and await results. Avoid outputting payload JSON, filenames, object keys or user information in the acceptance record.
