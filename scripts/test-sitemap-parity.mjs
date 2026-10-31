@@ -15,11 +15,18 @@ const projects=(data.PortfolioProject||[]).filter(x=>x.is_published===true&&x.pu
 assert.equal(services.length,9);
 assert.equal(cities.length,20);
 assert.equal(projects.length,8);
-for(const path of ['/', '/services','/service-areas','/our-work','/book-service',
+const requiredPaths=[
+ '/', '/services','/service-areas','/our-work','/book-service',
+ '/reviews','/about','/why-us','/faqs','/contact','/privacy-policy',
  ...services.map(x=>'/services/'+x.slug),
  ...cities.map(x=>'/service-areas/'+x.slug),
- ...projects.map(x=>'/our-work/'+x.slug)])
- assert.ok(found.has('https://sewsuite.com'+(path==='/'?'/':path)),'missing_sitemap_page_'+path);
+ ...projects.map(x=>'/our-work/'+x.slug)
+];
+const requiredURLs=new Set(requiredPaths.map(path=>'https://sewsuite.com'+path));
+assert.equal(requiredPaths.length,requiredURLs.size,'duplicate_required_route');
+assert.equal(found.size,requiredURLs.size,'stale_or_missing_sitemap_route');
+for(const url of requiredURLs) assert.ok(found.has(url),'missing_sitemap_page_'+url);
+for(const url of found) assert.ok(requiredURLs.has(url),'unapproved_sitemap_page_'+url);
 const robots=readFileSync('public/robots.txt','utf8');
 assert.match(robots,/Disallow:\s*\//,'preview_must_remain_blocked');
 const config=JSON.parse(readFileSync('vercel.json','utf8'));
