@@ -59,3 +59,7 @@ Owner inspected `information_schema.columns` in Railway psql and returned 39 col
 - `outbox`: tenant, lead_id, kind, state, payload (jsonb), created_at, claim_token, claim_started_at, provider_state, updated_at, attempt_count.
 
 The subsequent record-count attempt failed with `syntax error at or near "lead_workflow"` because the pasted statement began in the middle. This does **not** indicate table corruption or a failed migration. Provide a single SELECT with five scalar COUNT subqueries and await results. Avoid outputting payload JSON, filenames, object keys or user information in the acceptance record.
+
+## Production aggregate reconciliation checkpoint — October 31, 2026
+
+The owner reran a read-only scalar-subquery count at `railway=#` and received `leads=2, receipts=2, workflows=2, artwork=1, notifications=0` for `rrs_production`. The preceding fragmented UNION query failed only due to partial pasted SQL; the corrected query succeeded. Counts alone **do not prove** matching IDs, tenant isolation, committed artwork, unique receipts, or mail readiness. Outbox zero is observed while outbound mail remains gated; treat the customer/office notification path as unverified, not passed. Next: tenant-scoped orphan checks, duplicates, workflow and artwork state breakdowns without displaying lead payload PII; then independently validate object SHA-256 and mail delivery under authorized controlled tests.
