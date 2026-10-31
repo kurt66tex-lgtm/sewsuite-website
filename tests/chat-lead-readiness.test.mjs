@@ -2,11 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import handler from '../api/chat-lead.js';
 
-const keys=['RRS_PRODUCTION_CHAT_LEADS_ENABLED','RRS_INTAKE_API_ORIGIN','RRS_INTERNAL_INTAKE_KEY','RRS_TURNSTILE_SECRET_KEY','RRS_PUBLIC_SITE_ORIGIN'];
+const keys=['VERCEL_ENV','RRS_PRODUCTION_CHAT_LEADS_ENABLED','RRS_INTAKE_API_ORIGIN','RRS_INTERNAL_INTAKE_KEY','RRS_TURNSTILE_SECRET_KEY','RRS_PUBLIC_SITE_ORIGIN'];
 const originals=Object.fromEntries(keys.map(k=>[k,process.env[k]]));
 const originalFetch=globalThis.fetch;
 function setup(on=true){
- Object.assign(process.env,{RRS_PRODUCTION_CHAT_LEADS_ENABLED:on?'true':'false',RRS_INTAKE_API_ORIGIN:'https://private-crm.example.invalid',
+ Object.assign(process.env,{VERCEL_ENV:'production',RRS_PRODUCTION_CHAT_LEADS_ENABLED:on?'true':'false',RRS_INTAKE_API_ORIGIN:'https://private-crm.example.invalid',
   RRS_INTERNAL_INTAKE_KEY:'x'.repeat(40),RRS_TURNSTILE_SECRET_KEY:'y'.repeat(40),RRS_PUBLIC_SITE_ORIGIN:'https://sewsuite-authentic-comparison.vercel.app'});
 }
 function response(){return {statusCode:null,body:null,headers:{},setHeader(k,v){this.headers[k]=v;},status(n){this.statusCode=n;return this;},json(x){this.body=x;return this;}}}
