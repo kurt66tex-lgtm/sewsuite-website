@@ -44,3 +44,7 @@ When the prompt says `railway=#`, the user is in PostgreSQL psql, not PowerShell
 ## Primary project references
 
 See `docs/INDEPENDENT-SEW-SUITE-CUTOVER-ACCEPTANCE.md`, `docs/SEW-SUITE-INDEPENDENT-CUTOVER-GATES-20261018.md`, `docs/SYNTHETIC-QUOTE-ARTWORK-ACCEPTED-2026-10-31.md`, and `scripts/production-cutover-preflight.mjs`. These are evidence inputs, not automatic launch authorization.
+
+## Verified SQL schema discovery, October 31
+
+Owner ran a read-only `information_schema.tables` query in the intended Railway psql session (`railway=#`) and verified exactly these five matching application tables in schema `rrs_production`: `leads`, `lead_receipts`, `lead_workflow`, `artwork_intents`, and `outbox`. This is **schema discovery only**; record counts, column relationships, constraints, file hashes, and outbox delivery status have not yet been confirmed by this check. The next query must inspect column names and safe aggregate counts without displaying customer PII. Avoid guessing that attachments live in a table named `attachments` or `files`.
