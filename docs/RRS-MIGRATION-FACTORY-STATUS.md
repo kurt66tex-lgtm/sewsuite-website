@@ -87,3 +87,7 @@ Owner queried `pg_constraint` against five tables in `rrs_production` and return
 - `outbox` FK `(tenant,lead_id)` → leads, primary key `(tenant,lead_id,kind)`, kinds acknowledgment/office, states held/ready/claiming/accepted/delivered/failed/uncertain; relevant required columns are non-null.
 
 **Gate PASSED:** structural schema constraints and current dataset integrity. **Outstanding:** receipt request-key cross-check is application/data validated rather than a database composite FK to leads' request key; real R2 SHA-256 byte verification, mail outbox generation/delivery, runtime workflow and final restore rehearsals still pending. Do not claim the application is cutover-ready based on schema constraints alone.
+
+## Artwork size mismatch — metadata reconciliation checkpoint
+
+Owner inspected the single committed `rrs_production.artwork_intents` record: ID `5149af45-656e-49e0-9d2e-fe060ac81607`, stored size `1425452` bytes, state `committed`, non-null commit timestamp, SHA-256 `ed5f8d68bb363756d7d2d11b4f7bdeacd086dfc1ef3673509a4e49ae91eca105`. The earlier approved synthetic PNG was **94201** bytes, so these sizes differ by 1,331,251 bytes; do not call them the same file. A Railway staff HTTP 200 for this exact attachment was logged on 2026-10-29; actual file bytes/hash were not independently checked here. Keep this as a separately identified earlier artifact and check metadata-to-object consistency with a controlled authenticated download; no delete, update, or fabricated matching assertion.
