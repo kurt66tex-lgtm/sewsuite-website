@@ -181,9 +181,9 @@ export default function SiteLayout() {
     return () => { active = false; };
   }, []);
 
-  // Staging noindex: while on base44.app domain, keep noindex; on custom domain, allow indexing
+  // Fail closed: only the approved Sew Suite custom domain may be indexable; all preview hosts remain noindex.
   useEffect(() => {
-    const isStaging = window.location.hostname.includes('base44.app');
+    const isStaging = !['sewsuite.com', 'www.sewsuite.com'].includes(window.location.hostname.toLowerCase());
     let meta = document.querySelector('meta[name="robots"]');
     if (!meta) {
       meta = document.createElement('meta');
@@ -241,11 +241,11 @@ export default function SiteLayout() {
     if (socialImage) setMeta('meta[name="twitter:image"]', 'content', socialImage);
   }, [location.pathname, settings, businessName, regionLabel]);
 
-  // Google Analytics 4: load only on the live/custom domain when analytics use is approved.
+  // Google Analytics 4: only the approved public Sew Suite custom host, never Vercel or other previews.
   useEffect(() => {
     const measurementId = String(settings?.ga4_id || '').trim().toUpperCase();
     const validId = /^G-[A-Z0-9]+$/i.test(measurementId);
-    const isStaging = window.location.hostname.includes('base44.app');
+    const isStaging = !['sewsuite.com', 'www.sewsuite.com'].includes(window.location.hostname.toLowerCase());
     const enabled = settings?.privacy_use_analytics === true && validId && !isStaging && siteAccess.site_status === 'Active';
     if (!enabled) return;
 
