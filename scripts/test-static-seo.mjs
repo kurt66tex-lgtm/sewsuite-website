@@ -2,6 +2,9 @@
 // Never removes preview noindex or touches the live website.
 import {readFileSync,existsSync} from 'node:fs';
 import {join} from 'node:path';
+import {indexableRelease} from './indexing-release-policy.mjs';
+const allowProductionIndexing=indexableRelease(process.env);
+const expectedRobots=allowProductionIndexing?'index, follow':'noindex, nofollow';
 const data=JSON.parse(readFileSync('src/data/prelaunch-public-snapshot.json','utf8'));
 const services=(data.ServiceType||[]).filter(s=>s.active&&s.publicly_advertised);
 const cities=(data.ServiceArea||[]).filter(a=>a.active&&a.indexable!==false);
@@ -29,12 +32,12 @@ for(const r of routes){
  if(!existsSync(f))throw Error('missing_static_route_'+r.path);
  const html=readFileSync(f,'utf8');
  if(!html.includes('<title>')||!html.includes('rel="canonical" href="https://sewsuite.com'+r.path+'"'))throw Error('missing_page_metadata_'+r.path);
- if(!html.includes('<meta name="robots" content="noindex, nofollow"'))throw Error('preview_indexing_guard_missing_'+r.path);
+ if(!html.includes('<meta name="robots" content="'+expectedRobots+'"'))throw Error('incorrect_robots_policy_'+r.path);
  if(!html.includes('id="sew-suite-seo-fallback"')||!html.includes('<script type="module"'))throw Error('seo_or_hydration_missing_'+r.path);
  if(!html.includes('application/ld+json'))throw Error('missing_schema_'+r.path);
  if(!html.includes(r.title))throw Error('incorrect_page_title_'+r.path);
  if(r.local && !html.includes(r.local.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')))throw Error('localized_body_missing_'+r.path);
 }
 const original=readFileSync('dist/index.html','utf8');
-if(!original.includes('<meta name="robots" content="noindex, nofollow"'))throw Error('root_prelaunch_guard_missing');
-console.log('RRS_VITE_STATIC_SEO_ACCEPTANCE_PASS '+JSON.stringify({routes:routes.length,services:services.length,cities:cities.length,portfolioPages:projects.length,previewNoindex:true,customerDataTouched:false}));
+if(!original.includes('<meta name="robots" content="'+expectedRobots+'"'))throw Error('root_indexing_policy_mismatch');
+console.log('RRS_VITE_STATIC_SEO_ACCEPTANCE_PASS '+JSON.stringify({routes:routes.length,services:services.length,cities:cities.length,portfolioPages:projects.length,previewNoindex:!allowProductionIndexing,approvedProductionIndexing:allowProductionIndexing,customerDataTouched:false}));
