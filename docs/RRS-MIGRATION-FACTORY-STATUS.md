@@ -67,3 +67,7 @@ The owner reran a read-only scalar-subquery count at `railway=#` and received `l
 ## Production referential integrity verification — October 31, 2026
 
 Owner ran five read-only count checks in `rrs_production` and all returned **zero**: `leads_missing_receipts=0`, `orphan_receipts=0`, `leads_missing_workflows=0`, `orphan_artwork=0`, `artwork_needing_review=0`. The checks join by tenant, lead ID and (for receipts) request key; artwork review requires state `committed`, non-null committed timestamp, and SHA-256 length 64. **Passed:** observed relationship and metadata checks against current records. **Not yet established:** uniqueness constraints, actual private object byte SHA-256 and successful customer/office notification delivery (outbox currently empty). Preserve the distinction in subsequent migration acceptance decisions.
+
+## Duplicate-key and artwork-metadata validation — 2026-10-31
+
+Owner executed read-only aggregate SQL against the five `rrs_production` tables and verified: `duplicate_lead_keys=0`, `duplicate_receipt_keys=0`, `duplicate_workflows=0`, `committed_artwork=1`, `invalid_artwork_hashes=0`. These are PASS results for the current dataset. They do not establish unique constraints for future writes, actual R2 object bytes matching the stored SHA-256, or delivery of customer/office notices. Next inspect `pg_constraint` / `pg_indexes` read-only, then verify private object content hash with an authorized file fetch, without printing object keys or customer data.
