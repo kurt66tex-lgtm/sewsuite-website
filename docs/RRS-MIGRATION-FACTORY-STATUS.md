@@ -75,3 +75,15 @@ Owner executed read-only aggregate SQL against the five `rrs_production` tables 
 ## Database uniqueness constraints verified — October 31, 2026
 
 Owner queried `pg_index`, `pg_class`, and `pg_namespace` for the five production reconciliation tables. Seven unique B-tree indexes confirmed: `artwork_intents_object_key_key` on `(object_key)`; `artwork_intents_pkey` on `(id)`; `lead_receipts_pkey` on `(tenant, request_key)`; `lead_workflow_pkey` on `(tenant, lead_id)`; `leads_pkey` on `(tenant, id)`; `leads_tenant_request_key_key` on `(tenant, request_key)`; `outbox_pkey` on `(tenant, lead_id, kind)`. All indexes reported `is_unique=true`, with the five designated primary-key indexes identified in the inspection. This passes structural uniqueness for non-null key values; verify column NOT NULL/foreign-key/check constraints separately and test application idempotency under retries. The outbox was empty during the earlier aggregate inspection, so no delivery event has been accepted yet.
+
+## Database constraint audit — 2026-10-31 (verified in psql)
+
+Owner queried `pg_constraint` against five tables in `rrs_production` and returned 55 rows, including NOT NULL constraints represented by PostgreSQL constraint type `n`. Observed:
+
+- Each table has a `tenant = 'sew-suite'` check. `leads` has composite primary key `(tenant,id)` and unique `(tenant,request_key)`.
+- `lead_receipts` FK `(tenant,lead_id)` → leads, composite primary key `(tenant,request_key)`, and lowercase 64-character hex payload hash check.
+- `lead_workflow` FK `(tenant,lead_id)` → leads, primary key `(tenant,lead_id)`, version >= 1, and six allowed statuses (New, Working, Waiting on Customer, Ready to Schedule, Converted, Closed).
+- `artwork_intents` FK `(tenant,lead_id)` → leads, primary key `(id)`, unique `(object_key)`, SHA-256 lowercase hex pattern, size 1–10485760 bytes, and states pending/committed/rejected.
+- `outbox` FK `(tenant,lead_id)` → leads, primary key `(tenant,lead_id,kind)`, kinds acknowledgment/office, states held/ready/claiming/accepted/delivered/failed/uncertain; relevant required columns are non-null.
+
+**Gate PASSED:** structural schema constraints and current dataset integrity. **Outstanding:** receipt request-key cross-check is application/data validated rather than a database composite FK to leads' request key; real R2 SHA-256 byte verification, mail outbox generation/delivery, runtime workflow and final restore rehearsals still pending. Do not claim the application is cutover-ready based on schema constraints alone.
