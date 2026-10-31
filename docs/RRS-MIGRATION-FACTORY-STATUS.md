@@ -121,3 +121,16 @@ Actual production/mail-worker.mjs on backend release branch `sew-suite-isolated-
 Current approved Vercel preview reports GET /api/intake and GET /api/chat-lead as available:false, and Railway service startup shows public CRM intake disabled, staff write workflows disabled and production voice disabled. These are deliberate safeguards, not functional go-live passes.
 
 The separate backend release manifest check production/check-cutover-gates.mjs groups database recovery, website/SEO, intake/chat, staff CRM, voice, artwork and email. The source manifest has outstanding gates for live intake/chat/voice, production mail delivery, staff write workflows, some SEO/analytics and source access-history import. Treat its fail-closed result as authoritative for cutover until verified gate evidence updates it. No DNS or customer-delivery change authorized.
+
+## Release manifest audit and independent catalog configuration — 2026-10-31
+
+Read-only inspection of the authoritative private backend release checker and Sew Suite manifest found 38 required gates: 24 marked true and 14 pending. Groups: Database & recovery 4/4; Website / SEO 3/9; Intake & chat 2/4; Staff CRM 7/10; Voice 1/3; Artwork 4/4; Email 3/4. These are the persisted manifest values; verify field-level evidence before changing flags.
+
+Website remaining: production_website_snapshot_adapter_replaced, production_catalog_runtime_delivered, portfolio_live_to_preview_parity_verified, production_live_indexable_metadata_verified, analytics_seo_parity_verified, production_site_domain_origin_validated.
+Intake remaining: public_website_intake_verified, public_chat_intake_verified. Staff remaining: production_staff_workflow_live_accepted, production_staff_portal_db_workflow_verified, source_access_history_migrated_verified. Voice remaining: production_voice_provider_session_test_verified, production_voice_crm_handoff_verified. Email remaining: production_mail_delivery_verified.
+
+Connected Vercel preview configuration for approved sewsuite-authentic-comparison project: VITE_PUBLIC_CATALOG_MODE=independent, RRS_PUBLIC_CATALOG_MODE=independent, RRS_PUBLIC_CATALOG_ENABLED=true, and matching VITE_APPROVED_CATALOG_VERSION/RRS_APPROVED_PUBLIC_CATALOG_VERSION=e06f162d-8684-4eef-89fa-57bcec31a4fa. This is positive **configuration** evidence, not proof of live independent catalog API response or production-host indexing. Do not mark production_catalog_runtime_delivered solely from variables. Preview remains noindex.
+
+Live canonical Base44 app read-only recheck: six AccessAudit events (one invite created, four resent, one accepted), plus one original non-test LeadAttachment size 1,425,452 bytes. Independent private artwork storage byte/hash and linkage passes; source audit-event destination import remains pending.
+
+Backend branch pull request #3 contains candidate replay-notice guard, read-only stale-claim reconciliation SQL and no-production-access CI. GitHub Actions workflow run 41215452871 concluded success. Code not merged into deployed branch and SQL not executed. Outbound customer mail remains disabled.
