@@ -1,6 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {Mic,MicOff,PhoneOff,X,Loader2} from 'lucide-react';
 import {useBusinessSettings} from '@/hooks/useBusinessSettings';
+import {visitorSaidGoodbye,receptionistSaidGoodbye,canCloseNaturally} from '@/lib/voiceClosing';
 
 async function voiceRequest(action,data){
  const response=await fetch('/api/voice?action='+encodeURIComponent(action),{
@@ -25,18 +26,19 @@ export default function VoiceCallWidget(){
  const [open,setOpen]=useState(false),[available,setAvailable]=useState(false);
  const [phase,setPhase]=useState('idle'),[caption,setCaption]=useState(''),[muted,setMuted]=useState(false);
  const [error,setError]=useState('');
- const state=useRef({pc:null,media:null,audio:null,dc:null,session:null,token:null,seconds:0,finalized:false,timer:null});
+ const state=useRef({pc:null,media:null,audio:null,dc:null,session:null,token:null,seconds:0,finalized:false,timer:null,goodbyeTimer:null,visitorTranscript:'',assistantTranscript:'',visitorGoodbye:false,assistantGoodbye:false,crmSaved:false,crmPending:false});
  const assistantName=settings?.chat_assistant_name||'Sew Suite Assistant';
  useEffect(()=>{
   let active=true;
   voiceRequest('status').then(v=>{if(active)setAvailable(v.available===true&&v.website_enabled===true)}).catch(()=>{if(active)setAvailable(false)});
-  return ()=>{active=false;const s=state.current;if(s.timer)clearTimeout(s.timer);s.dc?.close();s.pc?.close();s.media?.getTracks().forEach(t=>t.stop());if(s.audio)s.audio.srcObject=null};
+  return ()=>{active=false;const s=state.current;if(s.timer)clearTimeout(s.timer);if(s.goodbyeTimer)clearTimeout(s.goodbyeTimer);s.dc?.close();s.pc?.close();s.media?.getTracks().forEach(t=>t.stop());if(s.audio)s.audio.srcObject=null};
  },[]);
  function clean(){
   const s=state.current;
   if(s.timer)clearTimeout(s.timer);
+  if(s.goodbyeTimer)clearTimeout(s.goodbyeTimer);
   try{s.dc?.close();s.pc?.close();s.media?.getTracks().forEach(t=>t.stop());if(s.audio){s.audio.pause();s.audio.srcObject=null;}}catch{}
-  state.current={pc:null,media:null,audio:null,dc:null,session:null,token:null,seconds:0,finalized:false,timer:null};
+  state.current={pc:null,media:null,audio:null,dc:null,session:null,token:null,seconds:0,finalized:false,timer:null,goodbyeTimer:null,visitorTranscript:'',assistantTranscript:'',visitorGoodbye:false,assistantGoodbye:false,crmSaved:false,crmPending:false};
   setMuted(false);setPhase('idle');
  }
  async function finalize(reason){
@@ -45,9 +47,21 @@ export default function VoiceCallWidget(){
   s.finalized=true;
   try{await voiceRequest('finalize',{session_id:s.session,runtime_token:s.token,usage_seconds:s.seconds,close_reason:reason});}catch{setError('Call ended, but the usage receipt could not be confirmed.');}
  }
- async function end(){
-  await finalize('visitor_hangup');
+ async function end(reason='visitor_hangup'){
+  // Silence the microphone and remote audio immediately; don't wait for HTTP.
+  const receipt=finalize(reason);
   clean();setOpen(false);
+  await receipt;
+ }
+ function maybeCloseAfterFarewell(){
+  const s=state.current;
+  if(s.goodbyeTimer)clearTimeout(s.goodbyeTimer);
+  if(!canCloseNaturally(s))return;
+  // Live transcript deltas are not exact speech-turn boundaries. Allow the
+  // final spoken goodbye to finish, resetting the timer on later deltas.
+  s.goodbyeTimer=setTimeout(()=>{
+   if(state.current===s&&canCloseNaturally(s))void end('natural_goodbye');
+  },4000);
  }
  async function connect(){
   if(!available||phase!=='idle')return;
@@ -70,21 +84,40 @@ export default function VoiceCallWidget(){
       const s=state.current;
       if(!s.session||!s.token||s.dc!==dc||dc.readyState!=='open')return;
       setCaption('Saving confirmed test inquiry…');
+      s.crmPending=true;
+      if(s.goodbyeTimer)clearTimeout(s.goodbyeTimer);
       let outcome;
       try{
         const result=await voiceRequest('tool',{session_id:s.session,runtime_token:s.token,tool_call_id:call.call_id,tool_name:call.name,arguments:call.arguments});
-        outcome=result?.result?.success===true?{success:true,lead_id:result.result.lead_id,delivery_mode:result.result.delivery_mode}:{success:false,error:'not_confirmed'};
+        // Keep the UUID in the private CRM. Never put it into a spoken
+        // model tool result or a customer-facing caption.
+        outcome=result?.result?.success===true?{success:true,confirmation:'Your inquiry has been sent to our team for review.'}:{success:false,error:'not_confirmed'};
       }catch{outcome={success:false,error:'crm_submission_unavailable'};}
+      s.crmPending=false;
+      s.crmSaved=outcome.success===true;
       if(dc.readyState==='open'){
         dc.send(JSON.stringify({type:'response.item.create',item:{type:'function_call_output',call_id:call.call_id,output:JSON.stringify(outcome)}}));
         dc.send(JSON.stringify({type:'response.create'}));
       }
-      setCaption(outcome.success?'Test inquiry saved in CRM.':'Test inquiry could not be saved. Please use the website form.');
+      setCaption(outcome.success?'Your inquiry was sent to the team.':'Inquiry not saved. Please contact the team.');
+      maybeCloseAfterFarewell();
       return;
     }
     if(v.type==='session.started'){setPhase('connected');setCaption('Connected. Start speaking.');}
     if(v.type==='session.usage.updated'){state.current.seconds=Math.max(state.current.seconds,Number(v.usage?.seconds||0))}
-    if(v.type==='session.output_transcript.delta')setCaption(t=>(t+String(v.delta||'')).slice(-280));
+    if(v.type==='session.input_transcript.delta'){
+      const s=state.current;
+      s.visitorTranscript=(s.visitorTranscript+String(v.delta||'')).slice(-360);
+      s.visitorGoodbye=visitorSaidGoodbye(s.visitorTranscript);
+      maybeCloseAfterFarewell();
+    }
+    if(v.type==='session.output_transcript.delta'){
+      const s=state.current;
+      s.assistantTranscript=(s.assistantTranscript+String(v.delta||'')).slice(-450);
+      s.assistantGoodbye=receptionistSaidGoodbye(s.assistantTranscript);
+      setCaption(t=>(t+String(v.delta||'')).slice(-280));
+      maybeCloseAfterFarewell();
+    }
     if(v.type==='session.closed'){await finalize('session_closed');clean();setOpen(false)}
     if(v.type==='error')setError('The voice connection reported an error.');
    };
