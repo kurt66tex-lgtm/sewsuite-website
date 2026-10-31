@@ -2,6 +2,7 @@
 // Generated preview must remain nonindexable; this checks URL completeness only.
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {indexableRelease} from './indexing-release-policy.mjs';
 const data=JSON.parse(readFileSync('src/data/prelaunch-public-snapshot.json','utf8'));
 assert.equal(data.BusinessSettings?.[0]?.email,'support@sewsuite.com','public_email_drift');
 const xml=readFileSync('public/sitemap.xml','utf8');
@@ -27,8 +28,14 @@ assert.equal(requiredPaths.length,requiredURLs.size,'duplicate_required_route');
 assert.equal(found.size,requiredURLs.size,'stale_or_missing_sitemap_route');
 for(const url of requiredURLs) assert.ok(found.has(url),'missing_sitemap_page_'+url);
 for(const url of found) assert.ok(requiredURLs.has(url),'unapproved_sitemap_page_'+url);
-const robots=readFileSync('public/robots.txt','utf8');
-assert.match(robots,/Disallow:\s*\//,'preview_must_remain_blocked');
+const indexable=indexableRelease(process.env);
+const robots=readFileSync('dist/robots.txt','utf8');
+if(indexable){
+ assert.match(robots,/Allow:\s*\//,'production_robots_allow_missing');
+ assert.doesNotMatch(robots,/Disallow:\s*\//,'production_robots_still_blocked');
+}else assert.match(robots,/Disallow:\s*\//,'preview_must_remain_blocked');
 const config=JSON.parse(readFileSync('vercel.json','utf8'));
-assert.ok(config.headers?.some(rule=>rule.headers?.some(h=>h.key==='X-Robots-Tag'&&/noindex/i.test(h.value))),'preview_header_noindex_missing');
-console.log('RRS_PRECUTOVER_SITEMAP_PARITY_PASS '+JSON.stringify({servicePages:services.length,cityPages:cities.length,portfolioPages:projects.length,totalSitemapURLs:urls.length,previewStillNoindex:true}));
+const header=config.headers?.find(rule=>rule.headers?.some(h=>h.key==='X-Robots-Tag'&&/noindex/i.test(h.value)));
+assert.ok(header,'preview_header_noindex_missing');
+assert.deepEqual((header.missing||[]).filter(x=>x.type==='host').map(x=>x.value).sort(),['sewsuite.com','www.sewsuite.com'],'live_host_restriction_invalid');
+console.log('RRS_PRECUTOVER_SITEMAP_PARITY_PASS '+JSON.stringify({servicePages:services.length,cityPages:cities.length,portfolioPages:projects.length,totalSitemapURLs:urls.length,previewStillNoindex:!indexable,productionIndexable:indexable}));

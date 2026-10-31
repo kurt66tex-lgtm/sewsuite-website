@@ -3,8 +3,10 @@
 // Browser React hydrates the same URL; no Base44 or production CRM calls are made.
 import {readFileSync,writeFileSync,mkdirSync,statSync} from 'node:fs';
 import {join,dirname} from 'node:path';
+import {indexableRelease} from './indexing-release-policy.mjs';
 const snapshot=JSON.parse(readFileSync('src/data/prelaunch-public-snapshot.json','utf8'));
 const template=readFileSync('dist/index.html','utf8');
+const allowProductionIndexing=indexableRelease(process.env);
 if(!template.includes('<div id="root"></div>')||!template.includes('</head>'))throw Error('vite_html_template_unexpected');
 const esc=value=>String(value??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const jsonld=value=>JSON.stringify(value).replace(/</g,'\\u003c');
@@ -115,6 +117,9 @@ function render(route){
  const url=base+route.path;
  const replace=(html,search,replacement)=>{if(!search.test(html))throw Error('missing_meta_marker_'+route.path);return html.replace(search,replacement)};
  let html=template;
+ if(allowProductionIndexing){
+  html=replace(html,/<meta name="robots"[^>]*>/,'<meta name="robots" content="index, follow" />');
+ }
  html=replace(html,/<title>[^<]*<\/title>/,'<title>'+esc(route.title)+'</title>');
  html=replace(html,/<meta name="description"[^>]*>/,'<meta name="description" content="'+esc(route.description)+'" />');
  html=replace(html,/<link rel="canonical"[^>]*>/,'<link rel="canonical" href="'+esc(url)+'" />');
@@ -140,4 +145,7 @@ function render(route){
  if(statSync(dst).size<2000)throw Error('static_page_too_small');
 }
 routes.forEach(render);
-console.log('RRS_VITE_STATIC_SEO_ROUTES_OK '+JSON.stringify({servicePages:serviceRows.length,cityPages:cityRows.length,portfolioPages:projects.length,htmlRoutes:routes.length,indexing:'intentionally_disabled_on_preview'}));
+if(allowProductionIndexing){
+ writeFileSync('dist/robots.txt','User-agent: *\nAllow: /\nSitemap: https://sewsuite.com/sitemap.xml\n','utf8');
+}
+console.log('RRS_VITE_STATIC_SEO_ROUTES_OK '+JSON.stringify({servicePages:serviceRows.length,cityPages:cityRows.length,portfolioPages:projects.length,htmlRoutes:routes.length,indexing:allowProductionIndexing?'verified_production_build_only':'intentionally_disabled_on_preview'}));
