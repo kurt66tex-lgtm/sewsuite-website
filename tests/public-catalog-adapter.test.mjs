@@ -3,13 +3,14 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 const adapter=readFileSync(new URL('../src/api/base44Client.js',import.meta.url),'utf8');
 const proxy=readFileSync(new URL('../api/public-catalog.js',import.meta.url),'utf8');
-test('public content has explicit snapshot preview and fail-closed independent mode',()=>{
+test('public content requires independent runtime catalog and never uses snapshot fallback',()=>{
  assert.match(adapter,/VITE_PUBLIC_CATALOG_MODE==='independent'/);
  assert.match(adapter,/VITE_APPROVED_CATALOG_VERSION/);
  assert.match(adapter,/message\.version!==import\.meta\.env\.VITE_APPROVED_CATALOG_VERSION/);
  assert.match(adapter,/independent_catalog_unavailable/);
  assert.match(adapter,/fetch\('\/api\/public-catalog'/);
- assert.doesNotMatch(adapter,/@base44\/sdk|media\.base44\.com/);
+ assert.doesNotMatch(adapter,/@base44\/sdk|media\.base44\.com|prelaunch-public-snapshot\.json/);
+ assert.match(adapter,/independent_catalog_required/);
 });
 test('independent content proxy requires private server-side key and owned origin',()=>{
  assert.match(proxy,/RRS_PUBLIC_CATALOG_READ_KEY/);
@@ -28,7 +29,7 @@ test('public catalog preserves numeric Base44 display ordering and repairs displ
 
 test('business settings and all page-facing catalog entities share UTF-8 normalization',()=>{
  assert.match(adapter,/return repairDisplayText\(message\.data\)/);
- assert.match(adapter,/return repairDisplayText\(snapshot\)/);
+ assert.doesNotMatch(adapter,/return repairDisplayText\(snapshot\)/);
  assert.match(adapter,/getPublicBusinessSettings.*repairDisplayText/);
  assert.match(adapter,/\.replace\(\/Ã©\/g,'é'\)/);
 });

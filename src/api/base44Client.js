@@ -1,14 +1,13 @@
 // RRS independent public content compatibility adapter.
 // Existing React components still import {base44}; there are NO Base44 SDK/network calls.
-// Protected preview defaults to its signed-off snapshot. Production must explicitly
-// select independent mode and pass a real owned catalog API acceptance gate.
-import snapshot from '@/data/prelaunch-public-snapshot.json';
+// Public runtime data must come from the independently controlled catalog API.
+// The signed-off local snapshot remains solely in the build-time SEO generator.
 const independent=import.meta.env.VITE_PUBLIC_CATALOG_MODE==='independent';
 const allowed=new Set(['BusinessSettings','ServiceType','ServiceArea','Brand','Review','PortfolioProject','PortfolioPhoto','ServiceIntakeQuestion']);
 const denied=async()=>{throw Error('public_write_not_allowed')};
 let activeRequest=null,expiresAt=0;
 async function document(){
- if(!independent)return repairDisplayText(snapshot);
+ if(!independent)throw Error('independent_catalog_required');
  if(activeRequest&&Date.now()<expiresAt)return activeRequest;
  activeRequest=fetch('/api/public-catalog',{cache:'no-store',headers:{accept:'application/json'}})
   .then(async response=>{
