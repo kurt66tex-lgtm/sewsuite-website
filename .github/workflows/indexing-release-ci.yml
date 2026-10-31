@@ -1,0 +1,46 @@
+name: Sew Suite guarded indexing build
+on:
+  pull_request:
+    paths:
+      - 'vercel.json'
+      - 'scripts/indexing-release-policy.mjs'
+      - 'scripts/build-static-seo.mjs'
+      - 'scripts/test-static-seo.mjs'
+      - 'scripts/test-sitemap-parity.mjs'
+      - 'scripts/verify-indexing-artifact.mjs'
+      - 'tests/indexing-release-policy.test.mjs'
+      - '.github/workflows/indexing-release-ci.yml'
+  push:
+    branches:
+      - sew-suite-indexing-release-guard-20261031
+permissions:
+  contents: read
+jobs:
+  indexing-artifact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [preview, production]
+    env:
+      VERCEL_ENV: ${{ matrix.mode }}
+      RRS_PRODUCTION_RELEASE_VERIFIED: ${{ matrix.mode == 'production' && 'true' || 'false' }}
+      RRS_PRODUCTION_INDEXABLE: ${{ matrix.mode == 'production' && 'true' || 'false' }}
+      RRS_PUBLIC_CATALOG_MODE: independent
+      VITE_PUBLIC_CATALOG_MODE: independent
+      RRS_PUBLIC_CATALOG_ENABLED: 'true'
+      VITE_APPROVED_CATALOG_VERSION: e06f162d-8684-4eef-89fa-57bcec31a4fa
+      RRS_APPROVED_PUBLIC_CATALOG_VERSION: e06f162d-8684-4eef-89fa-57bcec31a4fa
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install immutable dependencies
+        run: npm ci
+      - name: Build protected preview or simulated production artifact
+        run: npm run build
+      - name: Verify output contains correct crawl policy
+        run: node scripts/verify-indexing-artifact.mjs
