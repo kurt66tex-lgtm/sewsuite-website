@@ -2,7 +2,17 @@
 export default async function handler(req,res){
  res.setHeader('Cache-Control','no-store');
  const ready=process.env.RRS_PRODUCTION_CHAT_LEADS_ENABLED==='true'&&!!process.env.RRS_INTAKE_API_ORIGIN&&!!process.env.RRS_INTERNAL_INTAKE_KEY&&!!process.env.RRS_TURNSTILE_SECRET_KEY;
- if(req.method==='GET')return res.status(200).json({available:ready});
+ if(req.method==='GET'){
+  if(!ready)return res.status(200).json({available:false});
+  try{
+   const u=new URL(process.env.RRS_INTAKE_API_ORIGIN);
+   if(u.protocol!=='https:'||u.pathname!=='/'||u.search||u.hash||u.username||u.password)
+    return res.status(200).json({available:false});
+   const upstream=await fetch(new URL('/ready',u),{method:'GET',cache:'no-store',signal:AbortSignal.timeout(5000)});
+   const state=await upstream.json().catch(()=>({}));
+   return res.status(200).json({available:upstream.ok&&state.configured===true&&state.public_intake_enabled===true});
+  }catch{return res.status(200).json({available:false})}
+ }
  if(req.method!=='POST')return res.status(405).json({error:'method_not_allowed'});
  if(!ready)return res.status(503).json({error:'lead_intake_not_ready'});
  if(req.headers.origin!==process.env.RRS_PUBLIC_SITE_ORIGIN)return res.status(403).json({error:'origin_rejected'});
