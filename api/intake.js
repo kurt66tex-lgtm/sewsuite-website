@@ -1,3 +1,4 @@
+import {previewAllowsSyntheticLead} from './preview-synthetic-only.mjs';
 // Sew Suite production Vercel intake relay. Fail closed until API, captcha,
 // abuse controls and notification workflow pass release acceptance.
 export default async function handler(req,res){
@@ -24,6 +25,7 @@ export default async function handler(req,res){
  const body=req.body;
  if(!body||Array.isArray(body)||typeof body!=='object'||Buffer.byteLength(JSON.stringify(body))>12000)return res.status(422).json({error:'invalid_payload'});
  if(typeof body.website_company==='string'&&body.website_company.trim())return res.status(200).json({success:false,submission_confirmed:false});
+ if(!previewAllowsSyntheticLead(body,'website'))return res.status(403).json({error:'preview_test_only'});
  if(typeof body.turnstile_token!=='string'||!body.turnstile_token||body.turnstile_token.length>2100)return res.status(422).json({error:'verification_required'});
  let origin;try{origin=new URL(process.env.RRS_INTAKE_API_ORIGIN);if(origin.protocol!=='https:'||origin.pathname!=='/'||origin.username||origin.password||origin.search||origin.hash)throw Error()}catch{return res.status(503).json({error:'api_origin_invalid'})}
  try{
