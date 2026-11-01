@@ -43,7 +43,9 @@ test('server-side Cloudflare hostname must equal configured preview origin',asyn
   return new Response(JSON.stringify({success:true,hostname:'wrong.example.invalid'}),{status:200});
  };
  const req={method:'POST',headers:{origin:site,'content-type':'application/json'},
-  body:{confirmed:true,consent_to_contact:true,turnstile_token:'synthetic',messages:[]}};
+  body:{confirmed:true,consent_to_contact:true,turnstile_token:'synthetic',
+   first_name:'Synthetic',last_name:'Test',phone:'9724421285',email:'kurt66tex@gmail.com',service_type:'Custom Embroidery',problem_description:'24 embroidered shirts with existing artwork',
+   messages:[{role:'assistant',content:'May the Sew Suite team follow up about the project?'},{role:'user',content:'Synthetic Test 9724421285 kurt66tex@gmail.com. Yes please send this request to the Sew Suite team'}]}};
  const r=response();await handler(req,r);assert.equal(r.statusCode,403);assert.equal(calls,1);
 });
 test.after(()=>{globalThis.fetch=originalFetch;for(const [k,v] of Object.entries(originals)){if(v===undefined)delete process.env[k];else process.env[k]=v;}});
