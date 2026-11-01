@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Loader2, AlertTriangle, Paperclip, FileText, Image as ImageIcon, Trash2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useBusinessSettings } from '@/hooks/useBusinessSettings';
+import { useChatHandoff } from '@/hooks/useChatHandoff';
 
 export default function ChatWidget() {
   const { settings } = useBusinessSettings();
@@ -12,7 +13,6 @@ export default function ChatWidget() {
   const [conversationId, setConversationId] = useState(null);
   const [sending, setSending] = useState(false);
   const [safetyFlag, setSafetyFlag] = useState(false);
-  const [leadSubmitted, setLeadSubmitted] = useState(false);
   const [pendingFiles, setPendingFiles] = useState([]);
   const [uploadError, setUploadError] = useState('');
   const scrollRef = useRef(null);
@@ -25,12 +25,8 @@ export default function ChatWidget() {
   const enabled = settings?.chat_enabled !== false;
   const [chatAvailable,setChatAvailable]=useState(false);
   const [crmAvailable,setCrmAvailable]=useState(false);
-  const [quoteFormOpen,setQuoteFormOpen]=useState(false);
-  const [quoteDraft,setQuoteDraft]=useState({first_name:'',last_name:'',phone:'',email:'',service_type:'Custom Embroidery',problem_description:'',consent_to_contact:false});
-  const leadRequestKey=useRef('chat_'+crypto.randomUUID().replaceAll('-',''));
   const siteKey=import.meta.env.VITE_TURNSTILE_SITE_KEY||'';
-  const [quoteCaptcha,setQuoteCaptcha]=useState('');
-  useEffect(()=>{if(!quoteFormOpen||!siteKey)return;let active=true,instance;const render=()=>{if(!active||!window.turnstile||!document.getElementById('sew-chat-turnstile'))return;instance=window.turnstile.render('#sew-chat-turnstile',{sitekey:siteKey,callback:t=>setQuoteCaptcha(t),'expired-callback':()=>setQuoteCaptcha('')})};const script=document.createElement('script');script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';script.async=true;script.onload=render;document.head.appendChild(script);return()=>{active=false;if(instance!==undefined&&window.turnstile)try{window.turnstile.remove(instance)}catch{};script.remove()}},[quoteFormOpen,siteKey]);
+  const handoff=useChatHandoff({open,enabled:crmAvailable,siteKey});
   useEffect(()=>{let live=true;fetch('/api/chat-lead').then(r=>r.json()).then(d=>{if(live)setCrmAvailable(d.available===true)}).catch(()=>{});return ()=>{live=false}},[]);
   useEffect(()=>{let live=true;fetch('/api/chat?action=status').then(r=>r.json()).then(d=>{if(live)setChatAvailable(d.available===true)}).catch(()=>{if(live)setChatAvailable(false)});return ()=>{live=false}},[]);
 
@@ -133,10 +129,11 @@ export default function ChatWidget() {
       if (data.safety_flag) setSafetyFlag(true);
 
       setMessages([...newMessages, { role: 'assistant', content: data.reply }]);
+      if(data.lead_candidate && crmAvailable)handoff.start(data.lead_candidate,newMessages);
       setInput('');
       clearPendingFiles();
 
-      // Preview conversations never create customer leads or send notifications.
+      // Lead submission happens once, only after explicit conversational follow-up permission and verified Turnstile.
 
     } catch (e) {
       const message = String(e?.message || '');
@@ -150,17 +147,6 @@ export default function ChatWidget() {
     }
   };
 
-  const submitConfirmedQuote=async()=>{
-    if(!crmAvailable||sending||leadSubmitted||!quoteDraft.consent_to_contact||!quoteCaptcha)return;
-    setSending(true);setUploadError('');
-    try{
-      const response=await fetch('/api/chat-lead',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({...quoteDraft,request_key:leadRequestKey.current,turnstile_token:quoteCaptcha,confirmed:true,messages:messages.map(m=>({role:m.role,content:m.content}))})});
-      const data=await response.json();
-      if(response.status!==202||!data.success||!data.lead_id)throw Error('lead_not_confirmed');
-      setLeadSubmitted(true);setQuoteFormOpen(false);
-    }catch{setUploadError('We could not confirm your request was saved. Please use www.sewsuite.com and do not assume your inquiry was submitted.');}
-    finally{setSending(false)}
-  };
 
   if (!enabled) return null;
 
@@ -226,22 +212,28 @@ export default function ChatWidget() {
                 </div>
               </div>
             )}
-            {crmAvailable&&!leadSubmitted&&(
-              <div className="mx-3 mb-3 rounded-lg border border-slate-200 bg-white p-3">
-                <button type="button" onClick={()=>setQuoteFormOpen(v=>!v)} className="text-xs font-semibold text-brand-dark underline">{quoteFormOpen?'Close quote request':'Send this conversation as a quote request'}</button>
-                {quoteFormOpen&&<div className="mt-2 space-y-2">
-                  {['first_name','last_name','email','phone','service_type','problem_description'].map(field=><label key={field} className="block text-xs text-slate-700">{field.replaceAll('_',' ')}<input className="mt-1 w-full rounded border border-slate-300 px-2 py-1.5" value={quoteDraft[field]} onChange={e=>setQuoteDraft(v=>({...v,[field]:e.target.value}))}/></label>)}
-                  <label className="flex gap-2 text-xs text-slate-700"><input type="checkbox" checked={quoteDraft.consent_to_contact} onChange={e=>setQuoteDraft(v=>({...v,consent_to_contact:e.target.checked}))}/>I confirm these details are correct and agree to be contacted.</label>
-                  <button type="button" disabled={sending||!quoteDraft.consent_to_contact||!quoteCaptcha} onClick={submitConfirmedQuote} className="rounded bg-brand-accent px-3 py-2 text-xs font-bold text-brand-dark disabled:opacity-50">Confirm and send request</button>
-                  <div id="sew-chat-turnstile" aria-label="Verify quote request"></div>
-                </div>}
+            {handoff.status==='verifying' && (
+              <div className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-2" role="status">
+                Verifying your inquiry before sending it to the team…
               </div>
             )}
-            {leadSubmitted && (
-              <div className="text-center text-xs text-green-700 bg-green-50 rounded-lg py-2 px-3">
-                Your request was saved in the Sew Suite CRM. Our staff can now review the details.
+            {handoff.status==='saving' && (
+              <div className="text-xs text-slate-700 bg-white border border-slate-200 rounded-lg px-3 py-2" role="status">
+                Saving your inquiry securely…
               </div>
             )}
+            {handoff.status==='saved' && (
+              <div className="text-xs text-green-800 bg-green-50 border border-green-200 rounded-lg px-3 py-2" role="status">
+                Your request was sent to the Sew Suite team. They'll follow up using the contact details you provided.
+              </div>
+            )}
+            {handoff.status==='failed' && (
+              <div className="text-xs text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2" role="alert">
+                We could not confirm your inquiry was saved. Please contact Sew Suite directly. Do not submit it twice.
+              </div>
+            )}
+            <div id="sew-chat-turnstile" aria-label="Inquiry security verification" />
+
           </div>
 
           {/* Pending attachments + input */}
