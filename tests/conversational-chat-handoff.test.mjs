@@ -53,3 +53,12 @@ test('yes to artwork upload does not count as follow-up permission',()=>{
  const upload=[...base.slice(0,-2),{role:'assistant',content:'You can upload artwork to help the Sew Suite team review it. Would you like to do that?'},{role:'user',content:'Yes'}];
  assert.equal(hasChatFollowupPermission(upload),false);
 });
+
+test('artwork can be selected before CRM submission and is uploaded only after saved receipt',()=>{
+ const widget=readFileSync('src/components/site/ChatWidget.jsx','utf8');
+ assert.match(widget,/setArtworkStatus\('queued'\)/);
+ assert.match(widget,/handoff\.status!=='saved'/);
+ assert.match(widget,/await uploadLeadArtwork\(item\.file,handoff\.artworkCapability\)/);
+ assert.doesNotMatch(widget,/Attachments are not enabled in the comparison chat/);
+ assert.match(widget,/Attach artwork anytime/);
+});
