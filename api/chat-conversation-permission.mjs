@@ -2,7 +2,7 @@
 // explicitly asked for follow-up or agreed to the assistant's service follow-up question.
 // It is not marketing consent. No unverified transcript may create a CRM lead.
 const direct=/(?:please|go ahead and|you can|i(?:'d| would) like (?:someone|your team|you) to).{0,90}(?:send|submit|contact|follow.?up|reach out|forward|call|email)/i;
-const question=/(?:may|can|shall|okay|ok|would you like|is it okay).{0,160}(?:team|staff|sew suite|follow.?up|contact|send|forward|submit|reach out)/i;
+const question=/(?:\\b(?:may|can|shall)\\s+(?:the\\s+)?(?:sew suite\\s+)?(?:team|staff)\\s+(?:contact|call|email|follow\\s*up|reach\\s*out)\\b|\\b(?:may|can|shall|would you like|is it okay)\\b.{0,100}\\b(?:team|staff|sew suite)\\b.{0,60}\\b(?:contact|call|email|follow\\s*up|reach\\s*out|send|forward|submit)\\b)/i;
 const yes=/^(?:yes(?: please|,? go ahead|,? please do|,? that(?:'s| is) fine|,? that would be great)?|yep|yeah|sure(?: thing|,? please do)?|okay|ok|of course|go ahead|please do|absolutely|that works|you can|sounds good|that would be great)[.! ]*$/i;
 const no=/(?:don't|do not|no thanks|not yet|please wait|stop|cancel|not ready)/i;
 export function hasChatFollowupPermission(messages){
@@ -13,7 +13,9 @@ export function hasChatFollowupPermission(messages){
  if(no.test(last))return false;
  if(direct.test(last))return true;
  const previous=[...messages.slice(0,i)].reverse().find(m=>m.role==='assistant');
- return Boolean(previous&&question.test(String(previous.content||''))&&yes.test(last));
+ const prompt=String(previous?.content||'');
+ if(/\\b(?:upload|attach|add|provide|send)\\b.{0,90}\\b(?:artwork|logo|file|image|photo)\\b|\\b(?:artwork|logo|file|image|photo)\\b.{0,90}\\b(?:upload|attach)\\b/i.test(prompt))return false;
+ return Boolean(previous&&question.test(prompt)&&yes.test(last));
 }
 export function validConversationalLead(body){
  const messages=body?.messages;
