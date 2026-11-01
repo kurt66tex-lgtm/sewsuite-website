@@ -34,6 +34,6 @@ export default async function handler(req,res){
   const r=await fetch(new URL('/internal/lead',u),{method:'POST',headers:{'content-type':'application/json','x-rrs-internal-key':process.env.RRS_INTERNAL_INTAKE_KEY},body:JSON.stringify(lead),signal:AbortSignal.timeout(12000)});
   const d=await r.json().catch(()=>({}));
   if(r.status!==202||d.success!==true||!d.lead_id)return res.status(503).json({error:'lead_not_confirmed'});
-  return res.status(202).json({success:true,lead_id:d.lead_id,replayed:d.replayed===true,notification_status:d.notification_status||'held'});
+  return res.status(202).json({success:true,lead_id:d.lead_id,replayed:d.replayed===true,notification_status:d.notification_status||'held',...(typeof d.artwork_token==='string'?{artwork_token:d.artwork_token,request_key:v.request_key}:{})});
  }catch{return res.status(503).json({error:'lead_unavailable'})}
 }
