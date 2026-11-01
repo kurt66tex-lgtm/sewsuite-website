@@ -48,3 +48,8 @@ test('browser no longer contains separate form or manual send button',()=>{
  assert.match(api,/validConversationalLead\(v\)/);
  assert.match(api,/verification_failed/);
 });
+
+test('yes to artwork upload does not count as follow-up permission',()=>{
+ const upload=[...base.slice(0,-2),{role:'assistant',content:'You can upload artwork to help the Sew Suite team review it. Would you like to do that?'},{role:'user',content:'Yes'}];
+ assert.equal(hasChatFollowupPermission(upload),false);
+});
