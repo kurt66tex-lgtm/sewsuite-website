@@ -36,6 +36,8 @@ test('browser no longer contains separate form or manual send button',()=>{
  const api=readFileSync('api/chat-lead.js','utf8');
  assert.doesNotMatch(widget,/quoteFormOpen|quoteDraft|Confirm and send request|Send this conversation as a quote request/);
  assert.match(widget,/handoff\.start\(data\.lead_candidate,newMessages\)/);
+ assert.match(widget,/data\.handoff_needs_details/);
+ assert.match(widget,/handoff\.status\]\);/);
  assert.match(hook,/appearance:'interaction-only'/);
  assert.match(hook,/execution:'execute'/);
  assert.match(hook,/response\.status!==202/);
