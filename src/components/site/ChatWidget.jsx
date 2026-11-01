@@ -233,10 +233,17 @@ export default function ChatWidget() {
                 We could not confirm your inquiry was saved. Please contact Sew Suite directly. Do not submit it twice.
               </div>
             )}
-            <div id="sew-chat-turnstile" aria-label="Inquiry security verification" />
+
 
           </div>
 
+          {/* Keep the verification interaction visible and touchable on mobile. */}
+          <div className="shrink-0 bg-white px-3" aria-live="polite">
+            {['verifying','saving'].includes(handoff.status) && (
+              <p className="pb-1 text-xs text-slate-600">Securely verifying your request…</p>
+            )}
+            <div id="sew-chat-turnstile" className="max-w-full" aria-label="Inquiry security verification" />
+          </div>
           {/* Pending attachments + input */}
           <div className="border-t border-slate-200 bg-white">
             {pendingFiles.length > 0 && (
