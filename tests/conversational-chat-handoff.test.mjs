@@ -37,7 +37,7 @@ test('browser no longer contains separate form or manual send button',()=>{
  assert.match(hook,/execution:'execute'/);
  assert.match(hook,/response\.status!==202/);
  assert.match(hook,/request_key:key\.current/);
- assert.match(hook,/Your request was sent to the Sew Suite team/);
+ assert.match(widget,/Your request was sent to the Sew Suite team/);
  assert.match(api,/validConversationalLead\(v\)/);
  assert.match(api,/verification_failed/);
 });
