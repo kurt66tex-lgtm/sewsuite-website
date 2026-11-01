@@ -62,3 +62,10 @@ test('artwork can be selected before CRM submission and is uploaded only after s
  assert.doesNotMatch(widget,/Attachments are not enabled in the comparison chat/);
  assert.match(widget,/Attach artwork anytime/);
 });
+
+test('final no-more-details answer completes a requested quote only',()=>{
+ const final=[...base.slice(0,-2),{role:'assistant',content:'Is there anything else you would like us to know?'},{role:'user',content:'No'}];
+ assert.equal(hasChatFollowupPermission(final),true);
+ const artwork=[...base.slice(0,-2),{role:'assistant',content:'Do you have artwork?'},{role:'user',content:'No'}];
+ assert.equal(hasChatFollowupPermission(artwork),false);
+});
