@@ -3,7 +3,7 @@
 // It is not marketing consent. No unverified transcript may create a CRM lead.
 const direct=/(?:please|go ahead and|you can|i(?:'d| would) like (?:someone|your team|you) to).{0,90}(?:send|submit|contact|follow.?up|reach out|forward|call|email)/i;
 const question=/(?:may|can|shall|okay|ok|would you like|is it okay).{0,160}(?:team|staff|sew suite|follow.?up|contact|send|forward|submit|reach out)/i;
-const yes=/^(?:yes|yes please|yep|yeah|sure|okay|ok|of course|go ahead|please do|absolutely|that works|you can|sounds good)[.! ]*$/i;
+const yes=/^(?:yes(?: please|,? go ahead|,? please do|,? that(?:'s| is) fine|,? that would be great)?|yep|yeah|sure(?: thing|,? please do)?|okay|ok|of course|go ahead|please do|absolutely|that works|you can|sounds good|that would be great)[.! ]*$/i;
 const no=/(?:don't|do not|no thanks|not yet|please wait|stop|cancel|not ready)/i;
 export function hasChatFollowupPermission(messages){
  if(!Array.isArray(messages)||messages.length<2)return false;
