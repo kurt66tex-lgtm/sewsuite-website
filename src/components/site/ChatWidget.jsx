@@ -107,7 +107,7 @@ export default function ChatWidget() {
   };
 
   const send = async () => {
-    if ((!input.trim() && pendingFiles.length === 0) || sending) return;
+    if (!input.trim() || sending) return;
 
     if(!chatAvailable){setUploadError('The independent chat is temporarily unavailable. Please use www.sewsuite.com.');return;}
     
@@ -117,7 +117,7 @@ export default function ChatWidget() {
     try {
       const uploadedAttachments = [];
 
-      const content = input.trim() || `Uploaded ${uploadedAttachments.length} ${uploadedAttachments.length === 1 ? 'file' : 'files'} for review.`;
+      const content = input.trim();
       const userMsg = {
         role: 'user',
         content,
@@ -311,7 +311,7 @@ export default function ChatWidget() {
                 className="flex-1 text-sm border border-slate-300 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-accent"
                 disabled={sending}
               />
-              <button onClick={send} disabled={sending || (!input.trim() && pendingFiles.length === 0)} className="rounded-full p-2 disabled:opacity-40" style={{ backgroundColor: 'var(--brand-chat-send-bg)', color: 'var(--brand-chat-send-icon)' }} aria-label="Send message">
+              <button onClick={send} disabled={sending || !input.trim()} className="rounded-full p-2 disabled:opacity-40" style={{ backgroundColor: 'var(--brand-chat-send-bg)', color: 'var(--brand-chat-send-icon)' }} aria-label="Send message">
                 {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
               </button>
             </div>
