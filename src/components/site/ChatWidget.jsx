@@ -101,7 +101,7 @@ export default function ChatWidget() {
     if ((!input.trim() && pendingFiles.length === 0) || sending) return;
 
     if(!chatAvailable){setUploadError('The independent chat is temporarily unavailable. Please use www.sewsuite.com.');return;}
-    if(pendingFiles.length){setUploadError('Attachments are not enabled in the comparison chat yet. Please use www.sewsuite.com to submit files.');return;}
+    if(pendingFiles.length){setUploadError('Please submit the inquiry without attachments. Artwork upload is not available in this preview.');return;}
     setSending(true);
     setUploadError('');
 
@@ -284,10 +284,10 @@ export default function ChatWidget() {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                disabled={sending || pendingFiles.length >= 4}
+                disabled={true}
                 className="rounded-full p-2 text-slate-500 hover:text-brand-dark hover:bg-slate-100 disabled:opacity-40"
                 aria-label="Add photo or file"
-                title="Add photo or file"
+                title="Artwork uploads are not available in this preview"
               >
                 <Paperclip className="w-4 h-4" />
               </button>
@@ -295,7 +295,7 @@ export default function ChatWidget() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && send()}
-                placeholder="Type a message or attach a photo…"
+                placeholder="Type a message…"
                 className="flex-1 text-sm border border-slate-300 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-accent"
                 disabled={sending}
               />
@@ -303,7 +303,7 @@ export default function ChatWidget() {
                 {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
               </button>
             </div>
-            <div className="px-3 pb-2 text-[10px] text-slate-400">Photos/PDFs up to 10 MB each • up to 4 at a time</div>
+            <div className="px-3 pb-2 text-[10px] text-slate-400">Artwork uploads will be available after secure CRM linking is verified</div>
           </div>
         </div>
       )}
