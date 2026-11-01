@@ -17,6 +17,9 @@ const lead={first_name:'Synthetic',last_name:'Test',phone:'9724421285',
  consent_to_contact:true,confirmed:true,messages:base};
 test('spoken followup permission suffices without separate checkbox',()=>{
  assert.equal(hasChatFollowupPermission(base),true);
+ for(const consent of ['Yes, go ahead','Sure thing','Yes, that would be great','Sure, please do']){
+  assert.equal(hasChatFollowupPermission([...base.slice(0,-1),{role:'user',content:consent}]),true);
+ }
  assert.equal(validConversationalLead(lead),true);
 });
 test('do not create leads when approval or details are missing or invented',()=>{
