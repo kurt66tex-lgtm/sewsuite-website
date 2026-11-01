@@ -17,6 +17,9 @@ const lead={first_name:'Synthetic',last_name:'Test',phone:'9724421285',
  consent_to_contact:true,confirmed:true,messages:base};
 test('spoken followup permission suffices without separate checkbox',()=>{
  assert.equal(hasChatFollowupPermission(base),true);
+ for(const consent of ['Yes, go ahead','Sure thing','Yes, that would be great','Sure, please do']){
+  assert.equal(hasChatFollowupPermission([...base.slice(0,-1),{role:'user',content:consent}]),true);
+ }
  assert.equal(validConversationalLead(lead),true);
 });
 test('do not create leads when approval or details are missing or invented',()=>{
@@ -33,6 +36,8 @@ test('browser no longer contains separate form or manual send button',()=>{
  const api=readFileSync('api/chat-lead.js','utf8');
  assert.doesNotMatch(widget,/quoteFormOpen|quoteDraft|Confirm and send request|Send this conversation as a quote request/);
  assert.match(widget,/handoff\.start\(data\.lead_candidate,newMessages\)/);
+ assert.match(widget,/data\.handoff_needs_details/);
+ assert.match(widget,/handoff\.status\]\);/);
  assert.match(hook,/appearance:'interaction-only'/);
  assert.match(hook,/execution:'execute'/);
  assert.match(hook,/response\.status!==202/);

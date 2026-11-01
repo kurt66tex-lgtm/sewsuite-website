@@ -40,7 +40,7 @@ export default function ChatWidget() {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages, sending, pendingFiles]);
+  }, [messages, sending, pendingFiles, handoff.status]);
 
   const getNormalizedType = (file) => {
     if (file.type) return file.type;
@@ -130,6 +130,7 @@ export default function ChatWidget() {
 
       setMessages([...newMessages, { role: 'assistant', content: data.reply }]);
       if(data.lead_candidate && crmAvailable)handoff.start(data.lead_candidate,newMessages);
+      if(data.handoff_needs_details && crmAvailable)setUploadError('The inquiry was not saved yet. Please continue in chat to confirm any missing contact or project details.');
       setInput('');
       clearPendingFiles();
 
