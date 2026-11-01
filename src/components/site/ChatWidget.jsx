@@ -55,16 +55,43 @@ export default function ChatWidget() {
     return '';
   };
 
-  const handleFiles = async (fileList) => {
-    if(!artworkAvailable||!handoff.artworkCapability||artworkStatus==='uploading')return;
-    const file=Array.from(fileList||[])[0];
+  const handleFiles = (fileList) => {
+    if(!artworkAvailable || artworkStatus==='uploading')return;
+    const incoming=Array.from(fileList||[]);
     if(fileInputRef.current)fileInputRef.current.value='';
-    if(!file)return;
-    setArtworkStatus('uploading');
-    try{await uploadLeadArtwork(file,handoff.artworkCapability);setArtworkStatus('saved');}
-    catch{setArtworkStatus('failed');}
-    return;
+    const allowed={'image/png':['png'],'image/jpeg':['jpg','jpeg'],'image/webp':['webp'],'application/pdf':['pdf']};
+    const accepted=[];
+    for(const file of incoming){
+      if(pendingFiles.length+accepted.length>=4){setUploadError('You can attach up to four files.');break;}
+      if(!allowed[file.type]?.includes(file.name.split('.').pop().toLowerCase()) || !/^[A-Za-z0-9 _().-]{1,120}$/.test(file.name) || file.size<1 || file.size>10*1024*1024){
+        setUploadError('Use a JPG, PNG, WEBP or PDF up to 10 MB with a simple filename.');continue;
+      }
+      accepted.push({id:crypto.randomUUID(),file,file_type:file.type,preview:file.type.startsWith('image/')?URL.createObjectURL(file):null});
+    }
+    if(accepted.length){setPendingFiles(prev=>[...prev,...accepted]);setUploadError('');setArtworkStatus('queued');}
   };
+
+  const uploadedIds=useRef(new Set());
+  const uploadStarted=useRef(false);
+  useEffect(()=>{
+    if(handoff.status!=='saved'||!handoff.artworkCapability||!artworkAvailable||!pendingFiles.length||uploadStarted.current)return;
+    uploadStarted.current=true;
+    let active=true;
+    const files=[...pendingFiles];
+    (async()=>{
+      setArtworkStatus('uploading');
+      try{
+        for(const item of files){
+          if(uploadedIds.current.has(item.id))continue;
+          await uploadLeadArtwork(item.file,handoff.artworkCapability);
+          uploadedIds.current.add(item.id);
+        }
+        if(active){setArtworkStatus('saved');setPendingFiles([]);files.forEach(x=>{if(x.preview)URL.revokeObjectURL(x.preview)});}
+      }catch{if(active)setArtworkStatus('failed');}
+      finally{uploadStarted.current=false;}
+    })();
+    return ()=>{active=false};
+  },[handoff.status,handoff.artworkCapability,artworkAvailable,pendingFiles]);
 
   const removePendingFile = (id) => {
     setPendingFiles(prev => {
@@ -83,7 +110,7 @@ export default function ChatWidget() {
     if ((!input.trim() && pendingFiles.length === 0) || sending) return;
 
     if(!chatAvailable){setUploadError('The independent chat is temporarily unavailable. Please use www.sewsuite.com.');return;}
-    if(pendingFiles.length){setUploadError('Please submit the inquiry without attachments. Artwork upload is not available in this preview.');return;}
+    
     setSending(true);
     setUploadError('');
 
@@ -114,7 +141,7 @@ export default function ChatWidget() {
       if(data.lead_candidate && crmAvailable)handoff.start(data.lead_candidate,newMessages);
       if(data.handoff_needs_details && crmAvailable)setUploadError('The inquiry was not saved yet. Please continue in chat to confirm any missing contact or project details.');
       setInput('');
-      clearPendingFiles();
+      // Keep selected artwork until the CRM receipt authorizes automatic upload.
 
       // Lead submission happens once, only after explicit conversational follow-up permission and verified Turnstile.
 
@@ -253,6 +280,7 @@ export default function ChatWidget() {
                 ))}
               </div>
             )}
+            {artworkStatus==='queued' && <div className="px-3 pt-2 text-xs text-slate-600">Artwork attached. It will upload automatically when your inquiry is saved.</div>}
             {artworkStatus==='uploading' && <div className="px-3 pt-2 text-xs text-slate-600">Uploading artwork securely…</div>}
             {artworkStatus==='saved' && <div className="px-3 pt-2 text-xs text-green-700">Artwork saved with your inquiry.</div>}
             {artworkStatus==='failed' && <div className="px-3 pt-2 text-xs text-red-700">Artwork could not be confirmed. Please contact Sew Suite before retrying.</div>}
@@ -268,7 +296,7 @@ export default function ChatWidget() {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                disabled={!artworkAvailable || !handoff.artworkCapability || artworkStatus==='uploading'}
+                disabled={!artworkAvailable || artworkStatus==='uploading' || pendingFiles.length>=4}
                 className="rounded-full p-2 text-slate-500 hover:text-brand-dark hover:bg-slate-100 disabled:opacity-40"
                 aria-label="Add photo or file"
                 title="Attach artwork to your saved request"
@@ -287,7 +315,7 @@ export default function ChatWidget() {
                 {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
               </button>
             </div>
-            <div className="px-3 pb-2 text-[10px] text-slate-400">Artwork can be attached after your request is saved.</div>
+            <div className="px-3 pb-2 text-[10px] text-slate-400">Attach artwork anytime. It uploads automatically when your inquiry is saved.</div>
           </div>
         </div>
       )}
