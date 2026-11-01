@@ -64,36 +64,6 @@ export default function ChatWidget() {
     try{await uploadLeadArtwork(file,handoff.artworkCapability);setArtworkStatus('saved');}
     catch{setArtworkStatus('failed');}
     return;
-    setUploadError('');
-    const incoming = Array.from(fileList || []);
-    const accepted = [];
-    const allowed = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif', 'application/pdf']);
-
-    for (const file of incoming) {
-      if (pendingFiles.length + accepted.length >= 4) {
-        setUploadError('You can attach up to 4 files at a time.');
-        break;
-      }
-      const normalizedType = getNormalizedType(file);
-      if (!allowed.has(normalizedType)) {
-        setUploadError('Please attach a JPG, PNG, WEBP, HEIC/HEIF image, or PDF.');
-        continue;
-      }
-      if (file.size > 10 * 1024 * 1024) {
-        setUploadError('Each file must be 10 MB or smaller.');
-        continue;
-      }
-
-      accepted.push({
-        id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
-        file,
-        file_type: normalizedType,
-        preview: normalizedType.startsWith('image/') ? URL.createObjectURL(file) : null
-      });
-    }
-
-    if (accepted.length) setPendingFiles(prev => [...prev, ...accepted]);
-    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const removePendingFile = (id) => {
