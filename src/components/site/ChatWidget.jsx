@@ -3,6 +3,7 @@ import { MessageCircle, X, Send, Loader2, AlertTriangle, Paperclip, FileText, Im
 import { base44 } from '@/api/base44Client';
 import { useBusinessSettings } from '@/hooks/useBusinessSettings';
 import { useChatHandoff } from '@/hooks/useChatHandoff';
+import { uploadLeadArtwork } from '@/lib/uploadLeadArtwork';
 
 export default function ChatWidget() {
   const { settings } = useBusinessSettings();
@@ -25,9 +26,12 @@ export default function ChatWidget() {
   const enabled = settings?.chat_enabled !== false;
   const [chatAvailable,setChatAvailable]=useState(false);
   const [crmAvailable,setCrmAvailable]=useState(false);
+  const [artworkAvailable,setArtworkAvailable]=useState(false);
+  const [artworkStatus,setArtworkStatus]=useState('idle');
   const siteKey=import.meta.env.VITE_TURNSTILE_SITE_KEY||'';
   const handoff=useChatHandoff({open,enabled:crmAvailable,siteKey});
   useEffect(()=>{let live=true;fetch('/api/chat-lead').then(r=>r.json()).then(d=>{if(live)setCrmAvailable(d.available===true)}).catch(()=>{});return ()=>{live=false}},[]);
+  useEffect(()=>{let live=true;fetch('/api/artwork').then(r=>r.json()).then(d=>{if(live)setArtworkAvailable(d.available===true)}).catch(()=>{});return ()=>{live=false}},[]);
   useEffect(()=>{let live=true;fetch('/api/chat?action=status').then(r=>r.json()).then(d=>{if(live)setChatAvailable(d.available===true)}).catch(()=>{if(live)setChatAvailable(false)});return ()=>{live=false}},[]);
 
   useEffect(() => {
@@ -51,7 +55,15 @@ export default function ChatWidget() {
     return '';
   };
 
-  const handleFiles = (fileList) => {
+  const handleFiles = async (fileList) => {
+    if(!artworkAvailable||!handoff.artworkCapability||artworkStatus==='uploading')return;
+    const file=Array.from(fileList||[])[0];
+    if(fileInputRef.current)fileInputRef.current.value='';
+    if(!file)return;
+    setArtworkStatus('uploading');
+    try{await uploadLeadArtwork(file,handoff.artworkCapability);setArtworkStatus('saved');}
+    catch{setArtworkStatus('failed');}
+    return;
     setUploadError('');
     const incoming = Array.from(fileList || []);
     const accepted = [];
@@ -271,23 +283,25 @@ export default function ChatWidget() {
                 ))}
               </div>
             )}
+            {artworkStatus==='uploading' && <div className="px-3 pt-2 text-xs text-slate-600">Uploading artwork securely…</div>}
+            {artworkStatus==='saved' && <div className="px-3 pt-2 text-xs text-green-700">Artwork saved with your inquiry.</div>}
+            {artworkStatus==='failed' && <div className="px-3 pt-2 text-xs text-red-700">Artwork could not be confirmed. Please contact Sew Suite before retrying.</div>}
             {uploadError && <div className="px-3 pt-2 text-xs text-red-600">{uploadError}</div>}
             <div className="flex items-center gap-2 px-3 py-3">
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/jpeg,image/png,image/webp,image/heic,image/heif,application/pdf,.heic,.heif,.pdf"
-                multiple
+                accept="image/jpeg,image/png,image/webp,application/pdf,.pdf"
                 className="hidden"
                 onChange={(e) => handleFiles(e.target.files)}
               />
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                disabled={true}
+                disabled={!artworkAvailable || !handoff.artworkCapability || artworkStatus==='uploading'}
                 className="rounded-full p-2 text-slate-500 hover:text-brand-dark hover:bg-slate-100 disabled:opacity-40"
                 aria-label="Add photo or file"
-                title="Artwork uploads are not available in this preview"
+                title="Attach artwork to your saved request"
               >
                 <Paperclip className="w-4 h-4" />
               </button>
@@ -303,7 +317,7 @@ export default function ChatWidget() {
                 {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
               </button>
             </div>
-            <div className="px-3 pb-2 text-[10px] text-slate-400">Artwork uploads will be available after secure CRM linking is verified</div>
+            <div className="px-3 pb-2 text-[10px] text-slate-400">Artwork can be attached after your request is saved.</div>
           </div>
         </div>
       )}
