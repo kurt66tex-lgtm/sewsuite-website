@@ -12,6 +12,8 @@ export function hasChatFollowupPermission(messages){
  const last=String(messages[i].content||'').trim();
  if(no.test(last))return false;
  if(direct.test(last))return true;
+ const prev=[...messages.slice(0,i)].reverse().find(m=>m.role==='assistant');
+ if(prev&&/anything else|any other details/i.test(prev.content||'')&&/^(no|nope|nothing else|that's all|all set)[.! ]*$/i.test(last))return messages.some(m=>m.role==='user'&&/quote|estimate|request|need|order/i.test(m.content||''));
  const previous=[...messages.slice(0,i)].reverse().find(m=>m.role==='assistant');
  const prompt=String(previous?.content||'');
  if(/\b(?:upload|attach|add|provide|send)\b.{0,90}\b(?:artwork|logo|file|image|photo)\b|\b(?:artwork|logo|file|image|photo)\b.{0,90}\b(?:upload|attach)\b/i.test(prompt))return false;
