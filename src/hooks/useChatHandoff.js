@@ -13,7 +13,7 @@ export function useChatHandoff({open,enabled,siteKey}){
    const response=await fetch('/api/chat-lead',{
     method:'POST',headers:{'content-type':'application/json'},
     body:JSON.stringify({...lead,request_key:key.current,
-     confirmed:true,consent_to_contact:true,turnstile_token:token,messages})
+     confirmed:true,consent_to_contact:true,turnstile_token:token,messages:messages.map(m=>({role:m.role,content:m.content}))})
    });
    const result=await response.json().catch(()=>({}));
    if(response.status!==202||result.success!==true||!result.lead_id)
