@@ -12,8 +12,8 @@ const esc=value=>String(value??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').re
 const jsonld=value=>JSON.stringify(value).replace(/</g,'\\u003c');
 const para=text=>text?'<p>'+esc(text)+'</p>':'';
 const faqBlock=faqs=>Array.isArray(faqs)&&faqs.length?'<section><h2>Frequently Asked Questions</h2>'+faqs.map(q=>'<article><h3>'+esc(q.question)+'</h3>'+para(q.answer)+'</article>').join('')+'</section>':'';
-const business={ '@context':'https://schema.org','@type':'LocalBusiness',name:'Sew Suite',url:'https://sewsuite.com',telephone:'+1-469-640-8568',email:'support@sewsuite.com',areaServed:'North Texas'};
-const base='https://sewsuite.com';
+const business={ '@context':'https://schema.org','@type':'LocalBusiness',name:'Sew Suite',url:'https://www.sewsuite.com',telephone:'+1-469-640-8568',email:'support@sewsuite.com',areaServed:'North Texas'};
+const base='https://www.sewsuite.com';
 const serviceRows=(snapshot.ServiceType||[]).filter(s=>s.active===true&&s.publicly_advertised===true);
 const cityRows=(snapshot.ServiceArea||[]).filter(a=>a.active===true&&a.indexable!==false);
 const routes=[];
@@ -146,6 +146,6 @@ function render(route){
 }
 routes.forEach(render);
 if(allowProductionIndexing){
- writeFileSync('dist/robots.txt','User-agent: *\nAllow: /\nSitemap: https://sewsuite.com/sitemap.xml\n','utf8');
+ writeFileSync('dist/robots.txt','User-agent: *\nAllow: /\nSitemap: https://www.sewsuite.com/sitemap.xml\n','utf8');
 }
 console.log('RRS_VITE_STATIC_SEO_ROUTES_OK '+JSON.stringify({servicePages:serviceRows.length,cityPages:cityRows.length,portfolioPages:projects.length,htmlRoutes:routes.length,indexing:allowProductionIndexing?'verified_production_build_only':'intentionally_disabled_on_preview'}));
