@@ -31,7 +31,7 @@ for(const r of routes){
  const f=join('dist',r.path.slice(1),'index.html');
  if(!existsSync(f))throw Error('missing_static_route_'+r.path);
  const html=readFileSync(f,'utf8');
- if(!html.includes('<title>')||!html.includes('rel="canonical" href="https://sewsuite.com'+r.path+'"'))throw Error('missing_page_metadata_'+r.path);
+ if(!html.includes('<title>')||!html.includes('rel="canonical" href="https://www.sewsuite.com'+r.path+'"'))throw Error('missing_page_metadata_'+r.path);
  if(!html.includes('<meta name="robots" content="'+expectedRobots+'"'))throw Error('incorrect_robots_policy_'+r.path);
  if(!html.includes('id="sew-suite-seo-fallback"')||!html.includes('<script type="module"'))throw Error('seo_or_hydration_missing_'+r.path);
  if(!html.includes('application/ld+json'))throw Error('missing_schema_'+r.path);
