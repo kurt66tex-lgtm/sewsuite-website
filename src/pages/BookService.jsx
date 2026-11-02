@@ -267,7 +267,7 @@ export default function BookService() {
 
         {!publicIntakeAvailable && (
           <div role="status" className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-950">
-            <strong>Preview only:</strong> Online quote submissions and artwork uploads are not yet enabled on this replacement website. The current live Sew Suite website remains available for customer requests.
+            <strong>Temporarily unavailable:</strong> Online quote submissions and artwork uploads are not yet enabled on this replacement website. The current live Sew Suite website remains available for customer requests.
             <a href="https://www.sewsuite.com/book-service" className="ml-1 font-semibold underline">Open the live quote form</a>.
           </div>
         )}
@@ -417,7 +417,7 @@ export default function BookService() {
             <p className="text-sm text-slate-600 mb-3">{isCustomApparel ? 'Upload your logo, artwork, garment/product reference, or inspiration images when available.' : isApplianceModule ? 'If you can, upload a clear photo of the appliance and model/serial label. This can help the team prepare before the visit.' : 'Upload photos of the equipment, problem area, property, or project details that may help us understand the request.'} JPG, PNG or WEBP, up to 10MB each, max {photoLimit} files.</p>
             <label className="flex flex-col items-center justify-center border-2 border-dashed border-slate-300 rounded-lg p-6 cursor-pointer hover:border-brand-accent transition-colors">
               {uploading ? <Loader2 className="w-6 h-6 animate-spin text-slate-400" /> : <Upload className="w-6 h-6 text-slate-400" />}
-              <span className="text-sm text-slate-600 mt-2">{artworkAvailable ? (isCustomApparel ? 'Choose artwork or reference images' : 'Click to upload photos') : 'Artwork uploading is not available in this preview'}</span>
+              <span className="text-sm text-slate-600 mt-2">{artworkAvailable ? (isCustomApparel ? 'Choose artwork or reference images' : 'Click to upload photos') : 'Artwork uploading is temporarily unavailable'}</span>
               <input type="file" accept="image/jpeg,image/png,image/webp" multiple className="hidden" onChange={handleFileSelect} disabled={!artworkAvailable || submitting || uploading || photos.length >= Math.min(photoLimit, 5)} />
             </label>
             {photos.length > 0 && (
