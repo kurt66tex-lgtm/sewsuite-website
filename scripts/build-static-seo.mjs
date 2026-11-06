@@ -5,6 +5,7 @@ import {readFileSync,writeFileSync,mkdirSync,statSync} from 'node:fs';
 import {join,dirname} from 'node:path';
 import {indexableRelease} from './indexing-release-policy.mjs';
 const snapshot=JSON.parse(readFileSync('src/data/prelaunch-public-snapshot.json','utf8'));
+const publishedFaqs=JSON.parse(readFileSync('src/data/current-base44-public-faqs.json','utf8')).filter(f=>f.active===true).sort((a,b)=>a.display_order-b.display_order);
 const template=readFileSync('dist/index.html','utf8');
 const allowProductionIndexing=indexableRelease(process.env);
 if(!template.includes('<div id="root"></div>')||!template.includes('</head>'))throw Error('vite_html_template_unexpected');
@@ -97,7 +98,7 @@ add('/why-us','Why Choose Sew Suite | Branded Apparel & Embroidery',
  '<p><a href="/our-work">View our work</a> and <a href="/book-service">request a project quote</a>.</p>');
 add('/faqs','Sew Suite FAQs | Embroidery, Screen Printing & Orders',
  'Find information about custom apparel quotes, artwork, embroidery, printing and project requests.',
- '<h1>Frequently Asked Questions</h1>'+para('Browse our services and project details before requesting a custom apparel quote.')+
+ '<h1>Frequently Asked Questions</h1>'+faqBlock(publishedFaqs)+
  '<p><a href="/services">View services</a> or <a href="/contact">contact Sew Suite</a>.</p>');
 add('/contact','Contact Sew Suite | Custom Apparel in North Texas',
  'Contact Sew Suite for embroidery, screen printing, corporate apparel and custom teamwear in North Texas.',
