@@ -1,3 +1,4 @@
+import PublicOptimizedImage from '@/components/site/PublicOptimizedImage';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Calendar, Truck, ShieldCheck, Clock, Star, ArrowRight, MapPin, Package, ClipboardCheck, Users, Award } from 'lucide-react';
@@ -132,7 +133,7 @@ export default function Home() {
           </div>
           {/* Optional client hero image */}
           {heroImageUrl && <div className="relative flex items-center justify-center pb-6 sm:pb-6 lg:py-0">
-            <img src={heroImageUrl} alt={`${businessName} featured service image`} className={`w-full h-auto ${isCustomApparel ? 'rounded-xl shadow-lg max-w-[420px] md:max-w-[720px] lg:max-w-none object-cover aspect-[4/3] lg:aspect-auto' : 'rounded-xl max-w-[380px] md:max-w-[680px] lg:max-w-none object-contain'} mx-auto`} />
+            <PublicOptimizedImage src={heroImageUrl} alt={settings?.hero_image_alt || (heroImageUrl === '/sew-suite-hero.png' ? 'Sew Suite embroidered cap and navy polo with custom branded logos' : `${businessName} featured service photograph`)} loading="eager" fetchPriority="high" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 50vw" className={`w-full h-auto ${isCustomApparel ? 'rounded-xl shadow-lg max-w-[420px] md:max-w-[720px] lg:max-w-none object-cover aspect-[4/3] lg:aspect-auto' : 'rounded-xl max-w-[380px] md:max-w-[680px] lg:max-w-none object-contain'} mx-auto`} />
           </div>}
           {/* Mobile/tablet trust items — below truck */}
           <div className={`hidden sm:flex lg:hidden flex-wrap ${isCustomApparel ? 'justify-start' : 'justify-center'} gap-x-4 gap-y-2 pb-7 sm:pb-8 px-2 max-w-[420px] ${isCustomApparel ? 'mx-0' : 'mx-auto'}`}>
