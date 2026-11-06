@@ -1,3 +1,4 @@
+import PublicOptimizedImage from '@/components/site/PublicOptimizedImage';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowRight, Calendar, Phone } from 'lucide-react';
@@ -84,7 +85,7 @@ export default function PortfolioDetail() {
       </section>
 
       <div className="max-w-5xl mx-auto px-4 py-10">
-        {project.cover_image_url && <img src={project.cover_image_url} alt={project.cover_alt_text || project.title} className="w-full max-h-[680px] object-cover rounded-xl" />}
+        {project.cover_image_url && <PublicOptimizedImage src={project.cover_image_url} alt={project.cover_alt_text || project.title} className="w-full max-h-[680px] object-cover rounded-xl" sizes="(max-width: 1024px) 100vw, 1024px" />}
 
         <div className="grid lg:grid-cols-[1fr_300px] gap-10 mt-8">
           <div>
