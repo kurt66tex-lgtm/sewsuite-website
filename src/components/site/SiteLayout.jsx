@@ -428,7 +428,7 @@ export default function SiteLayout() {
         <div className="max-w-7xl mx-auto px-4 py-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="mb-3">
-              {logoDark ? <img src={logoDark} alt={businessName} className="w-[220px] h-auto object-contain" /> : <span className="font-black text-white">{businessName}</span>}
+              <img src="/sew-suite-logo-reversed.png" alt={businessName} className="w-[220px] h-auto object-contain" />
             </div>
             {settings?.primary_message && <p className="text-sm font-semibold text-white">{settings.primary_message}</p>}
             {regionLabel && <p className="text-sm mt-2">Serving {regionLabel}.</p>}
