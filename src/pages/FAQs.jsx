@@ -1,13 +1,11 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
 import liveFaqs from '@/data/current-base44-public-faqs.json';
 import { useBusinessSettings } from '@/hooks/useBusinessSettings';
 
 export default function FAQs() {
   const { settings } = useBusinessSettings();
-  const [faqs] = useState(() => liveFaqs.filter(f => f.active === true).sort((a, b) => a.display_order - b.display_order));
-  const [open, setOpen] = useState(0);
+  // Render the published FAQs directly; no client-side initialization is needed.
+  const faqs = liveFaqs.filter(f => f.active === true).sort((a, b) => a.display_order - b.display_order);
   const primary = settings?.primary_brand_color || '#FF6A00';
   const businessName = settings?.business_name || 'Service Business';
   const isApplianceModule = settings?.industry_module === 'appliance_repair';
@@ -26,15 +24,14 @@ export default function FAQs() {
       <section className="max-w-3xl mx-auto px-4 py-12">
         <div className="space-y-3">
           {faqs.map((f, i) => (
-            <div key={f.id} className="border border-slate-200 rounded-lg overflow-hidden">
-              <button onClick={() => setOpen(open === i ? -1 : i)} className="w-full flex items-center justify-between px-4 py-3 text-left">
-                <span className="font-semibold text-slate-900">{f.question}</span>
-                <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${open === i ? 'rotate-180' : ''}`} />
-              </button>
-              {open === i && <div className="px-4 pb-4 text-slate-600 text-sm">{f.answer}</div>}
-            </div>
-          ))}
-        </div>
+            <details key={f.id || i} className="group border border-slate-200 bg-white rounded-lg overflow-hidden" open={i === 0}>
+              <summary className="cursor-pointer list-none flex items-center justify-between gap-4 px-4 py-3 font-semibold text-slate-900">
+                <span>{f.question}</span>
+                <span aria-hidden="true" className="text-slate-500 text-xl leading-none group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-4 pb-4 text-slate-600 text-sm leading-relaxed">{f.answer}</div>
+            </details>
+          ))}        </div>
         <div className="mt-10 text-center">
           <p className="text-slate-600">Still have questions?</p>
           <Link to="/book-service" className="mt-3 inline-flex items-center gap-2 text-brand-dark font-semibold px-5 py-2.5 rounded-lg bg-brand-accent">{isCustomApparel ? 'Request a Quote' : 'Book Service'}</Link>
