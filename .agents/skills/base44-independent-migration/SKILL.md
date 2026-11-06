@@ -18,6 +18,20 @@ Use this skill for Service Trade Agency customer websites. Read `docs/RRS-MIGRAT
 7. Produce evidence-based go/no-go matrix. Request explicit authorization before any live DNS, customer delivery, paid voice/SIP or write enablement.
 8. On authorization, record prior DNS and domain assignment, switch only to approved Vercel project, verify TLS, apex/WWW, SEO index rules, CRM leads and notices, voice and monitored rollback. Keep Base44 for fallback.
 
+## Mandatory public-website image SEO and performance gate
+
+Applies to every Service Trade Agency website factory build, clone, refresh, and Base44 → Railway/Vercel migration. **Never** run public optimization on CRM or customer uploads: preserve original artwork, photographs, proofs, printable files and R2 objects byte-for-byte, including filenames and format. Public *published and permission-approved* portfolio photos are distinct from private CRM source files.
+
+1. Inventory public hero, service, about, portfolio, gallery, trust badge, logo, review QR, and social images. Require an approved local public asset/permission record for publication; no Base44-hosted runtime images and no private customer storage paths. Do not silently rewrite external uploads.
+2. For raster photographs generate WebP variants without upscaling (target 480/800/1200/1600px plus intrinsic width). Keep originals as fallback/rollback. AVIF is optional only if the encoded image is measurably smaller at equivalent quality. For photographic detail preserve readable embroidery/print features. For logos and QR prefer lossless WebP or SVG/PNG where the original is sharper/smaller; retain scannability of review QR.
+3. Provide responsive `srcSet` + `sizes`, explicit natural dimensions/aspect ratio, descriptive factual `alt` (or `alt=""` when decorative), relevant titles/captions, descriptive filenames and page-local text. Do not keyword-stuff with city/service phrases.
+4. Never lazy-load above-fold/LCP hero images. Set high priority and eager load; use appropriate WebP responsive sources and preload only the chosen hero. Below-fold portfolio cards/photos load lazily. Preserve exact approved crop, layout, typography, buttons, colors and logos.
+5. Ensure image discovery in crawlable prerendered HTML, page-specific Open Graph/Twitter images, and useful ImageObject/CreativeWork structured data where appropriate. Preserve canonical, sitemap, indexing and public/privacy boundaries.
+6. Run `npm run build` (automatically runs `npm run optimize:public-images` and `npm run test:public-images`) and verify successful image manifest, no missing assets, WebP signatures, original-size variant, page-specific alt metadata, 200 URLs, preview noindex, and source-vs-preview mobile/desktop visual parity. Track measured original/variant bytes, load/LCP and layout-shift results rather than claiming unmeasured gains.
+7. Stop at preview signoff until owner authorizes production deployment and DNS; keep Base44 available for rollback. The dedicated Sew Suite image preview may serve an approved **public-only** snapshot for visual comparison. That is not a substitute for the independently versioned Railway catalog acceptance gate prior to cutover.
+
+Sew Suite reference implementation: `scripts/optimize-public-images.mjs`, `src/components/site/PublicOptimizedImage.jsx`, `scripts/build-static-seo.mjs`, `scripts/test-public-image-performance.mjs`, and `docs/website-factory-public-image-seo-migration-skill.md`. Use this pattern on future projects but regenerate each site's approved public assets, alt text, crop and local business context; never copy Sew Suite-specific copy or assets.
+
 ## Checkpoint notation
 
 Use PASS only for evidence observed in the current target environment. Mark a check PENDING when code exists but the real workflow has not been exercised. Record failing tests and the verified fix, not just the error.
