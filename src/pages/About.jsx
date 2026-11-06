@@ -1,3 +1,4 @@
+import PublicOptimizedImage from '@/components/site/PublicOptimizedImage';
 import { Link } from 'react-router-dom';
 import { Phone, Clock, MapPin, Calendar, ShieldCheck, Star, Truck, ClipboardCheck } from 'lucide-react';
 import { useBusinessSettings } from '@/hooks/useBusinessSettings';
@@ -22,9 +23,10 @@ export default function About() {
       </section>
       <section className="max-w-4xl mx-auto px-4 py-12">
         {settings?.about_image_url && (
-          <img
+          <PublicOptimizedImage
             src={settings.about_image_url}
-            alt={`${businessName} team`}
+            alt={settings?.about_image_alt || `${businessName} team and work`}
+            sizes="(max-width: 1024px) 100vw, 896px"
             className="mb-8 aspect-[16/9] w-full rounded-xl border border-slate-200 object-cover"
           />
         )}
