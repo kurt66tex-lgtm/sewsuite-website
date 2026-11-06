@@ -7,6 +7,20 @@ import {indexableRelease} from './indexing-release-policy.mjs';
 const snapshot=JSON.parse(readFileSync('src/data/prelaunch-public-snapshot.json','utf8'));
 const publishedFaqs=JSON.parse(readFileSync('src/data/current-base44-public-faqs.json','utf8')).filter(f=>f.active===true).sort((a,b)=>a.display_order-b.display_order);
 const template=readFileSync('dist/index.html','utf8');
+const publicImages=JSON.parse(readFileSync('public/optimized/manifest.json','utf8'));
+if(publicImages.scope!=='public-website-only')throw Error('unsafe_public_media_manifest');
+const imageBySource=new Map(publicImages.images.map(i=>[i.source,i]));
+function imageHtml(path,alt,{loading='lazy',sizes='100vw',className=''}={}){
+ const item=imageBySource.get(path);
+ const variants=item?.variants||[];
+ const src=variants.at(-1)?.src||path;
+ const srcset=variants.map(v=>v.src+' '+v.width+'w').join(', ');
+ return '<img src="'+esc(src)+'"'+(srcset?' srcset="'+esc(srcset)+'" sizes="'+esc(sizes)+'"':'')+
+  (item?' width="'+item.width+'" height="'+item.height+'"':'')+
+  ' alt="'+esc(alt)+'" loading="'+loading+'" decoding="async"'+
+  (loading==='eager'?' fetchpriority="high"':'')+
+  (className?' class="'+esc(className)+'"':'')+'>';
+}
 const allowProductionIndexing=indexableRelease(process.env);
 if(!template.includes('<div id="root"></div>')||!template.includes('</head>'))throw Error('vite_html_template_unexpected');
 const esc=value=>String(value??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
@@ -18,10 +32,10 @@ const base='https://www.sewsuite.com';
 const serviceRows=(snapshot.ServiceType||[]).filter(s=>s.active===true&&s.publicly_advertised===true);
 const cityRows=(snapshot.ServiceArea||[]).filter(a=>a.active===true&&a.indexable!==false);
 const routes=[];
-function add(path,title,description,body,extraSchemas=[]){
+function add(path,title,description,body,extraSchemas=[],socialImage=null){
  if(routes.some(x=>x.path===path))throw Error('duplicate_route_'+path);
  if(!path.startsWith('/')||!title||!description||!body)throw Error('invalid_public_route');
- routes.push({path,title,description,body,extraSchemas});
+ routes.push({path,title,description,body,extraSchemas,socialImage});
 }
 const servicesIntro='<h1>Custom Embroidery, Screen Printing &amp; Branded Apparel</h1>'+para('Sew Suite provides custom embroidery, screen printing, DTF, corporate apparel, team and school wear, hats, bags, towels and artwork assistance.');
 add('/services','Custom Apparel & Decoration Services | Sew Suite','Nine custom embroidery, screen printing, DTF and branded apparel services available to North Texas businesses, schools, teams and organizations.',
@@ -68,6 +82,7 @@ add('/our-work','Sew Suite Portfolio | Custom Embroidery & Decorated Apparel',
  'View examples of Sew Suite custom embroidery, caps, corporate apparel, team wear and decorated bags.',
  '<h1>Our Custom Apparel Work</h1><section>'+projects.map(p=>
  '<article><h2><a href="/our-work/'+encodeURIComponent(p.slug)+'">'+esc(p.title)+'</a></h2>'+
+ '<a href="/our-work/'+encodeURIComponent(p.slug)+'">'+imageHtml(p.cover_image_url,p.cover_alt_text||p.title,{sizes:'(max-width: 640px) 100vw, 33vw'})+'</a>'+
  para(p.summary)+'</article>').join('')+'</section>');
 for(const p of projects){
  if(!/^\/(?:portfolio-[a-z0-9-]+\.jpg|media\/portfolio\/[A-Za-z0-9_.-]+\.(?:jpg|png))$/.test(p.cover_image_url||''))
@@ -76,11 +91,12 @@ for(const p of projects){
  const schema={'@context':'https://schema.org','@type':'CreativeWork',name:p.title,
   description:p.description||p.summary,url:base+path,
   image:base+p.cover_image_url,creator:{'@type':'Organization',name:'Sew Suite'}};
+ const imageSchema={'@context':'https://schema.org','@type':'ImageObject',contentUrl:base+p.cover_image_url,name:p.title,description:p.cover_alt_text||p.summary,creator:{'@type':'Organization',name:'Sew Suite'}};
  add(path,p.seo_title||p.title+' | Sew Suite',
   p.meta_description||p.summary,
   '<nav><a href="/our-work">Portfolio</a></nav><h1>'+esc(p.title)+'</h1>'+
-  '<figure><img src="'+esc(p.cover_image_url)+'" alt="'+esc(p.cover_alt_text||p.title)+'" loading="lazy"></figure>'+
-  para(p.summary)+para(p.description),[schema]);
+  '<figure>'+imageHtml(p.cover_image_url,p.cover_alt_text||p.title,{loading:'eager',sizes:'(max-width: 1024px) 100vw, 1024px'})+'</figure>'+
+  para(p.summary)+para(p.description),[schema,imageSchema],p.cover_image_url);
 }
 const support=settings.customer_support_email||'support@sewsuite.com';
 const phone=settings.phone||'469-640-8568';
@@ -133,11 +149,24 @@ function render(route){
   html=replace(html,reg,'<meta name="'+name+'" content="'+esc(value)+'" />');
  }
  // Keep the preview's existing noindex policy; production indexing requires a separate owner-approved release.
+ const socialImage=route.socialImage||settings.default_social_image_url||settings.hero_image_url;
+ if(socialImage){
+  const socialUrl=base+socialImage;
+  html=replace(html,/<meta property="og:image"[^>]*>/,'<meta property="og:image" content="'+esc(socialUrl)+'" />');
+  html=replace(html,/<meta name="twitter:image"[^>]*>/,'<meta name="twitter:image" content="'+esc(socialUrl)+'" />');
+ }
+ if(route.path==='/'){
+  const item=imageBySource.get(settings.hero_image_url);
+  if(item?.variants?.length){
+   const srcset=item.variants.map(v=>v.src+' '+v.width+'w').join(', ');
+   html=html.replace('</head>','<link rel="preload" as="image" href="'+esc(item.variants.at(-1).src)+'" imagesrcset="'+esc(srcset)+'" imagesizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 50vw" />\n</head>');
+  }
+ }
  const schemas=[business,...route.extraSchemas];
  html=html.replace('</head>','<script type="application/ld+json">'+jsonld(schemas)+'</script>\n</head>');
  const style='style="max-width:1200px;margin:auto;padding:28px 24px;font-family:Montserrat,Arial,sans-serif;color:#243746;line-height:1.6"';
  const navigation='<header style="border-bottom:1px solid #e5e7eb;padding:16px 24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap"><a href="/" aria-label="Sew Suite home"><img src="/sew-suite-logo-standard.png" width="150" alt="Sew Suite"></a><nav style="display:flex;gap:18px;flex-wrap:wrap"><a href="/services">Services</a><a href="/service-areas">Service Areas</a><a href="/our-work">Our Work</a><a href="/why-us">Why Us</a><a href="/reviews">Reviews</a><a href="/about">About</a><a href="/contact">Contact</a></nav></header>';
- const hero=route.path==='/'?'<figure style="margin:18px auto;max-width:720px"><img src="/sew-suite-hero.png" alt="Sew Suite featured service image" style="width:100%;height:auto;border-radius:12px"></figure>':'';
+ const hero=route.path==='/'?'<figure style="margin:18px auto;max-width:720px">'+imageHtml(settings.hero_image_url||'/sew-suite-hero.png','Sew Suite embroidered cap and navy polo with custom branded logos',{loading:'eager',sizes:'(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 50vw'})+'</figure>':'';
  const fallback='<div id="sew-suite-seo-fallback">'+navigation+'<main '+style+'><article>'+route.body+'</article>'+hero+'<p><a href="/book-service" style="display:inline-block;background:#D4A72C;color:#111;padding:12px 22px;border-radius:8px;font-weight:700">Request a Quote</a> <a href="tel:4696408568">469-640-8568</a></p></main></div>';
  html=replace(html,/<div id="root"><\/div>/,'<div id="root">'+fallback+'</div>');
  const dst=join('dist',route.path.slice(1),'index.html');
