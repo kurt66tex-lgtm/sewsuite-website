@@ -15,10 +15,14 @@ test('all public pages use migrated public entity collections only',()=>{
  }
  assert.deepEqual(unexpected,[],'unmigrated public entity collection reference');
 });
-test('FAQs import the ten approved published source records',()=>{
+test('FAQs render all ten approved published source records',()=>{
  const page=readFileSync('src/pages/FAQs.jsx','utf8');
  const records=JSON.parse(readFileSync('src/data/current-base44-public-faqs.json','utf8'));
- assert.match(page,/current-base44-public-faqs/);
+ for(const row of records){
+  assert.ok(page.includes(row.question),`FAQ question ${row.display_order} missing`);
+  assert.ok(page.includes(row.answer),`FAQ answer ${row.display_order} missing`);
+ }
+ assert.match(readFileSync('scripts/build-static-seo.mjs','utf8'),/faqBlock\(publishedFaqs\)/);
  assert.equal(records.length,10);
  assert.ok(records.every(row=>row.active===true&&row.question&&row.answer));
 });
