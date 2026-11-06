@@ -8,6 +8,12 @@ test('all ten published FAQ items are included in source order',()=>{
  assert.deepEqual(items.map(x=>x.display_order),[1,2,3,4,5,6,7,8,9,10]);
  assert.ok(items.every(x=>x.active===true&&x.question?.trim()&&x.answer?.trim()));
  assert.equal(new Set(items.map(x=>x.question)).size,10);
- assert.match(jsx,/current-base44-public-faqs\.json/);
+ for(const item of items){
+  assert.ok(jsx.includes(item.question),`FAQ question missing from rendered component: ${item.display_order}`);
+  assert.ok(jsx.includes(item.answer),`FAQ answer missing from rendered component: ${item.display_order}`);
+ }
+ const staticSeo=readFileSync('scripts/build-static-seo.mjs','utf8');
+ assert.match(staticSeo,/current-base44-public-faqs\.json/);
+ assert.match(staticSeo,/faqBlock\(publishedFaqs\)/);
  assert.doesNotMatch(jsx,/base44\.entities\.KnowledgeBase/);
 });
