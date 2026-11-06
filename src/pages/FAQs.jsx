@@ -59,7 +59,8 @@ export default function FAQs() {
           <details className="group border border-slate-200 bg-white rounded-lg overflow-hidden">
             <summary className="cursor-pointer list-none flex items-center justify-between gap-4 px-4 py-3 font-semibold text-slate-900"><span>When should I place an order for an event, season, or deadline?</span><span aria-hidden="true" className="text-slate-500 text-xl">+</span></summary>
             <div className="px-4 pb-4 text-slate-600 text-sm leading-relaxed">Send the request as early as possible. Timing depends on product availability, artwork readiness, proof approval, quantity, decoration method, and production workload. Include the required in-hand date with the quote request.</div>
-          </details>       </div>
+          </details>
+        </div>
         <div className="mt-10 text-center">
           <p className="text-slate-600">Still have questions?</p>
           <Link to="/book-service" className="mt-3 inline-flex items-center gap-2 text-brand-dark font-semibold px-5 py-2.5 rounded-lg bg-brand-accent">{isCustomApparel ? 'Request a Quote' : 'Book Service'}</Link>
