@@ -12,8 +12,11 @@ Optimize **public website presentation assets only**: approved hero, service, ga
 6. Test desktop/mobile image quality, crop parity, layout shifts, LCP, transfer sizes, alt accessibility, broken links, SEO output, sitemap, and regression of all pages.
 7. Deploy to preview, visually compare with approved Base44 design, then obtain acceptance before production cutover. Never alter DNS as part of image optimization.
 
-## Sew Suite implementation status
-`scripts/optimize-public-images.mjs` generates **public-only** WebP variants and a manifest; it does not replace any live page references. Next integration task: wire the manifest into public hero/portfolio rendering and static SEO HTML, add regression tests, and run a full preview build. Existing CRM upload paths must remain untouched.
-
-## Acceptance criteria
-No customer upload path is accessed; no approved image disappears; original assets remain available; meaningful alt text; responsive sources; stable layout; no lazy-loaded hero; no regressions in reviews QR/button, FAQs, Our Work, or footer. Confirm performance with measured results rather than assumed KB targets.
+## Sew Suite implementation and verified preview (November 6, 2026)
+- The current image branch generates **11 public images and 28 responsive WebP variants**, including 8 approved portfolio photos, the home hero, and 2 logo versions. Originals stay available; branding and cropping are preserved.
+- `PublicOptimizedImage` is used on the home hero (eager/high priority), navigation/footer logos, Our Work cards, featured work in home/service/area pages, portfolio details, and optional public About/gallery media. Google review QR remains SVG/PNG for scannability.
+- Crawlable static HTML uses responsive image sources, explicit dimensions, portfolio ImageObject structured data and page-specific social preview metadata.
+- `npm run build` now includes public image optimization and `npm run test:public-images` (file signatures, coverage, SEO and no CRM art). Production deployment remains gated on Railway catalog and user authorization.
+- Isolated visual preview: `https://sewsuite-authentic-comparison-9eb67sj54.vercel.app`. Its approved public-only snapshot is NOT evidence of independent Railway production catalog connectivity.
+- The primary reusable skill is `.agents/skills/base44-independent-migration/SKILL.md`; apply its public-image gate on every new site and migration, without copying Sew Suite-specific images or copy.
+- User accepted portfolio image appearance. Final homepage/mobile visual acceptance and production cutover remain pending.
