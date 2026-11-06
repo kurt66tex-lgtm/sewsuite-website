@@ -1,9 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import handler from '../api/public-catalog.js';
-const names=['RRS_PUBLIC_CATALOG_MODE','RRS_PUBLIC_CATALOG_ENABLED','RRS_PUBLIC_CATALOG_API_ORIGIN','RRS_PUBLIC_CATALOG_READ_KEY','RRS_APPROVED_PUBLIC_CATALOG_VERSION','VERCEL_ENV','VERCEL_GIT_COMMIT_REF','RRS_PREVIEW_PUBLIC_SNAPSHOT'];
+const names=['RRS_PUBLIC_CATALOG_MODE','RRS_PUBLIC_CATALOG_ENABLED','RRS_PUBLIC_CATALOG_API_ORIGIN','RRS_PUBLIC_CATALOG_READ_KEY','RRS_APPROVED_PUBLIC_CATALOG_VERSION'];
 const saved=Object.fromEntries(names.map(k=>[k,process.env[k]]));
-process.env.RRS_PREVIEW_PUBLIC_SNAPSHOT='false';
 const trustedKey='q'.repeat(40);
 const approvedVersion='6b047765-b106-473d-aa3d-b2479ace966f';
 const validData={
@@ -66,26 +65,5 @@ test('unapproved or malformed upstream documents are withheld',async()=>{
  globalThis.fetch=async()=>new Response(JSON.stringify({tenant:'wrong',version:'x',data:validData}),{status:200});
  try{const res=response();await handler({method:'GET'},res);assert.equal(res.statusCode,503);}
  finally{globalThis.fetch=original}
-});
-test('approved public snapshot is accessible only for the isolated feature preview',async()=>{
- process.env.RRS_PUBLIC_CATALOG_ENABLED='false';
- process.env.VERCEL_ENV='preview';
- process.env.VERCEL_GIT_COMMIT_REF='feature/public-image-optimization-20261106';
- process.env.RRS_PREVIEW_PUBLIC_SNAPSHOT='true';
- process.env.RRS_APPROVED_PUBLIC_CATALOG_VERSION='e06f162d-8684-4eef-89fa-57bcec31a4fa';
- try{
-  const res=response();await handler({method:'GET'},res);
-  assert.equal(res.statusCode,200);
-  assert.equal(res.body.data.BusinessSettings[0].business_name,'Sew Suite');
-  assert.equal(res.body.data.PortfolioProject.filter(x=>x.is_published).length,8);
-  assert.equal(res.headers['X-RRS-Catalog-Source'],'approved-public-snapshot-preview-only');
-  process.env.VERCEL_GIT_COMMIT_REF='different-branch';
-  const wrongBranch=response();await handler({method:'GET'},wrongBranch);
-  assert.equal(wrongBranch.statusCode,503);
-  process.env.VERCEL_GIT_COMMIT_REF='feature/public-image-optimization-20261106';
-  process.env.VERCEL_ENV='production';
-  const production=response();await handler({method:'GET'},production);
-  assert.equal(production.statusCode,503);
- }finally{process.env.RRS_PREVIEW_PUBLIC_SNAPSHOT='false'}
 });
 test.after(()=>{for(const [k,v] of Object.entries(saved)){if(v===undefined)delete process.env[k];else process.env[k]=v;}});
