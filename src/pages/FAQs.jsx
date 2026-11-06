@@ -31,7 +31,8 @@ export default function FAQs() {
               </summary>
               <div className="px-4 pb-4 text-slate-600 text-sm leading-relaxed">{f.answer}</div>
             </details>
-          ))}        </div>
+          ))}
+        </div>
         <div className="mt-10 text-center">
           <p className="text-slate-600">Still have questions?</p>
           <Link to="/book-service" className="mt-3 inline-flex items-center gap-2 text-brand-dark font-semibold px-5 py-2.5 rounded-lg bg-brand-accent">{isCustomApparel ? 'Request a Quote' : 'Book Service'}</Link>
