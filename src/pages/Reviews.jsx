@@ -13,7 +13,10 @@ export default function Reviews() {
   }, []);
 
   const businessName = settings?.business_name || 'Service Business';
-  const googleUrl = settings?.google_review_url;
+  // Sew Suite's approved Base44 review destination and QR artwork remain available
+  // even if the independent public catalog omits optional review settings.
+  const sewSuiteReviewUrl = 'https://g.page/r/CcQkIwJmCP0ZEAE/review';
+  const googleUrl = settings?.google_review_url || (businessName === 'Sew Suite' ? sewSuiteReviewUrl : null);
   const googleQrUrl = settings?.google_review_qr_url || (businessName === 'Sew Suite' ? '/sew-suite-google-review-qr.svg' : null);
 
   return (
