@@ -107,7 +107,7 @@ export default function PortfolioDetail() {
           )}
         </div>
 
-        {photos.length > 0 && <div className="grid sm:grid-cols-2 gap-5 mt-10">{photos.map(photo => <figure key={photo.id}><img src={photo.image_url} alt={photo.alt_text || project.title} className="w-full rounded-xl object-cover"/>{photo.caption && <figcaption className="text-sm text-slate-500 mt-2">{photo.caption}</figcaption>}</figure>)}</div>}
+        {photos.length > 0 && <div className="grid sm:grid-cols-2 gap-5 mt-10">{photos.map(photo => <figure key={photo.id}><PublicOptimizedImage src={photo.image_url} alt={photo.alt_text || project.title} sizes="(max-width: 640px) 100vw, 50vw" className="w-full rounded-xl object-cover"/>{photo.caption && <figcaption className="text-sm text-slate-500 mt-2">{photo.caption}</figcaption>}</figure>)}</div>}
 
         <section className="bg-brand-dark rounded-xl p-8 text-center mt-12">
           <h2 className="text-2xl font-black text-white">{isCustomApparel ? 'Have a project like this in mind?' : 'Interested in a similar project?'}</h2>
