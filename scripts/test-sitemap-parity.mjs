@@ -9,7 +9,7 @@ const xml=readFileSync('public/sitemap.xml','utf8');
 const urls=[...xml.matchAll(/<loc>(https:\/\/[^<]+)<\/loc>/g)].map(m=>m[1]);
 const found=new Set(urls);
 assert.equal(urls.length,found.size,'duplicate_sitemap_url');
-assert.ok(urls.every(url=>url.startsWith('https://sewsuite.com/')),'unexpected canonical host');
+assert.ok(urls.every(url=>url.startsWith('https://www.sewsuite.com/')),'unexpected canonical host');
 const services=(data.ServiceType||[]).filter(x=>x.active===true&&x.publicly_advertised===true);
 const cities=(data.ServiceArea||[]).filter(x=>x.active===true&&x.indexable!==false);
 const projects=(data.PortfolioProject||[]).filter(x=>x.is_published===true&&x.public_permission_confirmed===true);
@@ -23,7 +23,7 @@ const requiredPaths=[
  ...cities.map(x=>'/service-areas/'+x.slug),
  ...projects.map(x=>'/our-work/'+x.slug)
 ];
-const requiredURLs=new Set(requiredPaths.map(path=>'https://sewsuite.com'+path));
+const requiredURLs=new Set(requiredPaths.map(path=>'https://www.sewsuite.com'+path));
 assert.equal(requiredPaths.length,requiredURLs.size,'duplicate_required_route');
 assert.equal(found.size,requiredURLs.size,'stale_or_missing_sitemap_route');
 for(const url of requiredURLs) assert.ok(found.has(url),'missing_sitemap_page_'+url);
