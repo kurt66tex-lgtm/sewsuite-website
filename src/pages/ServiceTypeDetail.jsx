@@ -1,3 +1,4 @@
+import { SEW_SUITE_CANONICAL_ORIGIN } from '@/lib/sewSuiteCanonical';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Phone, Calendar, ChevronRight, Home as HomeIcon, AlertCircle, CheckCircle, ClipboardCheck, Camera, MapPin } from 'lucide-react';
@@ -31,7 +32,7 @@ export default function ServiceTypeDetail() {
 
   useEffect(() => {
     if (!service) return;
-    const baseUrl = (settings?.website_url || window.location.origin).replace(/\/$/, '');
+    const baseUrl = SEW_SUITE_CANONICAL_ORIGIN;
     const isApplianceModule = settings?.industry_module === 'appliance_repair';
     const isPlumbingModule = settings?.industry_module === 'plumbing';
     const servicesBasePath = isApplianceModule ? '/appliance-repair' : '/services';
@@ -91,7 +92,7 @@ export default function ServiceTypeDetail() {
         '@type': settings?.industry_module === 'custom' ? 'LocalBusiness' : isPlumbingModule ? 'Plumber' : 'HomeAndConstructionBusiness',
         name: businessName,
         ...(settings?.phone ? { telephone: settings.phone } : {}),
-        ...(settings?.website_url ? { url: settings.website_url } : {})
+        url: SEW_SUITE_CANONICAL_ORIGIN
       },
       ...(regionLabel ? { areaServed: regionLabel } : {}),
       description
