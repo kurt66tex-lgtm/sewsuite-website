@@ -1,3 +1,4 @@
+import { SEW_SUITE_CANONICAL_ORIGIN } from '@/lib/sewSuiteCanonical';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { MapPin, Phone, Calendar, CheckCircle2, ArrowRight } from 'lucide-react';
@@ -35,7 +36,7 @@ export default function ServiceAreaDetail() {
 
   useEffect(() => {
     if (!area) return;
-    const baseUrl = (settings?.website_url || window.location.origin).replace(/\/$/, '');
+    const baseUrl = SEW_SUITE_CANONICAL_ORIGIN;
     const canonicalUrl = `${baseUrl}/service-areas/${area.slug}`;
     const serviceLabel = isCustomApparel ? 'Custom Embroidery & Apparel' : isApplianceModule ? 'Appliance Repair' : isPlumbingModule ? 'Plumber' : 'Service';
     const serviceDescription = isCustomApparel ? 'custom embroidery, screen printing and branded apparel' : isApplianceModule ? 'appliance repair' : isPlumbingModule ? 'residential plumbing service' : 'professional service';
@@ -91,7 +92,7 @@ export default function ServiceAreaDetail() {
         '@type': isCustomApparel ? 'LocalBusiness' : isPlumbingModule ? 'Plumber' : 'HomeAndConstructionBusiness',
         name: businessName,
         ...(settings?.phone ? { telephone: settings.phone } : {}),
-        ...(settings?.website_url ? { url: settings.website_url } : {})
+        url: SEW_SUITE_CANONICAL_ORIGIN
       },
       areaServed: {
         '@type': 'City',
