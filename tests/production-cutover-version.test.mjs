@@ -16,9 +16,16 @@ test('preflight rejects catalog version mismatch',()=>{
  assert.equal(result.status,1);
  assert.match(result.stdout,/BLOCKED Browser and server require the same approved catalog version/);
 });
-test('preflight accepts version match but still refuses unfinished launch',()=>{
+test('preflight accepts matching versions only when all explicit release proofs are set',()=>{
  const result=check({VITE_APPROVED_CATALOG_VERSION:version,RRS_APPROVED_PUBLIC_CATALOG_VERSION:version});
- assert.equal(result.status,1);
+ assert.equal(result.status,0);
  assert.match(result.stdout,/PASS Browser and server require the same approved catalog version/);
- assert.match(result.stdout,/SEW_SUITE_PRODUCTION_CUTOVER_READY=false/);
+ assert.match(result.stdout,/SEW_SUITE_PRODUCTION_CUTOVER_READY=true/);
+});
+test('preflight blocks on production release, mail, or artwork evidence not being approved',()=>{
+ for(const key of ['RRS_PRODUCTION_RELEASE_VERIFIED','RRS_PRODUCTION_MAIL_VERIFIED','RRS_PRODUCTION_ARTWORK_VERIFIED']){
+  const result=check({VITE_APPROVED_CATALOG_VERSION:version,RRS_APPROVED_PUBLIC_CATALOG_VERSION:version,[key]:'false'});
+  assert.equal(result.status,1);
+  assert.match(result.stdout,/SEW_SUITE_PRODUCTION_CUTOVER_READY=false/);
+ }
 });

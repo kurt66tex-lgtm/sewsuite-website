@@ -1,5 +1,5 @@
-// Protected prelaunch-only Vercel proxy. No provider or database credentials
-// are sent to the browser. Keep off until Railway test gateway is certified.
+// Sew Suite production voice proxy with explicit release gating. No provider or
+// database credentials are sent to the browser. Preserve origin verification.
 const allowed=new Set(['status','session','tool','finalize']);
 export default async function handler(req,res){
  const action=String(req.query?.action||'');

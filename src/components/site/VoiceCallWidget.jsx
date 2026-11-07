@@ -83,7 +83,7 @@ export default function VoiceCallWidget(){
       if(call.name!=='create_service_request'||!call.call_id)return;
       const s=state.current;
       if(!s.session||!s.token||s.dc!==dc||dc.readyState!=='open')return;
-      setCaption('Saving confirmed test inquiry…');
+      setCaption('Sending your inquiry to the Sew Suite team…');
       s.crmPending=true;
       if(s.goodbyeTimer)clearTimeout(s.goodbyeTimer);
       let outcome;
@@ -143,12 +143,12 @@ export default function VoiceCallWidget(){
     <button onClick={()=>{end()}} aria-label="Close voice assistant" className="p-1 text-slate-300 hover:text-white"><X className="w-5 h-5"/></button>
    </div>
    <div className="p-4">
-    {!available?<p className="text-sm text-slate-700">This comparison preview is not accepting voice conversations yet. The independent receptionist is being tested. Please use www.sewsuite.com for assistance.</p>:null}
-    {available&&phase==='idle'&&<><p className="text-sm text-slate-700">Use your microphone to talk with the Sew Suite virtual receptionist. Testing calls do not submit customer orders.</p><button onClick={connect} className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-lg bg-brand-accent px-4 py-3 font-bold text-brand-dark"><Mic className="w-4 h-4"/>Start Voice Conversation</button></>}
+    {!available?<p className="text-sm text-slate-700">The AI receptionist is temporarily unavailable. Please call Sew Suite or request a quote online.</p>:null}
+    {available&&phase==='idle'&&<><p className="text-sm text-slate-700">Use your microphone to talk with the Sew Suite virtual receptionist. The assistant can submit your inquiry to our team for review. It does not place an order.</p><button onClick={connect} className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-lg bg-brand-accent px-4 py-3 font-bold text-brand-dark"><Mic className="w-4 h-4"/>Start Voice Conversation</button></>}
     {phase==='starting'&&<div className="py-8 text-center text-sm text-slate-600"><Loader2 className="mx-auto mb-2 w-6 h-6 animate-spin"/>Connecting securely…</div>}
     {phase==='connected'&&<><div className="rounded-xl bg-slate-50 border border-slate-200 p-3 min-h-20 text-sm text-slate-600">{caption||'Listening…'}</div><div className="mt-4 grid grid-cols-2 gap-2"><button onClick={mute} className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold">{muted?<MicOff className="w-4 h-4"/>:<Mic className="w-4 h-4"/>}{muted?'Unmute':'Mute'}</button><button onClick={end} className="inline-flex items-center justify-center gap-2 rounded-lg bg-red-600 px-3 py-2 text-sm font-bold text-white"><PhoneOff className="w-4 h-4"/>End</button></div></>}
     {error&&<p className="mt-3 text-xs text-red-700">{error}</p>}
-    <p className="mt-3 text-[10px] text-slate-400">Microphone permission is required. Preview conversations are for testing only.</p>
+    <p className="mt-3 text-[10px] text-slate-400">Microphone permission is required. Our assistant can help with quotes and project questions.</p>
    </div>
   </div>}
  </>;

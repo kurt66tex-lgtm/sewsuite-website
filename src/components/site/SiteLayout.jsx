@@ -1,3 +1,4 @@
+import PublicOptimizedImage from '@/components/site/PublicOptimizedImage';
 import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { Phone, Menu, X, Calendar, Shield, Facebook, Instagram, Linkedin, Youtube, Twitter, Music2 } from 'lucide-react';
@@ -311,7 +312,7 @@ export default function SiteLayout() {
         <div className="w-full max-w-xl text-center">
           {!isSetup && (
             <div className="inline-flex bg-black rounded-xl px-5 py-3 mb-8">
-              <img src={logoDark} alt={settings?.business_name || 'Business logo'} className="w-56 h-auto object-contain" />
+              <PublicOptimizedImage src={logoDark} alt={settings?.business_name || 'Business logo'} sizes="224px" loading="eager" className="w-56 h-auto object-contain" />
             </div>
           )}
           <div className="text-xs font-bold tracking-[0.2em] uppercase text-brand-accent mb-3">
@@ -365,8 +366,8 @@ export default function SiteLayout() {
       <header className="sticky top-0 z-40 bg-brand-dark lg:bg-brand-light border-b border-brand-accent/40 lg:border-slate-300/70 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-[88px] sm:h-24 lg:h-28">
           <Link to="/" className="flex items-center min-w-0" onClick={() => setMobileOpen(false)}>
-            <img src={logoDark} alt={businessName} className="lg:hidden w-[clamp(205px,64vw,245px)] sm:w-[275px] h-auto object-contain" />
-            {logoLight ? <img src={logoLight} alt={businessName} className="hidden lg:block lg:w-[250px] xl:w-[285px] h-auto object-contain" /> : <span className="hidden lg:block font-black text-xl text-brand-dark">{businessName}</span>}
+            <PublicOptimizedImage src={logoDark} alt={businessName} sizes="275px" loading="eager" className="lg:hidden w-[clamp(205px,64vw,245px)] sm:w-[275px] h-auto object-contain" />
+            {logoLight ? <PublicOptimizedImage src={logoLight} alt={businessName} sizes="285px" loading="eager" className="hidden lg:block lg:w-[250px] xl:w-[285px] h-auto object-contain" /> : <span className="hidden lg:block font-black text-xl text-brand-dark">{businessName}</span>}
           </Link>
 
           {/* Desktop nav */}
@@ -428,7 +429,7 @@ export default function SiteLayout() {
         <div className="max-w-7xl mx-auto px-4 py-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="mb-3">
-              <img src="/sew-suite-logo-reversed.png" alt={businessName} className="w-[220px] h-auto object-contain" />
+              <PublicOptimizedImage src="/sew-suite-logo-reversed.png" alt={businessName} sizes="220px" className="w-[220px] h-auto object-contain" />
             </div>
             {settings?.primary_message && <p className="text-sm font-semibold text-white">{settings.primary_message}</p>}
             {regionLabel && <p className="text-sm mt-2">Serving {regionLabel}.</p>}
@@ -499,7 +500,7 @@ export default function SiteLayout() {
                   className="group flex items-center gap-3 rounded-xl px-2 py-1 -ml-2 transition-all duration-300 hover:bg-white/[0.03] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
                   aria-label={`${supportLabel} ${supportName}`}
                 >
-                  {supportBadgeUrl && <img src={supportBadgeUrl} alt="" className="w-14 h-14 sm:w-16 sm:h-16 object-contain flex-shrink-0" />}
+                  {supportBadgeUrl && <PublicOptimizedImage src={supportBadgeUrl} alt="" sizes="64px" className="w-14 h-14 sm:w-16 sm:h-16 object-contain flex-shrink-0" />}
                   <div>
                     <div className="text-xs font-bold text-brand-accent uppercase tracking-wide">{supportLabel}</div>
                     <div className="text-sm font-semibold text-white">{supportName}</div>
@@ -507,7 +508,7 @@ export default function SiteLayout() {
                 </a>
               ) : (
                 <div className="flex items-center gap-3 rounded-xl px-2 py-1 -ml-2">
-                  {supportBadgeUrl && <img src={supportBadgeUrl} alt="" className="w-14 h-14 sm:w-16 sm:h-16 object-contain flex-shrink-0" />}
+                  {supportBadgeUrl && <PublicOptimizedImage src={supportBadgeUrl} alt="" sizes="64px" className="w-14 h-14 sm:w-16 sm:h-16 object-contain flex-shrink-0" />}
                   <div>
                     <div className="text-xs font-bold text-brand-accent uppercase tracking-wide">{supportLabel}</div>
                     <div className="text-sm font-semibold text-white">{supportName}</div>

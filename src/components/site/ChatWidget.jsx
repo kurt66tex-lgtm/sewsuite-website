@@ -109,7 +109,7 @@ export default function ChatWidget() {
   const send = async () => {
     if (!input.trim() || sending) return;
 
-    if(!chatAvailable){setUploadError('The independent chat is temporarily unavailable. Please use www.sewsuite.com.');return;}
+    if(!chatAvailable){setUploadError('Our chat assistant is temporarily unavailable. Please call Sew Suite or use the quote request form.');return;}
     
     setSending(true);
     setUploadError('');
@@ -150,7 +150,7 @@ export default function ChatWidget() {
       if (message.toLowerCase().includes('upload') || pendingFiles.length > 0) {
         setUploadError('We could not upload that file. Please try again, or continue without the attachment.');
       } else {
-        setUploadError('The independent chat could not connect. Please try again shortly or use www.sewsuite.com.');
+        setUploadError('The chat assistant could not connect. Please try again shortly or contact Sew Suite directly.');
       }
     } finally {
       setSending(false);

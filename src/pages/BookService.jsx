@@ -267,7 +267,7 @@ export default function BookService() {
 
         {!publicIntakeAvailable && (
           <div role="status" className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-950">
-            <strong>Temporarily unavailable:</strong> Online quote submissions and artwork uploads are not yet enabled on this replacement website. The current live Sew Suite website remains available for customer requests.
+            <strong>Temporarily unavailable:</strong> Online quote submissions are temporarily unavailable. Please call or email Sew Suite for assistance with your project.
             <a href="https://www.sewsuite.com/book-service" className="ml-1 font-semibold underline">Open the live quote form</a>.
           </div>
         )}
