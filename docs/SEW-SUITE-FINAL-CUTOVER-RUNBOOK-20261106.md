@@ -53,3 +53,10 @@ If DNS/SSL, page parity, public catalog, leads, mail, artwork, voice or indexing
 
 ## Tool limitations / owner action
 This session has Vercel project read, deployment and domain-add capabilities but no supported project-domain removal tool; do not assume we can atomically move an already-attached domain from this chat. A controlled Vercel dashboard/CLI step may require the owner's interaction. Final custom-domain cutover approval must be distinct from image design approval.
+
+## Final static SEO acceptance — 2026-11-06
+- Eliminated a real sitemap/canonical host inconsistency: the original `public/sitemap.xml` listed all 48 URLs under `https://sewsuite.com`, while build-time canonical and robots expected `https://www.sewsuite.com`. All sitemap URLs now use the approved `www` host.
+- Introduced `src/lib/sewSuiteCanonical.js` and applied it to static-route layout, service, service-area and portfolio detail React hydration, including LocalBusiness/Breadcrumb and Open Graph URLs; old signed Railway catalog remains unchanged.
+- Added `tests/canonical-site-host.test.mjs` and amended sitemap acceptance test, included in `npm run build`. New Vercel production-environment deployment from the approved branch passed all build/SEO/image regressions.
+- Latest verified production-stage deployment: `https://sewsuite-authentic-comparison-314qxmv3a.vercel.app`, READY. `/sitemap.xml` returned HTTP 200, 48 URLs all `www.sewsuite.com`; `/` canonical `https://www.sewsuite.com/`, `/api/public-catalog` HTTP 200 with correct Sew Suite name and catalog version. Preview/custom domain still noindex until explicit go-live toggles.
+- Current authorized release status: CODE/SEO/IMAGE/CATALOG BUILD PASSED; LIVE CRM/MAIL/VOICE AND DOMAIN CUTOVER NOT YET ENABLED. Do not mislabel a website build as go-live readiness.
