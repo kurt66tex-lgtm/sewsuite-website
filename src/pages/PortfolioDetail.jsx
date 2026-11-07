@@ -1,3 +1,4 @@
+import { SEW_SUITE_CANONICAL_ORIGIN } from '@/lib/sewSuiteCanonical';
 import PublicOptimizedImage from '@/components/site/PublicOptimizedImage';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -33,7 +34,7 @@ export default function PortfolioDetail() {
   useEffect(() => {
     if (!project) return;
     const businessName = settings?.business_name || 'Our Work';
-    const baseUrl = (settings?.website_url || window.location.origin).replace(/\/$/, '');
+    const baseUrl = SEW_SUITE_CANONICAL_ORIGIN;
     const canonicalUrl = `${baseUrl}/our-work/${project.slug}`;
     const title = project.seo_title || `${project.title} | ${businessName}`;
     const description = project.meta_description || project.summary || project.description || '';
