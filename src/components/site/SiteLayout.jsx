@@ -1,3 +1,4 @@
+import { SEW_SUITE_CANONICAL_ORIGIN } from '@/lib/sewSuiteCanonical';
 import PublicOptimizedImage from '@/components/site/PublicOptimizedImage';
 import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
@@ -201,7 +202,7 @@ export default function SiteLayout() {
     const seo = isCustomApparel ? (CUSTOM_APPAREL_STATIC_SEO[location.pathname] || STATIC_SEO[location.pathname]) : STATIC_SEO[location.pathname];
     if (!seo) return;
 
-    const baseUrl = (settings?.website_url || window.location.origin).replace(/\/$/, '');
+    const baseUrl = SEW_SUITE_CANONICAL_ORIGIN;
     const canonicalUrl = location.pathname === '/' ? `${baseUrl}/` : `${baseUrl}${location.pathname}`;
     const regionSuffix = regionLabel ? ` | ${regionLabel}` : '';
     const title = location.pathname === '/'
@@ -280,7 +281,7 @@ export default function SiteLayout() {
       '@context': 'https://schema.org',
       '@type': isCustomApparel ? 'LocalBusiness' : 'HomeAndConstructionBusiness',
       name: businessName,
-      url: settings?.website_url || window.location.origin,
+      url: SEW_SUITE_CANONICAL_ORIGIN,
     };
     if (phone) ld.telephone = phone;
     if (customerSupportEmail) ld.email = customerSupportEmail;
