@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 const adapter=readFileSync(new URL('../src/api/base44Client.js',import.meta.url),'utf8');
 const proxy=readFileSync(new URL('../api/public-catalog.js',import.meta.url),'utf8');
+const normalizer=readFileSync(new URL('../src/lib/repairDisplayText.js',import.meta.url),'utf8');
 test('public content requires independent runtime catalog and never uses snapshot fallback',()=>{
  assert.match(adapter,/VITE_PUBLIC_CATALOG_MODE==='independent'/);
  assert.match(adapter,/VITE_APPROVED_CATALOG_VERSION/);
@@ -24,12 +25,14 @@ test('public catalog preserves numeric Base44 display ordering and repairs displ
  assert.match(adapter,/typeof av==='number'&&typeof bv==='number'/);
  assert.match(adapter,/localeCompare\(String\(bv\?\?''\),undefined,\{numeric:true\}\)/);
  assert.match(adapter,/repairDisplayText/);
- assert.match(adapter,/Ã©/);
+ assert.match(adapter,/import \{ repairDisplayText \} from/);
+ assert.match(normalizer,/Ã©/);
 });
 
 test('business settings and all page-facing catalog entities share UTF-8 normalization',()=>{
  assert.match(adapter,/return repairDisplayText\(message\.data\)/);
  assert.doesNotMatch(adapter,/return repairDisplayText\(snapshot\)/);
  assert.match(adapter,/getPublicBusinessSettings.*repairDisplayText/);
- assert.match(adapter,/\.replace\(\/Ã©\/g,'é'\)/);
+ assert.match(normalizer,/\['Ã©', 'é'\]/);
+ assert.match(normalizer,/Sew Suite|â€™/);
 });
