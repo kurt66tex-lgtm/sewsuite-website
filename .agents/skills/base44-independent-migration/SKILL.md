@@ -32,6 +32,14 @@ Applies to every Service Trade Agency website factory build, clone, refresh, and
 
 Sew Suite reference implementation: `scripts/optimize-public-images.mjs`, `src/components/site/PublicOptimizedImage.jsx`, `scripts/build-static-seo.mjs`, `scripts/test-public-image-performance.mjs`, and `docs/website-factory-public-image-seo-migration-skill.md`. Use this pattern on future projects but regenerate each site's approved public assets, alt text, crop and local business context; never copy Sew Suite-specific copy or assets.
 
+## Private artwork browser-CORS release gate
+
+The public website's WebP optimization is **not** the same as private customer CRM artwork; never modify original customer uploads. When private artwork is uploaded using an S3-compatible presigned browser PUT URL, the *bucket* must allow the **final production hostname** (not only the previous preview hostname) in its CORS `AllowedOrigins` with method `PUT` and header `content-type`. Preserve old CORS rules while adding the narrow new production origin; no wildcard origin.
+
+Acceptance requires: (1) an authenticated durable lead submission HTTP 202; (2) private-artwork prepare HTTP 200; (3) anonymous browser-style S3 OPTIONS preflight with `Origin: https://www.sewsuite.com`, `Access-Control-Request-Method: PUT`, `Access-Control-Request-Headers: content-type` returning the expected allow-origin/method headers; (4) actual browser signed PUT success; (5) private artwork commit HTTP 200; (6) CRM authenticated staff attachment download and unauthorized denial. A **prepare 200 without commit** must be marked UPLOAD FAILED and investigated before final migration signoff, without resubmitting or duplicating the accepted lead.
+
+Sew Suite 2026-11-08 incident: website posted a new lead (Railway POST /internal/lead HTTP 202 at 17:16:25Z) and artwork prepare POST HTTP 200 at 17:16:25Z, but artwork commit was absent. Prior Oct 30 narrow CORS allowlist was configured for the Vercel preview origin; the production `www.sewsuite.com` Origin was not documented as permitted. This is a strong browser CORS suspect, pending live-origin preflight and authorized bucket CORS update. Do not claim the object was uploaded or saved.
+
 ## Checkpoint notation
 
 Use PASS only for evidence observed in the current target environment. Mark a check PENDING when code exists but the real workflow has not been exercised. Record failing tests and the verified fix, not just the error.
