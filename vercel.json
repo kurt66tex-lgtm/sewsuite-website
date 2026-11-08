@@ -28,5 +28,37 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/admin",
+      "destination": "https://sewsuite-production-crm.vercel.app/admin",
+      "permanent": false
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "https://sewsuite-production-crm.vercel.app/admin/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/login",
+      "destination": "https://sewsuite-production-crm.vercel.app/login",
+      "permanent": false
+    },
+    {
+      "source": "/register",
+      "destination": "https://sewsuite-production-crm.vercel.app/login",
+      "permanent": false
+    },
+    {
+      "source": "/forgot-password",
+      "destination": "https://sewsuite-production-crm.vercel.app/login",
+      "permanent": false
+    },
+    {
+      "source": "/reset-password",
+      "destination": "https://sewsuite-production-crm.vercel.app/login",
+      "permanent": false
+    }
   ]
 }
