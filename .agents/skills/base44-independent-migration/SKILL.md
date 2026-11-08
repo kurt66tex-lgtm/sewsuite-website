@@ -66,6 +66,14 @@ Microsoft Entra staff and agency roles must bind to pre-provisioned **directory 
 
 Sew Suite Nov 8 example: current public catalog had 18 historical mojibake strings; display normalizer and server auth redirects shipped via website PR #15, production deployment `dpl_A6Y3SSTXKMmJgKcaEZ4K2URVu74H`. Independent portfolio remained HTTP 200, static SEO had 48 indexable routes. Owner sign-in role/visual signoff remain separate checks.
 
+## Agency Owner and client-specific CRM controls are a nonoptional migration gate
+
+Never treat a login, visible menu or copied tab titles as evidence that Agency Owner controls migrated. Audit the original Base44 client `AgencyClientControl`, invoice/notification records, agency onboarding, `manageAgencyAccount`, provisioning, SEO, website activation/maintenance, review reputation, Google Local Services, AI Voice/Chat settings and minutes, billing plan/add-ons/invoices, and scoped access control. Match each original control with (1) private migrated value; (2) authorized getter and versioned/audited persistence; (3) verified independent provider action where applicable; (4) agency role and client-admin denial acceptance; (5) no unexpected live side effect. Document blocked items separately.
+
+Sew Suite November 8 failure: the independent `sewsuite-production-crm` correctly authenticated Microsoft Agency Owner but served seven empty descriptive placeholders. Original Base44 `Sew Suite` (`6aba8ad594aac8fa4dde76e6`) contains a 29 KB `src/pages/admin/AgencyControls.jsx` with working `manageAgencyAccount` actions, seven functional sections, one active `AgencyClientControl` record, and 0 invoice, billing notice or onboarding records in that source app. Railway's independent staff API had no agency control storage or write endpoint. Original source still exists; **no claim that controls migrated** is permitted until browser save/reload and provider-specific tests pass.
+
+A protected candidate foundation is staged in backend repo branch `feature/sewsuite-agency-controls-parity-20261108`, draft PR #16: private tenant-specific settings/audit store; Microsoft OID Agency Owner authorization; CSRF/idempotency/concurrency checks; guarded new endpoint; first-stage editor. Isolated PostgreSQL/Node tests pass and protected preview builds, **but production remains unchanged** and original source settings are not imported. Provider actions remain disabled until verified. Parity release blocker tracked in GitHub issue #15. Do not restore the obsolete Base44 auth login or bridge live credentials through the browser as a shortcut.
+
 ## Checkpoint notation
 
 Use PASS only for evidence observed in the current target environment. Mark a check PENDING when code exists but the real workflow has not been exercised. Record failing tests and the verified fix, not just the error.
