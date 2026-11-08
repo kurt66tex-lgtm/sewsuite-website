@@ -1,3 +1,4 @@
+import { repairDisplayText } from '@/lib/repairDisplayText';
 // RRS independent public content compatibility adapter.
 // Existing React components still import {base44}; there are NO Base44 SDK/network calls.
 // Public runtime data must come from the independently controlled catalog API.
@@ -24,12 +25,7 @@ async function document(){
  expiresAt=Date.now()+60000;
  return activeRequest;
 }
-function repairDisplayText(value){
- if(typeof value==='string')return value.replace(/Ã©/g,'é').replace(/Ã¨/g,'è').replace(/â€”|â€\u0094|â\u20ac\u201d|â€\u201d|â\u20ac\u0094|â\u20ac\u201c/g,'—').replace(/â€“|â€\u0093|â\u20ac\u0093/g,'–').replace(/Ã¢/g,'â');
- if(Array.isArray(value))return value.map(repairDisplayText);
- if(value&&typeof value==='object')return Object.fromEntries(Object.entries(value).map(([key,item])=>[key,repairDisplayText(item)]));
- return value;
-}
+
 async function records(name){
  const data=await document();
  return allowed.has(String(name))?(data[name]||[]).map(repairDisplayText):[];
