@@ -48,7 +48,10 @@ export default function BookService() {
   const [photos, setPhotos] = useState([]); // {file_uri, file_name, file_type, file_size, attachment_type, preview}
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [result, setResult] = useState(null); // {success, safety_flag}
+  const [result, setResult] = useState(null); // confirmed lead and artwork receipt status
+  const artworkCapability = useRef(null); // short-lived, in-page capability; never store in localStorage
+  const [retryingArtwork,setRetryingArtwork] = useState(false);
+  const [artworkRetryAttempts,setArtworkRetryAttempts] = useState(0);
   const [error, setError] = useState(null);
   const [turnstileToken,setTurnstileToken]=useState('');
   const [publicIntakeAvailable,setPublicIntakeAvailable]=useState(false);
@@ -120,10 +123,11 @@ export default function BookService() {
     setPhotos(previous => previous.map((p,i) => i===idx ? {...p,attachment_type:type}:p));
   };
 
-  const uploadConfirmedArtwork = async (leadId, capability) => {
+  const uploadConfirmedArtwork = async (leadId, capability, items=photos) => {
     if (!/^[a-f0-9]{64}$/.test(capability || '')) throw Error('missing_artwork_capability');
     const done = [];
-    for (const item of photos) {
+    for (const item of items) {
+      try {
       const file = item.file;
       const bytes = await file.arrayBuffer();
       const digest = await crypto.subtle.digest('SHA-256',bytes);
@@ -143,9 +147,42 @@ export default function BookService() {
       });
       const committed = await commit.json().catch(()=>({}));
       if (commit.status!==200||committed.success!==true||!committed.file_id)throw Error('artwork_commit_failed');
-      done.push({file_name:file.name,file_id:committed.file_id});
+      done.push({file_name:file.name,file_id:committed.file_id,sourceIndex:photos.indexOf(item)});
+      }catch(error){
+        // A prior file may already be committed. Keep its receipt so retry
+        // only uploads the failed items; never re-create the CRM lead.
+        error.completedFiles=done;
+        throw error;
+      }
     }
     return done;
+  };
+
+  const retryArtworkOnly = async () => {
+    if(!result?.success||!result.artwork_error||retryingArtwork||artworkRetryAttempts>=2)return;
+    const token=artworkCapability.current;
+    if(!/^[a-f0-9]{64}$/.test(token||''))return;
+    const already=new Set((result.artwork_files||[]).map(x=>x.sourceIndex));
+    const pending=photos.filter((_,i)=>!already.has(i));
+    if(!pending.length){
+      setResult(old=>({...old,artwork_error:false}));
+      return;
+    }
+    setRetryingArtwork(true);
+    setArtworkRetryAttempts(n=>n+1);
+    try{
+      const completed=await uploadConfirmedArtwork(result.lead_id,token,pending);
+      setResult(old=>{
+        const files=[...(old.artwork_files||[]),...completed];
+        return {...old,artwork_files:files,artwork_error:files.length<old.artwork_expected};
+      });
+    }catch(error){
+      // Report only attachment receipts actually confirmed by the gateway.
+      const completed=error.completedFiles||[];
+      setResult(old=>({
+        ...old,artwork_files:[...(old.artwork_files||[]),...completed],artwork_error:true
+      }));
+    }finally{setRetryingArtwork(false)}
   };
 
   const submit = async (e) => {
@@ -164,12 +201,13 @@ export default function BookService() {
       const response=await fetch('/api/intake',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(fields)});
       const data=await response.json().catch(()=>({}));
       if(response.status!==202||data.success!==true||!data.lead_id)throw Error('not_confirmed');
-      // Lead was durably committed. A subsequent artwork failure MUST NOT undo or resubmit the lead.
+      // A failed S3 PUT never undoes a durable lead and never triggers another quote.
+      artworkCapability.current=/^[a-f0-9]{64}$/.test(data.artwork_token||'')?data.artwork_token:null;
       let artworkFiles=[],artworkError=false;
       if (photos.length) {
         setUploading(true);
         try { artworkFiles=await uploadConfirmedArtwork(data.lead_id,data.artwork_token); }
-        catch { artworkError=true; }
+        catch (uploadError) { artworkFiles=uploadError.completedFiles||[];artworkError=true; }
         finally { setUploading(false); }
       }
       setResult({success:true,lead_id:data.lead_id,notification_status:data.notification_status,
@@ -197,7 +235,16 @@ export default function BookService() {
           {result.artwork_error && (
             <div role="alert" className="mt-5 flex items-start gap-2 bg-amber-50 border border-amber-300 rounded-lg p-4 text-left text-sm text-amber-950">
               <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" />
-              <span>Your quote request was received, but we could not confirm one or more artwork attachments. Please email service@sewsuite.com with your name and project details so the team can locate your request. Do not submit the quote again.</span>
+              <div>
+                <p>Your quote request was received, but we could not confirm one or more artwork attachments. Your quote is already saved. Do not submit the quote again.</p>
+                {artworkCapability.current && artworkRetryAttempts<2 && (
+                  <button type="button" onClick={retryArtworkOnly} disabled={retryingArtwork}
+                    className="mt-3 rounded-lg bg-brand-accent px-4 py-2 font-semibold text-brand-dark disabled:opacity-50">
+                    {retryingArtwork?'Retrying artwork upload…':'Retry artwork upload only'}
+                  </button>
+                )}
+                <p className="mt-2">If the attachment still fails, please email service@sewsuite.com with your name and project details so the team can locate your saved request.</p>
+              </div>
             </div>
           )}
           {!result.artwork_error && result.artwork_expected > 0 && (
