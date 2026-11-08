@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "client": "sew-suite",
+  "created_on": "2026-11-08",
+  "production_url": "https://www.sewsuite.com",
+  "release_note": "Website domain is already cut over, but CRM and agency factory parity remain blocked. Never interpret this as an approved new site cutover.",
+  "modules": {
+    "public_pages": {
+      "status": "PASS",
+      "evidence": [
+        "2026-11-08 verified all 48 Vercel public routes return 200"
+      ],
+      "real_target_verified": true
+    },
+    "dns_and_https": {
+      "status": "PASS",
+      "evidence": [
+        "2026-11-08 authoritative www/apex Vercel DNS verified HTTPS and redirect"
+      ],
+      "real_target_verified": true
+    },
+    "seo_static_dynamic_parity": {
+      "status": "PASS",
+      "evidence": [
+        "2026-11-08 48 sitemap canonical and indexable pages verified on live www"
+      ],
+      "real_target_verified": true
+    },
+    "public_content_images": {
+      "status": "PASS",
+      "evidence": [
+        "2026-11-08 public WebP source images optimized and verified; legacy mojibake repair deployed"
+      ],
+      "real_target_verified": true
+    },
+    "quote_intake": {
+      "status": "PASS",
+      "evidence": [
+        "2026-11-08 Railway new form lead POST 202 and production PostgreSQL row verified"
+      ],
+      "real_target_verified": true
+    },
+    "private_artwork_upload_and_download": {
+      "status": "PENDING",
+      "evidence": [
+        "2026-11-08 existing lead private artwork recovered and downloaded; fresh post-CORS browser upload still untested"
+      ],
+      "real_target_verified": true,
+      "checks": {
+        "browser_put": false,
+        "private_commit": true,
+        "staff_download": true,
+        "unauthorized_denial": false
+      }
+    },
+    "customer_office_mail": {
+      "status": "PENDING",
+      "evidence": [
+        "2026-11-08 manually released two test-lead notices to Graph; future leads still held by DB function"
+      ],
+      "real_target_verified": true,
+      "checks": {
+        "automated_new_quote": false,
+        "customer_delivery": true,
+        "office_delivery": true,
+        "no_historical_replays": true
+      }
+    },
+    "staff_auth_and_roles": {
+      "status": "PASS",
+      "evidence": [
+        "2026-11-08 user verified Patty and Agency Owner Microsoft login to independent CRM"
+      ],
+      "real_target_verified": true
+    },
+    "crm_workflows": {
+      "status": "PENDING",
+      "evidence": [
+        "2026-11-08 staff inbox and artwork verified, but full workflow/proof/rebooking not released"
+      ],
+      "real_target_verified": false
+    },
+    "agency_controls": {
+      "status": "FAIL",
+      "evidence": [
+        "2026-11-08 owner screenshot shows seven Agency Owner placeholder panels; source Base44 functionality not migrated"
+      ],
+      "real_target_verified": false,
+      "placeholder_only": true,
+      "checks": {
+        "real_private_data": false,
+        "authorized_owner_save": false,
+        "client_admin_denial": false,
+        "audit": false,
+        "reload": false
+      }
+    },
+    "business_settings": {
+      "status": "PENDING",
+      "evidence": [
+        "2026-11-08 CRM still reads partial published public catalog; private settings write not migrated"
+      ],
+      "real_target_verified": false
+    },
+    "ai_chat_lead_capture": {
+      "status": "PENDING",
+      "evidence": [
+        "2026-11-08 runtime readiness verified but end-to-end live chat auto-submit not yet accepted"
+      ],
+      "real_target_verified": false,
+      "checks": {
+        "consented_capture": false,
+        "auto_submit": false,
+        "crm_record": false
+      }
+    },
+    "ai_voice_lead_capture": {
+      "status": "PENDING",
+      "evidence": [
+        "2026-11-08 voice runtime ready; natural close and new live CRM record not accepted post-cutover"
+      ],
+      "real_target_verified": false,
+      "checks": {
+        "consented_capture": false,
+        "natural_close": false,
+        "crm_record": false
+      }
+    },
+    "backup_and_restore": {
+      "status": "PENDING",
+      "evidence": [
+        "2026-11-08 22:09 UTC post-artwork encrypted backup/remote decrypt verified; recent independent restore pending"
+      ],
+      "real_target_verified": true,
+      "checks": {
+        "remote_backup": true,
+        "decrypt": true,
+        "isolated_restore": false
+      }
+    }
+  }
+}
