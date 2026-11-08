@@ -40,6 +40,14 @@ Acceptance requires: (1) an authenticated durable lead submission HTTP 202; (2) 
 
 Sew Suite 2026-11-08 incident: website posted a new lead (Railway POST /internal/lead HTTP 202 at 17:16:25Z) and artwork prepare POST HTTP 200 at 17:16:25Z, but artwork commit was absent. Prior Oct 30 narrow CORS allowlist was configured for the Vercel preview origin; the production `www.sewsuite.com` Origin was not documented as permitted. This is a strong browser CORS suspect, pending live-origin preflight and authorized bucket CORS update. Do not claim the object was uploaded or saved.
 
+## Live artwork CORS and retry acceptance (November 8, 2026)
+
+On the *final production domain*, verify presigned private-artwork browser PUT CORS with an exact origin (`https://www.sewsuite.com`), method PUT and header `content-type`; do not overwrite other allowed origins or allow arbitrary origins. CORS preflight PASS alone is a **configuration** result, not evidence that an already failed file was committed.
+
+Sew Suite owner ran the scoped CORS update and confirmed `RRS_SEWSUITE_LIVE_BUCKET_CORS_CONFIGURATION_PASS` and `RRS_SEWSUITE_LIVE_BROWSER_CORS_PREFLIGHT_PASS`. The prior production quote had already returned HTTP 202 and private artwork prepare returned HTTP 200, but no private-artwork commit was observed. Leave the existing quote and customer file unchanged; do not create another quote as a workaround.
+
+For service-business factory builds: when an attachment fails after a confirmed lead receipt, keep the saved lead ID, original selected File object and scoped upload capability only **in memory** while the confirmation page stays open. Offer an explicitly labeled **Retry artwork upload only** action that generates a fresh presigned URL for only unconfirmed files, caps attempts, preserves previously committed file receipts and NEVER posts `/api/intake` again. On a refresh/browser close the in-memory capability expires: offer staff-assisted upload to the existing lead rather than asking for a new quote. Mark the artwork gate PASS only after PUT + commit 200 and staff CRM readback (and unauthorized denial).
+
 ## Checkpoint notation
 
 Use PASS only for evidence observed in the current target environment. Mark a check PENDING when code exists but the real workflow has not been exercised. Record failing tests and the verified fix, not just the error.
