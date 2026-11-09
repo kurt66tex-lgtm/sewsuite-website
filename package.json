@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node --test tests/chat-artwork-upload.test.mjs tests/conversational-chat-handoff.test.mjs tests/preview-synthetic-intake-guard.test.mjs tests/customer-friendly-confirmations.test.mjs tests/voice-natural-close.test.mjs tests/indexing-release-policy.test.mjs tests/artwork-gate.test.mjs tests/public-catalog-gate.test.mjs tests/public-catalog-adapter.test.mjs tests/production-cutover-version.test.mjs tests/current-base44-faq-parity.test.mjs tests/public-page-data-dependencies.test.mjs tests/production-intake-relay.test.mjs tests/chat-lead-readiness.test.mjs tests/preview-noindex-ga4-host-guard.test.mjs tests/canonical-site-host.test.mjs tests/artwork-retry-no-duplicate-leads.test.mjs tests/live-text-and-microsoft-admin-redirect.test.mjs tests/migration-factory-release-gates.test.mjs && npm run optimize:public-images && vite build && node scripts/build-static-seo.mjs && node scripts/test-static-seo.mjs && node scripts/test-independent-media.mjs && npm run test:public-images && node scripts/test-sitemap-parity.mjs",
+    "build": "node --test tests/chat-artwork-upload.test.mjs tests/conversational-chat-handoff.test.mjs tests/preview-synthetic-intake-guard.test.mjs tests/customer-friendly-confirmations.test.mjs tests/voice-natural-close.test.mjs tests/indexing-release-policy.test.mjs tests/artwork-gate.test.mjs tests/public-catalog-gate.test.mjs tests/public-catalog-adapter.test.mjs tests/production-cutover-version.test.mjs tests/current-base44-faq-parity.test.mjs tests/public-page-data-dependencies.test.mjs tests/production-intake-relay.test.mjs tests/chat-lead-readiness.test.mjs tests/preview-noindex-ga4-host-guard.test.mjs tests/canonical-site-host.test.mjs tests/artwork-retry-no-duplicate-leads.test.mjs tests/live-text-and-microsoft-admin-redirect.test.mjs tests/migration-factory-release-gates.test.mjs tests/migration-source-feature-parity.test.mjs && npm run optimize:public-images && vite build && node scripts/build-static-seo.mjs && node scripts/test-static-seo.mjs && node scripts/test-independent-media.mjs && npm run test:public-images && node scripts/test-sitemap-parity.mjs",
     "lint": "eslint . --quiet",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc -p ./jsconfig.json",
@@ -18,8 +18,8 @@
     "test:public-catalog": "node --test tests/public-catalog-gate.test.mjs tests/public-catalog-adapter.test.mjs",
     "optimize:public-images": "node scripts/optimize-public-images.mjs",
     "test:public-images": "node scripts/test-public-image-performance.mjs",
-    "migration:check": "node scripts/check-migration-factory-readiness.mjs docs/migration-factory/sew-suite-cutover-evidence-20261108.json",
-    "test:factory-gates": "node --test tests/migration-factory-release-gates.test.mjs"
+    "migration:check": "node scripts/check-migration-factory-readiness.mjs docs/migration-factory/sew-suite-cutover-evidence-20261108.json && node scripts/check-migration-source-features.mjs docs/migration-factory/sew-suite-base44-control-parity-20261109.json",
+    "test:factory-gates": "node --test tests/migration-factory-release-gates.test.mjs && node --test tests/migration-source-feature-parity.test.mjs"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^17.0.0",
