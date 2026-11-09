@@ -18,7 +18,7 @@
     "test:public-catalog": "node --test tests/public-catalog-gate.test.mjs tests/public-catalog-adapter.test.mjs",
     "optimize:public-images": "node scripts/optimize-public-images.mjs",
     "test:public-images": "node scripts/test-public-image-performance.mjs",
-    "migration:check": "node scripts/check-migration-factory-readiness.mjs docs/migration-factory/sew-suite-cutover-evidence-20261108.json && node scripts/check-migration-source-features.mjs docs/migration-factory/sew-suite-base44-control-parity-20261109.json",
+    "migration:check": "node scripts/check-migration-all-gates.mjs",
     "test:factory-gates": "node --test tests/migration-factory-release-gates.test.mjs && node --test tests/migration-source-feature-parity.test.mjs"
   },
   "dependencies": {
