@@ -1,0 +1,479 @@
+{
+  "schema_version": 1,
+  "client": "sew-suite",
+  "original_app_name": "Sew Suite",
+  "original_app_id": "6aba8ad594aac8fa4dde76e6",
+  "excluded_similar_app": "Sew Suite Official Website",
+  "source_inventory_reviewed": true,
+  "verified_on": "2026-11-09",
+  "original_files_inspected": 8,
+  "source_record_count": 1,
+  "migration_note": "Not permission to enable telephony, LSA, invoice sending or website suspension. Private 022 voice profile is a staged draft, not an active provider.",
+  "features": [
+    {
+      "id": "voice_runtime_status",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Five actual runtime readiness statuses",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "provider_behavior",
+        "owner_acceptance",
+        "client_admin_denial"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_phone_sip_setup",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Phone webhook / SIP target and project setup",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "provider_connection",
+        "negative_path",
+        "owner_acceptance",
+        "client_admin_denial"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": true,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_channel_enabled",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Voice add-on and website/phone channel controls",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "provider_connection",
+        "negative_path",
+        "owner_acceptance",
+        "client_admin_denial"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": true,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_billing_rates",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Monthly add-on, provider/carrier/backend rates and markup",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "usage_billing_reconciled",
+        "owner_acceptance"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_billable_usage",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Actual minutes, usage charge and next voice invoice",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "real_session_ledger",
+        "deduped_minutes",
+        "unbilled_reconciled"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_phone_routing",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Business/transfer number and provider route notes",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "provider_connection",
+        "negative_path",
+        "owner_acceptance",
+        "client_admin_denial"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": true,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_schedule",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Always/after-hours/custom weekly coverage",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "overnight_dst_test",
+        "provider_behavior"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_models",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Live model, backend model and voice selection",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "provider_behavior",
+        "owner_acceptance",
+        "client_admin_denial"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_retention",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Transcripts, recording consent and retention",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "provider_behavior",
+        "owner_acceptance",
+        "client_admin_denial"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_agent_prompt",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Secure agency agent/system instructions",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "source_data_parity",
+        "owner_acceptance"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_qualification",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Fit/individual/local team/quantity qualification rules",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "provider_behavior",
+        "owner_acceptance",
+        "client_admin_denial"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_target_customer_types",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Approved target customer profiles and qualification notes",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "source_data_parity",
+        "owner_acceptance"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_knowledge_base",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "All original approved knowledge entries",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "source_entries_imported",
+        "owner_approved",
+        "private_save_reload"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_interaction_lifecycle",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Call closing, hangup and session finalization",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "provider_behavior",
+        "owner_acceptance",
+        "client_admin_denial"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_customer_lead_capture",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Automatic duplicate-free CRM request creation",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "provider_behavior",
+        "owner_acceptance",
+        "client_admin_denial"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_human_transfer",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Transfer request to real office/on-call number",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "provider_connection",
+        "negative_path",
+        "owner_acceptance",
+        "client_admin_denial"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": true,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "voice_privacy_consent",
+      "section": "AI Phone & Chat",
+      "source_file": "src/components/admin/VoiceAIAddOnPanel.jsx",
+      "source_control": "Approved recording and marketing consent safeguards",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "provider_behavior",
+        "owner_acceptance",
+        "client_admin_denial"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "preview_only": true,
+        "placeholder_only": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "agency_launch_provisioning",
+      "section": "Launch & Readiness",
+      "source_file": "src/components/admin/ProvisioningPanel.jsx",
+      "source_control": "Original Golden Master intake, work queue, pack, QA and rehearsal",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "backend_action",
+        "role_denial",
+        "owner_acceptance"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "agency_seo_baseline",
+      "section": "SEO",
+      "source_file": "src/components/admin/SeoPilotBaselinePanel.jsx",
+      "source_control": "Search Console / GA4 baseline and scheduled trend capture",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "backend_action",
+        "role_denial",
+        "owner_acceptance"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "agency_website_controls",
+      "section": "Website",
+      "source_file": "src/pages/admin/AgencyControls.jsx",
+      "source_control": "Site status and actual Vercel maintenance/suspension",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "backend_action",
+        "role_denial",
+        "owner_acceptance"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "agency_reputation",
+      "section": "Reputation",
+      "source_file": "src/components/admin/ReputationManagementAddOnPanel.jsx",
+      "source_control": "GBP OAuth, review sync, replies and agency approvals",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "backend_action",
+        "role_denial",
+        "owner_acceptance"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "agency_local_services",
+      "section": "Google Local Services",
+      "source_file": "src/components/admin/GoogleLocalLeadsAddOnPanel.jsx",
+      "source_control": "Google LSA approval, spend, conversion and lead sync",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "backend_action",
+        "role_denial",
+        "owner_acceptance"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "evidence": [],
+        "checks": {}
+      }
+    },
+    {
+      "id": "agency_billing_invoices",
+      "section": "Billing & Invoices",
+      "source_file": "src/pages/admin/AgencyControls.jsx",
+      "source_control": "Plan, add-on pricing, invoice lifecycle and notices",
+      "selected": true,
+      "status": "PENDING",
+      "required_checks": [
+        "private_save_reload",
+        "backend_action",
+        "role_denial",
+        "owner_acceptance"
+      ],
+      "target": {
+        "real_production_tested": false,
+        "evidence": [],
+        "checks": {}
+      }
+    }
+  ]
+}
