@@ -1,6 +1,7 @@
 import {readFileSync} from 'node:fs';
 import {evaluateMigrationRelease} from './migration-factory-release-gates.mjs';
 import {evaluateSourceFeatureParity} from './migration-source-feature-parity.mjs';
+import {checkIndependentCrmRuntime} from './check-independent-crm-runtime.mjs';
 const inputs=[
  ['release','docs/migration-factory/sew-suite-cutover-evidence-20261108.json',evaluateMigrationRelease],
  ['source','docs/migration-factory/sew-suite-base44-control-parity-20261109.json',evaluateSourceFeatureParity]
@@ -20,3 +21,10 @@ for(const [label,file,check] of inputs){
  }
 }
 if(failed)process.exitCode=1;
+
+const crm=checkIndependentCrmRuntime();
+if(!crm.ready){
+ console.error('MIGRATION_INDEPENDENT_CRM_RUNTIME_BLOCKED');
+ for(const reason of crm.failures)console.error(' - '+reason);
+ process.exitCode=1;
+}else console.log('MIGRATION_INDEPENDENT_CRM_RUNTIME_PASS');
