@@ -138,7 +138,7 @@ export default function ChatWidget() {
       if (data.safety_flag) setSafetyFlag(true);
 
       setMessages([...newMessages, { role: 'assistant', content: data.reply }]);
-      if(data.lead_candidate && crmAvailable)handoff.start(data.lead_candidate,newMessages);
+      if(data.lead_candidate && crmAvailable)handoff.start(data.lead_candidate,newMessages,data.conversation_id||conversationId);
       if(data.handoff_needs_details && crmAvailable)setUploadError('The inquiry was not saved yet. Please continue in chat to confirm any missing contact or project details.');
       setInput('');
       // Keep selected artwork until the CRM receipt authorizes automatic upload.

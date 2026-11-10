@@ -10,11 +10,13 @@ export function useChatHandoff({open,enabled,siteKey}){
   if(!pending.current||attempted.current||submitted.current)return;
   attempted.current=true;setStatus('saving');
   try{
-   const {lead,messages}=pending.current;
+   const {lead,messages,conversationId}=pending.current;
    const response=await fetch('/api/chat-lead',{
     method:'POST',headers:{'content-type':'application/json'},
     body:JSON.stringify({...lead,request_key:key.current,
-     confirmed:true,consent_to_contact:true,turnstile_token:token,messages:messages.map(m=>({role:m.role,content:m.content}))})
+     confirmed:true,consent_to_contact:true,turnstile_token:token,
+     ...(typeof conversationId==='string'&&/^[a-f0-9]{24}$/.test(conversationId)?{conversation_id:conversationId}:{}),
+     messages:messages.map(m=>({role:m.role,content:m.content}))})
    });
    const result=await response.json().catch(()=>({}));
    if(response.status!==202||result.success!==true||!result.lead_id)
@@ -56,10 +58,10 @@ export function useChatHandoff({open,enabled,siteKey}){
    script?.remove();
   };
  },[open,enabled,siteKey]);
- function start(lead,messages){
+ function start(lead,messages,conversationId=null){
   if(!open||!enabled||!siteKey||submitted.current||pending.current||attempted.current)return;
   if(!lead||!Array.isArray(messages)||messages.length<2)return;
-  pending.current={lead,messages};setStatus('verifying');
+  pending.current={lead,messages,conversationId};setStatus('verifying');
   if(widget.current!==null&&window.turnstile){
    try{window.turnstile.execute(widget.current)}catch{setStatus('failed')}
   }

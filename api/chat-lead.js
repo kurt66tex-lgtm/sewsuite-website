@@ -30,7 +30,8 @@ export default async function handler(req,res){
   if(!challenge.ok||!verified.success||verified.hostname!==new URL(process.env.RRS_PUBLIC_SITE_ORIGIN).hostname)return res.status(403).json({error:'verification_failed'});
   const u=new URL(process.env.RRS_INTAKE_API_ORIGIN);
   if(u.protocol!=='https:'||u.pathname!=='/'||u.username||u.password)throw Error('config');
-  const lead={first_name:v.first_name,last_name:v.last_name,phone:v.phone,email:v.email,service_type:v.service_type,problem_description:v.problem_description,request_key:v.request_key,consent_to_contact:true,source:'AI Chat',transcript:v.messages};
+  const lead={first_name:v.first_name,last_name:v.last_name,phone:v.phone,email:v.email,service_type:v.service_type,problem_description:v.problem_description,request_key:v.request_key,consent_to_contact:true,source:'AI Chat',transcript:v.messages,
+   ...(typeof v.conversation_id==='string'&&/^[a-f0-9]{24}$/.test(v.conversation_id)?{conversation_id:v.conversation_id}:{})};
   const r=await fetch(new URL('/internal/lead',u),{method:'POST',headers:{'content-type':'application/json','x-rrs-internal-key':process.env.RRS_INTERNAL_INTAKE_KEY},body:JSON.stringify(lead),signal:AbortSignal.timeout(12000)});
   const d=await r.json().catch(()=>({}));
   if(r.status!==202||d.success!==true||!d.lead_id)return res.status(503).json({error:'lead_not_confirmed'});
