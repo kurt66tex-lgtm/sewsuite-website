@@ -1,7 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {Mic,MicOff,PhoneOff,X,Loader2} from 'lucide-react';
 import {useBusinessSettings} from '@/hooks/useBusinessSettings';
-import {visitorSaidGoodbye,receptionistSaidGoodbye,canCloseNaturally} from '@/lib/voiceClosing';
+import {visitorSaidGoodbye,visitorRequestedFollowup,receptionistSaidGoodbye,canCloseNaturally} from '@/lib/voiceClosing';
 
 async function voiceRequest(action,data){
  const response=await fetch('/api/voice?action='+encodeURIComponent(action),{
@@ -26,7 +26,7 @@ export default function VoiceCallWidget(){
  const [open,setOpen]=useState(false),[available,setAvailable]=useState(false);
  const [phase,setPhase]=useState('idle'),[caption,setCaption]=useState(''),[muted,setMuted]=useState(false);
  const [error,setError]=useState('');
- const state=useRef({pc:null,media:null,audio:null,dc:null,session:null,token:null,seconds:0,finalized:false,timer:null,goodbyeTimer:null,visitorTranscript:'',assistantTranscript:'',visitorGoodbye:false,assistantGoodbye:false,crmSaved:false,crmPending:false});
+ const state=useRef({pc:null,media:null,audio:null,dc:null,session:null,token:null,seconds:0,finalized:false,timer:null,goodbyeTimer:null,visitorTranscript:'',assistantTranscript:'',visitorGoodbye:false,assistantGoodbye:false,crmSaved:false,crmPending:false,crmAttempted:false,followupRequested:false});
  const assistantName=settings?.chat_assistant_name||'Sew Suite Assistant';
  useEffect(()=>{
   let active=true;
@@ -38,7 +38,7 @@ export default function VoiceCallWidget(){
   if(s.timer)clearTimeout(s.timer);
   if(s.goodbyeTimer)clearTimeout(s.goodbyeTimer);
   try{s.dc?.close();s.pc?.close();s.media?.getTracks().forEach(t=>t.stop());if(s.audio){s.audio.pause();s.audio.srcObject=null;}}catch{}
-  state.current={pc:null,media:null,audio:null,dc:null,session:null,token:null,seconds:0,finalized:false,timer:null,goodbyeTimer:null,visitorTranscript:'',assistantTranscript:'',visitorGoodbye:false,assistantGoodbye:false,crmSaved:false,crmPending:false};
+  state.current={pc:null,media:null,audio:null,dc:null,session:null,token:null,seconds:0,finalized:false,timer:null,goodbyeTimer:null,visitorTranscript:'',assistantTranscript:'',visitorGoodbye:false,assistantGoodbye:false,crmSaved:false,crmPending:false,crmAttempted:false,followupRequested:false};
   setMuted(false);setPhase('idle');
  }
  async function finalize(reason){
@@ -85,6 +85,7 @@ export default function VoiceCallWidget(){
       if(!s.session||!s.token||s.dc!==dc||dc.readyState!=='open')return;
       setCaption('Sending your inquiry to the Sew Suite team…');
       s.crmPending=true;
+      s.assistantGoodbye=false;
       if(s.goodbyeTimer)clearTimeout(s.goodbyeTimer);
       let outcome;
       try{
@@ -94,6 +95,7 @@ export default function VoiceCallWidget(){
         outcome=result?.result?.success===true?{success:true,confirmation:'Your inquiry has been sent to our team for review.'}:{success:false,error:'not_confirmed'};
       }catch{outcome={success:false,error:'crm_submission_unavailable'};}
       s.crmPending=false;
+      s.crmAttempted=true;
       s.crmSaved=outcome.success===true;
       if(dc.readyState==='open'){
         dc.send(JSON.stringify({type:'response.item.create',item:{type:'function_call_output',call_id:call.call_id,output:JSON.stringify(outcome)}}));
@@ -109,6 +111,7 @@ export default function VoiceCallWidget(){
       const s=state.current;
       s.visitorTranscript=(s.visitorTranscript+String(v.delta||'')).slice(-360);
       s.visitorGoodbye=visitorSaidGoodbye(s.visitorTranscript);
+      if(visitorRequestedFollowup(s.visitorTranscript))s.followupRequested=true;
       maybeCloseAfterFarewell();
     }
     if(v.type==='session.output_transcript.delta'){
