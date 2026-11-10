@@ -53,9 +53,23 @@ export default function VoiceCallWidget(){
   clean();setOpen(false);
   await receipt;
  }
+ async function endUnconfirmedFollowup(){
+  // The call ended without a verified CRM attempt. Keep the warning visible
+  // instead of silently closing or implying the customer's request was saved.
+  const receipt=finalize('followup_not_confirmed');
+  clean();setOpen(true);
+  setError('We could not confirm your callback request. Please call Sew Suite or use the Contact page.');
+  await receipt;
+ }
  function maybeCloseAfterFarewell(){
   const s=state.current;
   if(s.goodbyeTimer)clearTimeout(s.goodbyeTimer);
+  if(s.followupRequested&&s.visitorGoodbye&&s.assistantGoodbye&&!s.crmAttempted&&!s.crmPending){
+   s.goodbyeTimer=setTimeout(()=>{
+    if(state.current===s&&!s.crmAttempted&&!s.crmPending)void endUnconfirmedFollowup();
+   },25000);
+   return;
+  }
   if(!canCloseNaturally(s))return;
   // Live transcript deltas are not exact speech-turn boundaries. Allow the
   // final spoken goodbye to finish, resetting the timer on later deltas.
