@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {visitorSaidGoodbye,receptionistSaidGoodbye,canCloseNaturally} from '../src/lib/voiceClosing.js';
+import {visitorSaidGoodbye,visitorRequestedFollowup,receptionistSaidGoodbye,canCloseNaturally} from '../src/lib/voiceClosing.js';
 const widget=readFileSync('src/components/site/VoiceCallWidget.jsx','utf8');
 
 test('explicit customer goodbyes register without confusing routine thanks',()=>{
@@ -33,4 +33,26 @@ test('voice only passes a friendly confirmation to the model, not a UUID',()=>{
  assert.match(widget,/s\.goodbyeTimer/);
  assert.match(widget,/session\.input_transcript\.delta/);
  assert.match(widget,/session\.output_transcript\.delta/);
+});
+
+test('caller explicitly requesting a staff callback cannot auto-hangup before verified attempt',()=>{
+ for(const t of ['I need to go and have someone contact me','Please call me back','Can you have your team reach out to me?'])
+  assert.equal(visitorRequestedFollowup(t),true,t);
+ for(const t of ['I need embroidered caps','Thanks, bye','I will contact your team later'])
+  assert.equal(visitorRequestedFollowup(t),false,t);
+ assert.equal(canCloseNaturally({followupRequested:true,visitorGoodbye:true,assistantGoodbye:true}),false);
+ assert.equal(canCloseNaturally({followupRequested:true,visitorGoodbye:true,assistantGoodbye:true,crmPending:true}),false);
+ assert.equal(canCloseNaturally({followupRequested:true,visitorGoodbye:true,assistantGoodbye:true,crmSaved:true}),true);
+ assert.equal(canCloseNaturally({followupRequested:true,visitorGoodbye:true,assistantGoodbye:true,crmAttempted:true}),true);
+ assert.match(widget,/s\.followupRequested=true/);
+ assert.match(widget,/s\.crmAttempted=true/);
+ assert.match(widget,/s\.assistantGoodbye=false/);
+});
+
+test('requested but unsubmitted callbacks have a bounded visible fail-closed path',()=>{
+ assert.match(widget,/s\.goodbyeTimer=setTimeout\(\(\)=>\{/);
+ assert.match(widget,/\},25000\)/);
+ assert.match(widget,/endUnconfirmedFollowup\(\)/);
+ assert.match(widget,/followup_not_confirmed/);
+ assert.match(widget,/We could not confirm your callback request/);
 });
