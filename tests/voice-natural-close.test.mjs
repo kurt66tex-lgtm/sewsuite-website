@@ -48,3 +48,11 @@ test('caller explicitly requesting a staff callback cannot auto-hangup before ve
  assert.match(widget,/s\.crmAttempted=true/);
  assert.match(widget,/s\.assistantGoodbye=false/);
 });
+
+test('requested but unsubmitted callbacks have a bounded visible fail-closed path',()=>{
+ assert.match(widget,/s\.goodbyeTimer=setTimeout\(\(\)=>\{/);
+ assert.match(widget,/\},25000\)/);
+ assert.match(widget,/endUnconfirmedFollowup\(\)/);
+ assert.match(widget,/followup_not_confirmed/);
+ assert.match(widget,/We could not confirm your callback request/);
+});
