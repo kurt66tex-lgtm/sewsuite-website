@@ -100,9 +100,18 @@ for(const p of projects){
 }
 const support=settings.customer_support_email||'support@sewsuite.com';
 const phone=settings.phone||'469-640-8568';
+// Public approved destination from the original Sew Suite Base44 BusinessSettings,
+// not a placeholder, CRM-generated user link, or third-party shortener.
+const approvedSewSuiteReviewUrl='https://g.page/r/CcQkIwJmCP0ZEAE/review';
+const approvedSewSuiteQrPath='/sew-suite-google-review-qr.svg';
 add('/reviews','Sew Suite Reviews | Custom Apparel & Embroidery',
- 'Learn about Sew Suite custom apparel and how customer inquiries and reviews are handled.',
- '<h1>Customer Reviews</h1>'+para('Learn more about our custom embroidery, branded apparel and customer service.')+
+ 'Share your experience with Sew Suite on Google or view our custom apparel examples.',
+ '<h1>Customer Reviews</h1>'+
+ para('We appreciate honest feedback about your Sew Suite experience. You can visit Google directly or scan the QR code using another device.')+
+ '<section aria-labelledby="google-review-title"><h2 id="google-review-title">Leave a Google Review</h2>'+
+ '<p><a href="'+esc(approvedSewSuiteReviewUrl)+'" target="_blank" rel="noopener noreferrer">Leave a Google Review for Sew Suite</a></p>'+
+ '<p><a href="'+esc(approvedSewSuiteReviewUrl)+'" target="_blank" rel="noopener noreferrer" aria-label="Open Sew Suite Google review page after scanning the QR code">'+
+ '<img src="'+esc(approvedSewSuiteQrPath)+'" width="192" height="192" alt="Scan this QR code to leave an honest Google review for Sew Suite" loading="lazy" decoding="async"></a></p></section>'+
  '<p><a href="/our-work">Browse completed apparel examples</a>.</p>');
 add('/about','About Sew Suite | North Texas Custom Apparel',
  'Learn about Sew Suite custom embroidery, screen printing and branded apparel for businesses, teams and schools.',
