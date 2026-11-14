@@ -38,6 +38,18 @@ for(const r of routes){
  if(!html.includes(r.title))throw Error('incorrect_page_title_'+r.path);
  if(r.local && !html.includes(r.local.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')))throw Error('localized_body_missing_'+r.path);
 }
+// Confirm static and hydrated Reviews agree on the original approved Google
+// review destination, and that QR artwork is deployed with the page.
+const reviewsHtml=readFileSync('dist/reviews/index.html','utf8');
+const approvedReviewUrl='https://g.page/r/CcQkIwJmCP0ZEAE/review';
+const qrPath='sew-suite-google-review-qr.svg';
+if(!reviewsHtml.includes(approvedReviewUrl)||
+ !reviewsHtml.includes('Leave a Google Review for Sew Suite')||
+ !reviewsHtml.includes('/'+qrPath)||
+ !reviewsHtml.includes('alt="Scan this QR code')||
+ !existsSync(join('dist',qrPath))||
+ !existsSync(join('public',qrPath)))
+ throw Error('original_base44_google_review_link_or_qr_missing');
 const original=readFileSync('dist/index.html','utf8');
 if(!original.includes('<meta name="robots" content="'+expectedRobots+'"'))throw Error('root_indexing_policy_mismatch');
 console.log('RRS_VITE_STATIC_SEO_ACCEPTANCE_PASS '+JSON.stringify({routes:routes.length,services:services.length,cities:cities.length,portfolioPages:projects.length,previewNoindex:!allowProductionIndexing,approvedProductionIndexing:allowProductionIndexing,customerDataTouched:false}));
